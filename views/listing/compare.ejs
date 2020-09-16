@@ -1,0 +1,161 @@
+<%- include ("../partials/header") %>
+
+<main>
+    <div class="px-3">
+        <div class="theme-container">
+            <div class="py-3">
+                <div class="mdc-card p-3 row between-xs middle-xs compare-toolbar">
+                    <h3 class="uppercase">Compare: <span id="compare-count"><%= listings.length %></span> </h3>
+                    <div class="row center-xs middle-xs">
+                        <button class="prop-prev swiper-button-prev swipe-arrow mdc-fab mdc-fab--mini primary mx-2">
+                            <span class="mdc-fab__ripple"></span>
+                            <span class="mdc-fab__icon material-icons">keyboard_arrow_left</span>
+                        </button>
+                        <button class="prop-next swiper-button-next swipe-arrow mdc-fab mdc-fab--mini primary mx-2">
+                            <span class="mdc-fab__ripple"></span>
+                            <span class="mdc-fab__icon material-icons">keyboard_arrow_right</span>
+                        </button>
+                    </div>
+                    <button class="mdc-fab mdc-fab--mini bg-warn d-sm-none d-md-none d-lg-none d-xl-none" type="button">
+                        <span class="mdc-fab__ripple"></span>
+                        <span class="mdc-fab__icon material-icons">cancel</span>
+                    </button>
+                    <button id="compare-clear" class="mdc-button mdc-button--raised bg-warn d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex"
+                        type="button">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Clear All</span>
+                    </button>
+                </div>
+                <div class="compare-carousel mt-3">
+                    <div id="compare-list" class="swiper-container carousel-outer">
+                        <div class="swiper-wrapper">
+                            <% listings.forEach(listing => { %>
+                            <div class="swiper-slide">
+                                <div class="mdc-card property-item grid-item column-4 full-width-page compare-item">
+                                    <div class="thumbnail-section">
+                                        <button data-value="<%= listing._id %>"
+                                            class="mdc-icon-button remove compare-remove" type="button">
+                                            <i class="material-icons mat-icon-lg warn-color">highlight_off</i>
+                                        </button>
+                                        <div class="property-image">
+                                            <img src="/assets/images/props/office/1-medium.jpg" alt="product image">
+                                        </div>
+                                    </div>
+                                    <div class="property-content-wrapper">
+                                        <div class="property-content">
+                                            <div class="content">
+                                                <h2 class="title"><a href="#"><%= listing.location.project %></a></h2>
+                                                <p class="row address flex-nowrap">
+                                                    <i class="material-icons text-muted">location_on</i>
+                                                    <span><%= listing.location.sector + ", " + listing.location.place %></span>
+                                                </p>
+                                                <div class="mdc-chip bg-primary center-xs w-100">
+                                                    <div class="mdc-chip__ripple"></div>
+                                                    <span
+                                                        class="mdc-chip__text"><%= new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0,  maximumFractionDigits: 0 }).format(listing.price) %>
+                                                    </span>
+                                                </div>
+                                                <div class="details py-3">
+                                                    <div class="item">
+                                                        <span>Property Type:</span>
+                                                        <span><%= listing.propertyType.subtype, listing.propertyType.type %></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Property Status:</span>
+                                                        <div class="list">
+                                                            <% for(let i= 0; i < listing.listingInfo.tags.length -1; i++) { %>
+                                                            <span><%= listing.listingInfo.tags[i] %> </span>
+                                                            <% } %>
+                                                            <span
+                                                                class="last"><%= listing.listingInfo.tags[listing.listingInfo.tags.length -1] %>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>City:</span>
+                                                        <span><%= listing.location.place %></span>
+                                                    </div>
+                                                    <!-- <div class="item">
+                                                        <span>Zip Code:</span>
+                                                        <span>90044</span>
+                                                    </div> -->
+                                                    <div class="item">
+                                                        <span>Neighborhood:</span>
+                                                        <div class="list">
+                                                            <span><%= listing.location.project %></span>
+                                                            <span class="last"><%= listing.location.sector %></span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="item">
+                                                        <span>Street:</span>
+                                                        <div class="list">
+                                                            <span>Hollywood Street #2</span>
+                                                            <span class="last">Highland Park Street #1</span>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="item">
+                                                        <span>Bedrooms:</span>
+                                                        <span><%= listing.propertyInfo.bedrooms %></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Bathrooms:</span>
+                                                        <span><%= listing.propertyInfo.bathrooms %></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Garages:</span>
+                                                        <span><%= listing.propertyInfo.reservedParking %></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Property size:</span>
+                                                        <span><%= listing.propertyInfo.area.area %> ft²</span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Year Built:</span>
+                                                        <span><%= listing.propertyInfo.ageOfProperty %></span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Features:</span>
+                                                        <div class="list">
+                                                            <span>Air Conditioning</span>
+                                                            <span>Barbeque</span>
+                                                            <span>Dryer</span>
+                                                            <span>Microwave</span>
+                                                            <span>Refrigerator</span>
+                                                            <span>Fireplace</span>
+                                                            <span>Sauna</span>
+                                                            <span>TV Cable</span>
+                                                            <span>WiFi</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <span>Published:</span>
+                                                        <span><%= moment(listing.createdAt).format("ll") %> </span>
+                                                    </div>
+                                                </div>
+                                                <p class="uppercase text-center fw-500 mb-2">description</p>
+                                                <p class="text-muted fw-500">Lorem ipsum dolor sit amet consectetur
+                                                    adipisicing elit. Praesentium magnam veniam sit reprehenderit
+                                                    deserunt ad voluptates id aperiam veritatis! Nobis saepe quos
+                                                    eveniet numquam vitae quis, tenetur consectetur impedit dolore.</p>
+                                            </div>
+                                            <div class="grow"></div>
+                                            <div class="actions row center-xs middle-xs">
+                                                <a href="/listing/<%= listing._id %>" class="mdc-button mdc-button--raised">
+                                                    <span class="mdc-button__ripple"></span>
+                                                    <span class="mdc-button__label">More info</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer") %>

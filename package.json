@@ -1,0 +1,40 @@
+{
+  "name": "ghar-search-internal",
+  "version": "1.0.0",
+  "description": "Internal App for ghar search",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeev96/gharSearchInternal.git"
+  },
+  "author": "Jeevanjot Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeev96/gharSearchInternal/issues"
+  },
+  "homepage": "https://github.com/jeev96/gharSearchInternal#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "joi": "^14.3.1",
+    "method-override": "^3.0.0",
+    "moment": "^2.25.1",
+    "mongoose": "^5.9.11",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1",
+    "rand-token": "^1.0.1",
+    "uuid": "^8.0.0"
+  }
+}

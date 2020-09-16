@@ -1,0 +1,125 @@
+<%- include ("../partials/header") %>
+
+<main>
+    <div class="px-3">
+        <div class="theme-container">
+            <div class="page-drawer-container mt-3">
+                <aside class="mdc-drawer mdc-drawer--modal page-sidenav">
+                    <a href="#" class="h-0"></a>
+                    <div class="mdc-card">
+                        <div class="row start-xs middle-xs p-3">
+                            <img src="/assets/images/others/user.jpg" alt="user-image" class="avatar">
+                            <h2 class="text-muted fw-500 mx-3"><%= currentUser.name %> </h2>
+                        </div>
+                        <hr class="mdc-list-divider m-0">
+                        <ul class="mdc-list">
+                            <li>
+                                <a href="/account/profile" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">person</span>
+                                    <span class="mdc-list-item__text">Profile</span>
+                                </a>
+                            </li>
+                            <% if(currentUser.userType === "ADMIN") { %>
+                            <li>
+                                <a href="/account/allUsers" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">group</span>
+                                    <span class="mdc-list-item__text">Users</span>
+                                </a>
+                            </li>
+                            <% } %>
+                            <li>
+                                <a href="/account/my-properties" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">view_list</span>
+                                    <span class="mdc-list-item__text">My Properties</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/listing/favourite" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">favorite</span>
+                                    <span class="mdc-list-item__text">Favorites</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/account/submit" class="mdc-list-item py-1">
+                                    <span
+                                        class="mdc-list-item__graphic material-icons text-muted mx-3">add_circle</span>
+                                    <span class="mdc-list-item__text">Submit Property</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/account/logout" class="mdc-list-item py-1">
+                                    <span
+                                        class="mdc-list-item__graphic material-icons text-muted mx-3">power_settings_new</span>
+                                    <span class="mdc-list-item__text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <div class="mdc-drawer-scrim page-sidenav-scrim"></div>
+                <div class="page-sidenav-content">
+                    <div
+                        class="row mdc-card between-xs middle-xs w-100 p-2 mdc-elevation--z1 text-muted d-md-none d-lg-none d-xl-none mb-3">
+                        <button id="page-sidenav-toggle" class="mdc-icon-button material-icons">more_vert</button>
+                        <h3 class="fw-500">My Account</h3>
+                    </div>
+                    <div class="mdc-card p-3">
+                        <div class="mdc-text-field mdc-text-field--outlined custom-field w-100">
+                            <input id="my-properties-search" class="mdc-text-field__input"
+                                placeholder="Type to filter properties">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label class="mdc-floating-label">Filter properties</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div class="mdc-data-table border-0 w-100 mt-3">
+                            <table id="my-properties" class="mdc-data-table__table" aria-label="Dessert calories">
+                                <thead>
+                                    <tr class="mdc-data-table__header-row">
+                                        <th class="mdc-data-table__header-cell">Image</th>
+                                        <th class="mdc-data-table__header-cell">Title</th>
+                                        <th class="mdc-data-table__header-cell">Location</th>
+                                        <th class="mdc-data-table__header-cell">Published</th>
+                                        <th class="mdc-data-table__header-cell">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="mdc-data-table__content">
+                                    <% listings.forEach((listing, index) => { %>
+                                    <tr class="mdc-data-table__row">
+                                        <td class="mdc-data-table__cell">
+                                            <img src="/assets/images/props/flat-1/1-small.jpg" alt="pro-image"
+                                                width="100" class="d-block py-3">
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <a href="/listing/<%= listing._id %>"
+                                                class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
+                                                <%= listing.location.project %>
+                                            </a>
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <%= listing.location.sector + ", " + listing.location.place %>
+                                        </td>
+                                        <td class="mdc-data-table__cell"><%= moment(listing.createdAt).format("ll") %>
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <button class="mdc-icon-button material-icons primary-color">edit</button>
+                                            <button class="mdc-icon-button material-icons warn-color">delete</button>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="pagination-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer") %>
