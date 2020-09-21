@@ -63,7 +63,7 @@ module.exports = {
                                 listing.listingInfo.title : listing.location.project %></a></h1>
                             <p class="row address flex-nowrap">
                                 <i class="material-icons text-muted">location_on</i>
-                                <span><%= listing.location.sector + ", " + listing.location.place %></span>
+                                <span><%= listing.location.sector + ", " + listing.location.city %></span>
                             </p>
                             <div class="row between-xs middle-xs">
                                 <h3 class="primary-color price">
@@ -186,7 +186,7 @@ module.exports = {
                             </h1>
                             <p class="row address flex-nowrap">
                                 <i class="material-icons text-muted">location_on</i>
-                                <span><%= listing.location.sector + ", " + listing.location.place %></span>
+                                <span><%= listing.location.sector + ", " + listing.location.city %></span>
                             </p>
                             <div class="row between-xs middle-xs">
                                 <h3 class="primary-color price">

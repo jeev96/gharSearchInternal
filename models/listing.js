@@ -26,6 +26,9 @@ var listingSchema = new mongoose.Schema({
             type: [String],
             default: ["NEW"]
         },
+        description: {
+            type: String
+        },
     },
     propertyType: {
         type: {
@@ -38,7 +41,11 @@ var listingSchema = new mongoose.Schema({
         }
     },
     location: {
-        place: {
+        map: {
+            lat: { type: String },
+            lon: { type: String }
+        },
+        city: {
             type: String,
             default: "CHANDIGARH"
         },
@@ -69,11 +76,18 @@ var listingSchema = new mongoose.Schema({
             type: [String],
             default: ["https://d27p8o2qkwv41j.cloudfront.net/wp-content/uploads/2016/07/shutterstock_262923179-e1500871070126.jpg"]
         },
-        documents: {
-            floorPlans: {
-                type: [String]
-            }
-        }
+        videos: [{
+            name: { type: String },
+            link: { type: String }
+        }],
+        plans: [{
+            name: { type: String },
+            description: { type: String },
+            area: { type: String },
+            rooms: { type: String },
+            baths: { type: String },
+            image: { type: String },
+        }]
     },
     propertyInfo: {
         builtYear: {
@@ -83,12 +97,7 @@ var listingSchema = new mongoose.Schema({
             type: [String]
         },
         area: {
-            area: Number,
-            unit: {
-                type: String,
-                enum: ["ft²", "yard²", "acre"],
-                default: "ft²"
-            }
+            type: Number,
         },
         bhk: {
             type: String
@@ -104,8 +113,6 @@ var listingSchema = new mongoose.Schema({
         },
         facing: {
             type: String,
-            enum: ["E", "W", "N", "S", "NE", "NW", "SE", "SW"],
-            default: "E"
         },
         flooring: {
             type: String,
@@ -121,6 +128,10 @@ var listingSchema = new mongoose.Schema({
             type: String,
             default: "MUNICIPAL-CORPORATION"
         },
+        additionalFeatures: [{
+            name: { type: String },
+            value: { type: String }
+        }]
     },
     ownership: {
         type: String,
@@ -129,9 +140,6 @@ var listingSchema = new mongoose.Schema({
     },
     price: {
         type: mongoose.Decimal128
-    },
-    description: {
-        type: String
     },
     contactInfo: {
         name: String,

@@ -21,9 +21,15 @@
                             </li>
                             <% if(currentUser.userType === "ADMIN") { %>
                             <li>
-                                <a href="/account/allUsers" class="mdc-list-item py-1">
+                                <a href="/user" class="mdc-list-item py-1">
                                     <span class="mdc-list-item__graphic material-icons text-muted mx-3">group</span>
                                     <span class="mdc-list-item__text">Users</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/account/register" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">person_add</span>
+                                    <span class="mdc-list-item__text">Register User</span>
                                 </a>
                             </li>
                             <% } %>

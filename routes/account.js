@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
-const utils = require("../services/utils");
 const dbEntry = require("../services/dbEntry");
 const Listing = require("../models/listing");
 const User = require("../models/user");
+let utils = require("../services/utils");
+const middleware = require("../services/middleware");
+const { isLoggedIn, isAdmin } = middleware;
 
 // login
 router.get("/login", function (req, res) {
@@ -90,17 +92,32 @@ router.post("/change-password", function (req, res) {
 });
 
 // profile route
-router.get("/profile", function (req, res) {
+router.get("/profile", isLoggedIn, function (req, res) {
     res.render("account/profile", { page: "profile" });
 });
 
 // submit route
-router.get("/submit", function (req, res) {
+router.get("/submit", isLoggedIn, function (req, res) {
     res.render("account/submit", { page: "submit" });
 });
 
+// submit post route
+router.post("/submit", isLoggedIn, function (req, res) {
+    let newListing = utils.createSubmitEntryResidential(req.user, req.body);
+
+	Listing.create(newListing, function (err, newlyCreated) {
+		if (err) {
+			console.log(err);
+		} else {
+			//redirect back to listings page
+			console.log(newlyCreated);
+			res.redirect("/listings");
+		}
+	});
+});
+
 // profile route
-router.get("/my-properties", function (req, res) {
+router.get("/my-properties", isLoggedIn, function (req, res) {
     Listing.find({ "author.id": req.user._id }).exec((err, foundListings) => {
         if (err) {
             console.log(err);
@@ -111,5 +128,7 @@ router.get("/my-properties", function (req, res) {
         }
     });
 });
+
+
 
 module.exports = router;

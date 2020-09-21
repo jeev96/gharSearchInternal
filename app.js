@@ -19,6 +19,7 @@ let indexRoutes = require("./routes/index");
 let filterRoutes = require("./routes/filter");
 let listingRoutes = require("./routes/listing");
 let accountRoutes = require("./routes/account");
+let userRoutes = require("./routes/user");
 let leadRoutes = require("./routes/lead");
 
 // assign mongoose promise library and connect to database
@@ -77,6 +78,7 @@ app.use("/", indexRoutes);
 app.use("/filter", filterRoutes);
 app.use("/listing", listingRoutes);
 app.use("/account", accountRoutes);
+app.use("/user", userRoutes);
 app.use("/lead", leadRoutes);
 
 app.listen(3000, function () {

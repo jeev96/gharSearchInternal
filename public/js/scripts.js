@@ -413,15 +413,39 @@ function onPageLoad() {
         loadMoreSearch($(this).data("value"));
     });
 
+    $(".delete-user").submit(function (event) {
+        let answer = confirm("Delete User " + $(this).data("value") + " ?");
+        if (answer) {
+            console.log("Delete user called");
+        }
+        else {
+            event.preventDefault();
+        }
+    });
+
+    $("#listing-submit").submit(function (event) {
+        event.preventDefault();
+        const searchString = getFilterFormData("#listing-submit");
+        $.post("/account/submit", searchString, function (data, status) {
+            if (status === "success") {
+                console.log("Success");
+                return;
+            } else {
+                console.log("Faliure");
+                return;
+            }
+        });
+    });
+
     $("#filters").submit(function (event) {
         event.preventDefault();
-        const searchString = getFilterFormData();
+        const searchString = getFilterFormData("#filters");
         formData = searchString;
         searchListings(searchString);
         goToTop();
     });
 
-    $("#register").submit(function(event) {
+    $("#register").submit(function (event) {
         let userType = $("#register li.mdc-list-item--selected");
         $("#userType").val($(userType[0]).data("value"))
     });
@@ -502,9 +526,9 @@ function onPageLoad() {
         searchListings(getFormData());
     }
 
-    function getFilterFormData() {
-        let searchString = $("#filters").serializeArray();
-        let inputData = $("#filters li.mdc-list-item--selected");
+    function getFilterFormData(formName) {
+        let searchString = $(formName).serializeArray();
+        let inputData = $(formName + " li.mdc-list-item--selected");
         for (let i = 0; i < inputData.length; i++) {
             searchString.push({
                 name: $(inputData[i]).parent().attr("name"),
@@ -1014,10 +1038,13 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
+// Maps markers
+let conatct_marker;
 function initMap() {
-    var myLatLng = { lat: 40.678178, lng: -73.944158 };
+    let myLatLng = { lat: 40.678178, lng: -73.944158 };
+
     if (document.getElementById('location-map')) {
-        var location_map = new google.maps.Map(document.getElementById('location-map'), {
+        let location_map = new google.maps.Map(document.getElementById('location-map'), {
             center: myLatLng,
             zoom: 12,
             mapTypeControl: false,
@@ -1280,18 +1307,79 @@ function initMap() {
                 }
             ]
         });
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
             position: myLatLng,
             map: location_map,
             title: 'Our office'
         });
     }
     if (document.getElementById('contact-map')) {
-        var contact_map = new google.maps.Map(document.getElementById('contact-map'), {
+        let contact_map = new google.maps.Map(document.getElementById('contact-map'), {
             center: myLatLng,
             zoom: 12
         });
+        const input = document.getElementById("maps-search");
+        const searchBox = new google.maps.places.SearchBox(input);
+        conatct_marker = new google.maps.Marker({
+            position: myLatLng,
+            map: contact_map,
+            title: 'Our office'
+        });
+        // setFormPositions(myLatLng);
+        google.maps.event.addListener(contact_map, 'click', function (event) {
+            placeMarker(contact_map, event.latLng);
+        });
+
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+
+            conatct_marker.setMap(null);
+
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach(place => {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+
+                const icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                }; // Create a marker for each place.
+
+                conatct_marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: contact_map
+                });
+                setFormPositions(place.geometry.location);
+
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            contact_map.fitBounds(bounds);
+        });
     }
+}
+
+function placeMarker(map, location) {
+    conatct_marker.setMap(null);
+    setFormPositions(location);
+    conatct_marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+
+function setFormPositions(location) {
+    $("#latitude").val(location.lat);
+    $("#longitude").val(location.lng);
 }
 
 window.addEventListener('load', function () {

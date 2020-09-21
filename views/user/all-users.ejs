@@ -85,34 +85,44 @@
                             <table id="my-properties" class="mdc-data-table__table" aria-label="Dessert calories">
                                 <thead>
                                     <tr class="mdc-data-table__header-row">
-                                        <th class="mdc-data-table__header-cell">Image</th>
-                                        <th class="mdc-data-table__header-cell">Title</th>
-                                        <th class="mdc-data-table__header-cell">Location</th>
-                                        <th class="mdc-data-table__header-cell">Published</th>
+                                        <th class="mdc-data-table__header-cell">Index</th>
+                                        <th class="mdc-data-table__header-cell">Name</th>
+                                        <th class="mdc-data-table__header-cell">Username</th>
+                                        <th class="mdc-data-table__header-cell">Phone</th>
+                                        <th class="mdc-data-table__header-cell">Type</th>
                                         <th class="mdc-data-table__header-cell">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="mdc-data-table__content">
-                                    <% listings.forEach((listing, index) => { %>
+                                    <% users.forEach((user, index) => { %>
                                     <tr class="mdc-data-table__row">
                                         <td class="mdc-data-table__cell">
-                                            <img src="/assets/images/props/flat-1/1-small.jpg" alt="pro-image"
-                                                width="100" class="d-block py-3">
+                                            <%= index + 1%>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <a href="/listing/<%= listing._id %>"
+                                            <a href="/listing/<%= user._id %>"
                                                 class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
-                                                <%= listing.location.project %>
+                                                <%= user.name %>
                                             </a>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <%= listing.location.sector + ", " + listing.location.city %>
-                                        </td>
-                                        <td class="mdc-data-table__cell"><%= moment(listing.createdAt).format("ll") %>
+                                            <%= user.username %>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <button class="mdc-icon-button material-icons primary-color">edit</button>
-                                            <button class="mdc-icon-button material-icons warn-color">delete</button>
+                                            <%= user.phone %>
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <%= user.userType %>
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <form class="delete-user" data-value="<%= user.username %>"
+                                                action="/user/<%= user._id %>?_method=DELETE" method="POST">
+                                                <% if (currentUser.username !== user.username) { %>
+                                                <button type="submit" class="mdc-icon-button material-icons warn-color">
+                                                    delete
+                                                </button>
+                                                <% } %>
+                                            </form>
                                         </td>
                                     </tr>
                                     <% }); %>

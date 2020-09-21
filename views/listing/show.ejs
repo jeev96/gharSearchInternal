@@ -11,7 +11,7 @@
                             <p class="row flex-nowrap address mb-0">
                                 <i class="material-icons text-muted">location_on</i>
                                 <span class="fw-500 text-muted">Sector
-                                    <%= listing.location.sector + ", " + listing.location.place %></span>
+                                    <%= listing.location.sector + ", " + listing.location.city %></span>
                             </p>
                         </div>
                         <div class="column mx-3">
@@ -137,14 +137,14 @@
                                 <span><%= listing.propertyType.type %></span>
                             </div>
                             <div class="row col-xs-12 col-sm-6 item">
-                                <span>Property Subtype:</span>
+                                <span>Subtype:</span>
                                 <span><%= listing.propertyType.subtype %></span>
                             </div>
                             <div class="row col-xs-12 col-sm-6 item">
                                 <span>Property Status:</span>
                                 <div class="row list">
                                     <% for(let i= 0; i < listing.listingInfo.tags.length -1; i++) { %>
-                                    <span><%= listing.listingInfo.tags[i] %> </span>
+                                    <span><%= listing.listingInfo.tags[i] %></span>
                                     <% } %>
                                     <span
                                         class="last"><%= listing.listingInfo.tags[listing.listingInfo.tags.length -1] %>
@@ -160,7 +160,7 @@
                             </div>
                             <div class="row col-xs-12 col-sm-6 item">
                                 <span>City:</span>
-                                <span><%= listing.location.place %></span>
+                                <span><%= listing.location.city %></span>
                             </div>
 
                             <!-- <div class="row col-xs-12 col-sm-6 item">
@@ -184,11 +184,11 @@
                             </div>
                             <div class="row col-xs-12 col-sm-6 item">
                                 <span>Property size:</span>
-                                <span><%= listing.propertyInfo.area.area %> ft²</span>
+                                <span><%= listing.propertyInfo.area %> ft²</span>
                             </div>
                             <div class="row col-xs-12 col-sm-6 item">
                                 <span>Year Built:</span>
-                                <span><%= listing.propertyInfo.ageOfProperty %></span>
+                                <span><%= listing.propertyInfo.builtYear %></span>
                             </div>
                         </div>
                     </div>
