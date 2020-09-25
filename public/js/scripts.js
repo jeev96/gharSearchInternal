@@ -425,8 +425,23 @@ function onPageLoad() {
 
     $("#listing-submit").submit(function (event) {
         event.preventDefault();
-        const searchString = getFilterFormData("#listing-submit");
-        $.post("/account/submit", searchString, function (data, status) {
+        const formData = getFilterFormData("#listing-submit");
+        $.post("/listing/submit", formData, function (data, status) {
+            if (status === "success") {
+                console.log("Success");
+                $("#upload-listing-id").val(data.id)
+                return;
+            } else {
+                console.log("Faliure");
+                return;
+            }
+        });
+    });
+
+    $("#listing-media-form").submit(function (event) {
+        const formData = getFilterFormData("#listing-media-form");
+        console.log(formData);
+        $.post("/listing/submitMedia", formData, function (data, status) {
             if (status === "success") {
                 console.log("Success");
                 return;
@@ -742,7 +757,7 @@ function onPageLoad() {
     function initAddToFavorites() {
         const add_favorites_snackbar = mdc.snackbar.MDCSnackbar.attachTo(favorites_snackbar);
         $('.add-to-favorite').on('click', function () {
-            $.post('/listing/favourite', { id: $(this).data("value") }, function (data, status, xhr) {
+            $.post('/listingOperation/favourite', { id: $(this).data("value") }, function (data, status, xhr) {
                 console.log('Request sent!');
             })
                 .done(function () {
@@ -765,7 +780,7 @@ function onPageLoad() {
     function initAddToCompare() {
         const add_compare_snackbar = mdc.snackbar.MDCSnackbar.attachTo(compare_snackbar);
         $('.add-to-compare').on('click', function () {
-            $.post('/listing/compare', { id: $(this).data("value") }, function (data, status, xhr) {
+            $.post('/listingOperation/compare', { id: $(this).data("value") }, function (data, status, xhr) {
                 console.log('Request sent!');
             })
                 .done(function () {
@@ -895,6 +910,8 @@ function onPageLoad() {
                 const prev = content.querySelector('.prev-tab');
                 if (next) {
                     next.addEventListener('click', () => {
+                        // if ($("#listing-submit").isValid()) {
+                        // }
                         tabBar.activateTab(index + 1);
                     });
                 }
@@ -960,7 +977,7 @@ function onPageLoad() {
     $('.favourite-remove').on('click', function () {
         let button = $(this);
         $.ajax({
-            url: '/listing/favourite/' + $(this).data("value"),
+            url: '/listingOperation/favourite/' + $(this).data("value"),
             type: 'DELETE',
             success: function (result) {
                 let count = Number($('#favourite-count').text());
@@ -973,7 +990,7 @@ function onPageLoad() {
     });
     $('#favourite-clear').on('click', function () {
         $.ajax({
-            url: '/listing/favourite',
+            url: '/listingOperation/favourite',
             type: 'DELETE',
             success: function (result) {
                 $('#favourite-count').text("0");
@@ -993,7 +1010,7 @@ function onPageLoad() {
     $('.compare-remove').on('click', function () {
         let button = $(this);
         $.ajax({
-            url: '/listing/compare/' + $(this).data("value"),
+            url: '/listingOperation/compare/' + $(this).data("value"),
             type: 'DELETE',
             success: function (result) {
                 let count = Number($('#compare-count').text());
@@ -1006,7 +1023,7 @@ function onPageLoad() {
     });
     $('#compare-clear').on('click', function () {
         $.ajax({
-            url: '/listing/compare',
+            url: '/listingOperation/compare',
             type: 'DELETE',
             success: function (result) {
                 $('#compare-count').text("0");
@@ -1395,14 +1412,18 @@ window.addEventListener('load', function () {
 
 function initDropzonePropertyImages() {
     if ($('#property-images').length) {
-        var property_images = new Dropzone('#property-images', {
+        let property_images = new Dropzone('#property-images', {
+            autoProcessQueue: false,
             addRemoveLinks: true,
-            url: '/file/post',
+            uploadMultiple: true,
+            acceptedFiles: 'image/*',
+            url: '/media/upload',
+            paramName: 'image',
             previewTemplate: document.querySelector('#dropzone-preview-template').innerHTML,
-            parallelUploads: 2,
+            parallelUploads: 8,
             thumbnailHeight: 120,
             thumbnailWidth: 120,
-            maxFilesize: 3,
+            maxFilesize: 5,
             maxFiles: 8,
             dictRemoveFile: `<svg viewBox="0 0 24 24">
                                 <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
@@ -1414,9 +1435,9 @@ function initDropzonePropertyImages() {
             thumbnail: function (file, dataUrl) {
                 if (file.previewElement) {
                     file.previewElement.classList.remove("dz-file-preview");
-                    var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                    for (var i = 0; i < images.length; i++) {
-                        var thumbnailElement = images[i];
+                    let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                    for (let i = 0; i < images.length; i++) {
+                        let thumbnailElement = images[i];
                         thumbnailElement.alt = file.name;
                         thumbnailElement.src = dataUrl;
                     }
@@ -1425,52 +1446,51 @@ function initDropzonePropertyImages() {
             }
         });
 
-        // Now fake the file upload, since GitHub does not handle file uploads
-        // and returns a 404 
-        var minSteps = 6,
-            maxSteps = 60,
-            timeBetweenSteps = 100,
-            bytesPerStep = 100000;
-        property_images.uploadFiles = function (files) {
-            var self = this;
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-                for (var step = 0; step < totalSteps; step++) {
-                    var duration = timeBetweenSteps * (step + 1);
-                    setTimeout(function (file, totalSteps, step) {
-                        return function () {
-                            file.upload = {
-                                progress: 100 * (step + 1) / totalSteps,
-                                total: file.size,
-                                bytesSent: (step + 1) * file.size / totalSteps
-                            };
-                            self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-                            if (file.upload.progress == 100) {
-                                file.status = Dropzone.SUCCESS;
-                                self.emit("success", file, 'success', null);
-                                self.emit("complete", file);
-                                self.processQueue();
-                                //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
-                            }
-                        };
-                    }(file, totalSteps, step), duration);
+        property_images.on('sendingmultiple', function (file, xhr, formData) {
+            formData.append('listingId', $("#upload-listing-id").val());
+            file.forEach((image) => {
+                $("#listing-media-form").append(`<input type="hidden" name="images" value="${image.name}" />`)
+            })
+        });
+
+        property_images.on('removedfile', function (file) {
+            $('input[type=hidden]').each(function () {
+                if ($(this).val() === file.name) {
+                    $(this).remove();
                 }
+            });
+            let data = {
+                listingId: $("#upload-listing-id").val(),
+                // listingId: "testEntry",
+                imageName: file.name
             }
-        }
+            $.post("/media/removeListingImage", data, function (result, status) {
+                console.log("Data: " + data + "\nStatus: " + status);
+            });
+        });
+
+        $('#upload-images-button').on('click', function () {
+            if ($("#upload-listing-id").val() !== "") {
+                property_images.processQueue();
+            }
+            property_images.processQueue();
+        });
     }
 }
 
 function initDropzonePlanImage(index) {
     if ($('#plan-image-' + index).length) {
-        var plan_image = new Dropzone('#plan-image-' + index, {
+        let plan_image = new Dropzone('#plan-image-' + index, {
+            autoProcessQueue: true,
             addRemoveLinks: true,
-            url: '/file/post',
+            acceptedFiles: 'image/*',
+            url: '/media/uploadPlan',
+            paramName: 'planImage',
             previewTemplate: document.querySelector('#dropzone-preview-template').innerHTML,
-            parallelUploads: 2,
+            parallelUploads: 1,
             thumbnailHeight: 120,
             thumbnailWidth: 120,
-            maxFilesize: 3,
+            maxFilesize: 5,
             maxFiles: 1,
             dictRemoveFile: `<svg viewBox="0 0 24 24">
                                 <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
@@ -1482,9 +1502,9 @@ function initDropzonePlanImage(index) {
             thumbnail: function (file, dataUrl) {
                 if (file.previewElement) {
                     file.previewElement.classList.remove("dz-file-preview");
-                    var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                    for (var i = 0; i < images.length; i++) {
-                        var thumbnailElement = images[i];
+                    let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                    for (let i = 0; i < images.length; i++) {
+                        let thumbnailElement = images[i];
                         thumbnailElement.alt = file.name;
                         thumbnailElement.src = dataUrl;
                     }
@@ -1493,39 +1513,26 @@ function initDropzonePlanImage(index) {
             }
         });
 
-        // Now fake the file upload, since GitHub does not handle file uploads
-        // and returns a 404 
-        var minSteps = 6,
-            maxSteps = 60,
-            timeBetweenSteps = 100,
-            bytesPerStep = 100000;
-        plan_image.uploadFiles = function (files) {
-            var self = this;
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-                for (var step = 0; step < totalSteps; step++) {
-                    var duration = timeBetweenSteps * (step + 1);
-                    setTimeout(function (file, totalSteps, step) {
-                        return function () {
-                            file.upload = {
-                                progress: 100 * (step + 1) / totalSteps,
-                                total: file.size,
-                                bytesSent: (step + 1) * file.size / totalSteps
-                            };
-                            self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-                            if (file.upload.progress == 100) {
-                                file.status = Dropzone.SUCCESS;
-                                self.emit("success", file, 'success', null);
-                                self.emit("complete", file);
-                                self.processQueue();
-                                //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
-                            }
-                        };
-                    }(file, totalSteps, step), duration);
+        plan_image.on('sending', function (file, xhr, formData) {
+            formData.append('listingId', $("#upload-listing-id").val());
+            $("#listing-media-form").append(`<input type="hidden" name="planImages" value="${file.name}" />`)
+        });
+
+        plan_image.on('removedfile', function (file) {
+            $('input[type=hidden]').each(function () {
+                if ($(this).val() === file.name) {
+                    $(this).remove();
                 }
+            });
+            let data = {
+                listingId: $("#upload-listing-id").val(),
+                imageName: file.name
             }
-        }
+            $.post("/media/removePlanImage", data, function (result, status) {
+                console.log("Data: " + data + "\nStatus: " + status);
+            });
+        });
+
     }
 }
 

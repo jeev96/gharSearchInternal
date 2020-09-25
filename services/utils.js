@@ -1,8 +1,6 @@
 const ejs = require("ejs");
 const listingType = require("../constants/listingType");
-const tagType = require("../constants/tagType");
 const ejsComponents = require("../services/ejsComponents");
-const { parse } = require("uuid");
 
 function getRangeQuery(lower, upper) {
     if (lower && upper) {
@@ -16,6 +14,7 @@ function getRangeQuery(lower, upper) {
 
 function getSearchQuery(data) {
     let obj = {};
+    obj["status"] = listingType.status.LIVE;
     data.type ? obj["propertyType.type"] = data.type : "";
     data.subType ? obj["propertyType.subtype"] = data.subType : "";
     data.priceFrom || data.priceTo ? obj["price"] = getRangeQuery(data.priceFrom, data.priceTo) : "";
@@ -24,7 +23,7 @@ function getSearchQuery(data) {
     data.bedroomFrom || data.bedroomTo ? obj["propertyInfo.bedrooms"] = getRangeQuery(data.bedroomFrom, data.bedroomTo) : "";
     data.bathroomFrom || data.bathroomTo ? obj["propertyInfo.bathrooms"] = getRangeQuery(data.bathroomFrom, data.bathroomTo) : "";
     data.parkingFrom || data.parkingTo ? obj["propertyInfo.reservedParking"] = getRangeQuery(data.parkingFrom, data.parkingTo) : "";
-    data.place ? obj["location.place"] = data.place : "";
+    data.city ? obj["location.city"] = data.city : "";
     data.sector ? obj["location.sector"] = data.sector : "";
     data.project ? obj["location.project"] = data.project : "";
 
@@ -47,79 +46,7 @@ function getFilterQuery(filter) {
     return filterObj;
 }
 
-function getListingTags(data) {
-    let tags = [];
-    tags.push(data.tag);
-    data.isFeatured ? tags.push(tagType.FEATURED) : "";
-    data.isHotOffer ? tags.push(tagType.HOT_OFFER) : "";
-    return tags; 
-}
-
 module.exports = {
-    createSubmitEntryResidential: function (user, data) {
-        let author = {
-            id: user._id,
-            username: user.username
-        }
-        let listingInfo = {
-            title: data.title,
-            description: data.description,
-            tags: getListingTags(data)
-        }
-        let ownership = data.ownership;
-        let price = data.price;
-        let propertyType = {
-            type: data.type,
-            subtype: data.subtype
-        }
-        let location = {
-            map: {
-                lat: data.lat,
-                lon: data.lon
-            },
-            city: data.city,
-            sector: data.sector,
-            project: data.project,
-            block: data.block,
-            tower: data.tower,
-            floor: data.floor,
-            propertyNumber: data.propertyNumber,
-            preferentialLocationCharges: data.preferentialLocationCharges
-        }
-        let propertyInfo = {
-            area: data.area,
-            bhk: data.bhk,
-            bedrooms: data.bedrooms,
-            bathrooms: data.bathrooms,
-            balconies: data.balconies,
-            reservedParking: data.reservedParking,
-            otherRooms: data.otherRooms,
-            builtYear: data.builtYear,
-            amenities: data.amenities,
-            waterSource: data.waterSource,
-            facing: data.facing,
-            flooring: data.flooring,
-        }
-        let contactInfo = {
-            name: data.dealerName,
-            firmName: data.firmName,
-            type: data.dealerType,
-            phone: data.dealerPhone
-        }
-
-        let newListing = {
-            author: author,
-            createdAt: Date.now(),
-            listingInfo: listingInfo,
-            propertyType: propertyType,
-            location: location,
-            propertyInfo: propertyInfo,
-            ownership: ownership,
-            price: price,
-            contactInfo: contactInfo
-        }
-        return newListing;
-    },
     getDbQuery: function (data) {
         const dbQuery = {
             searchQuery: getSearchQuery(data),

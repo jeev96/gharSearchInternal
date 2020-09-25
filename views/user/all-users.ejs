@@ -13,12 +13,6 @@
                         </div>
                         <hr class="mdc-list-divider m-0">
                         <ul class="mdc-list">
-                            <li>
-                                <a href="/account/profile" class="mdc-list-item py-1">
-                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">person</span>
-                                    <span class="mdc-list-item__text">Profile</span>
-                                </a>
-                            </li>
                             <% if(currentUser.userType === "ADMIN") { %>
                             <li>
                                 <a href="/user" class="mdc-list-item py-1">
@@ -28,11 +22,26 @@
                             </li>
                             <li>
                                 <a href="/account/register" class="mdc-list-item py-1">
-                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">person_add</span>
+                                    <span
+                                        class="mdc-list-item__graphic material-icons text-muted mx-3">person_add</span>
                                     <span class="mdc-list-item__text">Register User</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/account/leads" class="mdc-list-item py-1">
+                                    <span
+                                        class="mdc-list-item__graphic material-icons text-muted mx-3">person_pin</span>
+                                    <span class="mdc-list-item__text">Leads</span>
+                                </a>
+                            </li>
+                            <hr class="mdc-list-divider m-0">
                             <% } %>
+                            <li>
+                                <a href="/account/profile" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">person</span>
+                                    <span class="mdc-list-item__text">Profile</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="/account/my-properties" class="mdc-list-item py-1">
                                     <span class="mdc-list-item__graphic material-icons text-muted mx-3">view_list</span>
@@ -40,13 +49,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/listing/favourite" class="mdc-list-item py-1">
+                                <a href="/listingOperation/favourite" class="mdc-list-item py-1">
                                     <span class="mdc-list-item__graphic material-icons text-muted mx-3">favorite</span>
                                     <span class="mdc-list-item__text">Favorites</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/account/submit" class="mdc-list-item py-1">
+                                <a href="/listing/submit" class="mdc-list-item py-1">
                                     <span
                                         class="mdc-list-item__graphic material-icons text-muted mx-3">add_circle</span>
                                     <span class="mdc-list-item__text">Submit Property</span>
@@ -100,10 +109,10 @@
                                             <%= index + 1%>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <a href="/listing/<%= user._id %>"
+                                            <div
                                                 class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
                                                 <%= user.name %>
-                                            </a>
+                                            </div>
                                         </td>
                                         <td class="mdc-data-table__cell">
                                             <%= user.username %>

@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const utils = require("../services/utils");
+const listingType = require("../constants/listingType");
 const dbConstants = require("../constants/dbConstants");
 const Listing = require("../models/listing");
-const { subtype } = require("../constants/listingType");
 
 // root route
 router.get("/", function (req, res) {
-    Listing.find({}, function (err, allListings) {
+    Listing.find({ "status": listingType.status.LIVE }, function (err, allListings) {
         if (err) {
             console.log(err);
         } else {

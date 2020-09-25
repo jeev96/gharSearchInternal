@@ -86,7 +86,7 @@ module.exports = {
                                 </div>
                             </div>
                             <div class="features mt-3">
-                                <p><span>Property size</span><span><%= listing.propertyInfo.area.area %> ft²</span></p>
+                                <p><span>Property size</span><span><%= listing.propertyInfo.area %> ft²</span></p>
                                 <p><span>Bedrooms</span><span><%= listing.propertyInfo.bedrooms %></span></p>
                                 <p><span>Bathrooms</span><span><%= listing.propertyInfo.bathrooms %></span></p>
                                 <p><span>Garages</span><span><%= listing.propertyInfo.reservedParking %></span></p>
@@ -209,7 +209,7 @@ module.exports = {
                                 </div>
                             </div>
                             <div class="features mt-3">
-                                <p><span>Property size</span><span><%= listing.propertyInfo.area.area %>
+                                <p><span>Property size</span><span><%= listing.propertyInfo.area %>
                                         ft²</span></p>
                                 <p><span>Bedrooms</span><span><%= listing.propertyInfo.bedrooms %></span>
                                 </p>
@@ -252,6 +252,7 @@ module.exports = {
                         <span>
                         <% let tagTitle = key.toUpperCase(); tagTitle = tagTitle.replace("TO", " <");
                             tagTitle = tagTitle.replace("FROM", " >");
+                            tagTitle = ["SUBTYPE", "CITY"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
                         %>
                             <span role="button" tabindex="0" class="mdc-chip__text"><%= tagTitle + " " + tags[key] %></span>
                         </span>
@@ -286,7 +287,7 @@ module.exports = {
                         <span>
                         <% let tagTitle = key.toUpperCase(); tagTitle = tagTitle.replace("TO", " <");
                             tagTitle = tagTitle.replace("FROM", " >");
-                            tagTitle = ["SUBTYPE", "PLACE"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
+                            tagTitle = ["SUBTYPE", "CITY"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
                         %>
                             <span role="button" tabindex="0" class="mdc-chip__text"><%= tagTitle + tags[key] %></span>
                         </span>

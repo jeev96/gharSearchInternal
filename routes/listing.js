@@ -1,132 +1,47 @@
-let express = require("express");
-let router = express.Router();
-let moment = require('moment')
-let mongoose = require("mongoose");
-let utils = require("../services/utils");
-let Listing = require("../models/listing");
+const express = require("express");
+const router = express.Router();
+const moment = require('moment')
+const dbEntry = require("../services/dbEntry");
+const utils = require("../services/utils");
+const Listing = require("../models/listing");
+const middleware = require("../services/middleware");
+const { isLoggedIn, isAdmin } = middleware;
 
-// compare listing route
-router.get("/compare", function (req, res) {
-    let compareIds = req.session.compare || [];
+// submit route
+router.get("/submit", isLoggedIn, function (req, res) {
+    res.render("listing/submit", { page: "submit" });
+});
 
-    compareIds = compareIds.map(id => {
-        return mongoose.Types.ObjectId(id);
-    });
+// submit post route
+router.post("/submit", isLoggedIn, function (req, res) {
+    let newListing = dbEntry.createSubmitEntryResidential(req.user, req.body);
 
-    Listing.find({ _id: { $in: compareIds } }, function (err, foundListings) {
+    Listing.create(newListing, function (err, newlyCreated) {
         if (err) {
             console.log(err);
-            res.redirect("/error");
+            res.status(400).send();
         } else {
-            res.render("listing/compare", { listings: foundListings, page: "compare-listing" });
+            //redirect back to listings page
+            console.log(newlyCreated);
+            res.status(200).send({ id: newlyCreated._id });
         }
     });
 });
-// add to compare
-router.post("/compare", function (req, res) {
-    if (!req.body.id) {
-        res.status(404).send();
-        return;
-    }
-    try {
-        if (!req.session.hasOwnProperty("compare")) {
-            req.session.compare = [];
-        }
-        let index = req.session.compare.indexOf(req.body.id);
-        if (index === -1) {
-            req.session.compare.push(req.body.id);
-            req.session.save();
-            res.status(200).send();
-        } else {
-            res.status(409).send();
-        }
-    }
-    catch (err) {
-        console.log(err);
-        res.status(400).send();
-    }
-});
-// delete all from compare
-router.delete("/compare", function (req, res) {
-    req.session.compare = [];
-    req.session.save();
-    res.status(200).send();
 
-});
-// delete one from compare
-router.delete("/compare/:id", function (req, res) {
-    if (!req.session.hasOwnProperty("compare")) {
-        res.status(404).send();
-    } else {
-        let index = req.session.compare.indexOf(req.params.id);
-        if (index > -1) {
-            req.session.compare.splice(index, 1);
-        }
-        req.session.save();
-        res.status(200).send();
-    }
-});
+// submit media info post route
+router.post("/submitMedia", isLoggedIn, function (req, res) {
+    let mediaInfo = dbEntry.createSubmitEntryMedia(req.body);
 
-// favourites listing route
-router.get("/favourite", function (req, res) {
-    let favouriteIds = req.session.favourite || [];
-
-    favouriteIds = favouriteIds.map(id => {
-        return mongoose.Types.ObjectId(id);
-    });
-
-    Listing.find({ _id: { $in: favouriteIds } }, function (err, foundListings) {
+    Listing.findByIdAndUpdate(req.body.listingId, { $set: { media: mediaInfo } }, function (err, newlyCreated) {
         if (err) {
             console.log(err);
-            res.redirect("/error");
+            res.status(400).send();
         } else {
-            res.render("listing/favourite", { listings: foundListings, page: "favourite-listing" });
+            //redirect back to listings page
+            console.log(newlyCreated);
+            res.status(200).send({ id: newlyCreated._id });
         }
     });
-});
-// add to favourite
-router.post("/favourite", function (req, res) {
-    if (!req.body.id) {
-        res.status(404).send();
-        return;
-    }
-    try {
-        if (!req.session.hasOwnProperty("favourite")) {
-            req.session.favourite = [];
-        }
-        let index = req.session.favourite.indexOf(req.body.id);
-        if (index === -1) {
-            req.session.favourite.push(req.body.id);
-            req.session.save();
-            res.status(200).send();
-        } else {
-            res.status(409).send();
-        }
-    }
-    catch (err) {
-        console.log(err);
-        res.status(400).send();
-    }
-});
-// delete all from favourite
-router.delete("/favourite", function (req, res) {
-    req.session.favourite = [];
-    req.session.save();
-    res.status(200).send();
-
-});
-// delete one from favourite
-router.delete("/favourite/:id", function (req, res) {
-    if (!req.session.hasOwnProperty("favourite")) {
-        res.status(404).send();
-    } else {
-        let index = req.session.favourite.indexOf(req.params.id);
-        if (index > -1) {
-            req.session.favourite.splice(index, 1);
-        }
-        req.session.save();
-        res.status(200).send();
-    }
 });
 
 // search route
@@ -168,6 +83,35 @@ router.get("/:id", function (req, res) {
             res.redirect("/error");
         } else {
             res.render("listing/show", { listing: foundListing, page: "single-listing" });
+        }
+    });
+});
+
+// get edit route
+router.get("/:id/edit", isLoggedIn, function (req, res) {
+    Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
+        if (err) {
+            console.log(err);
+            // flash
+            res.redirect("back");
+        } else {
+            res.render("listing/edit", { listing: foundListing, page: "edit-listing" });
+        }
+    });
+});
+
+// put edit route
+router.put("/:id", isLoggedIn, function (req, res) {
+    let newData = dbEntry.createCompleteResidentialEntry(req.user, req.body);
+
+    Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedListing) {
+        if (err) {
+            console.log(err);
+			req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            req.flash("success", "Successfully Updated!");
+			res.redirect("/account/my-properties");
         }
     });
 });

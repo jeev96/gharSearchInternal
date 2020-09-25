@@ -358,6 +358,14 @@ a {
 /* MDC override
 /**************************************************************/
 
+.mdc-data-table__cell {
+	overflow: visible;
+}
+
+.mdc-data-table__header-cell {
+	overflow: visible;
+}
+
 .mdc-button, .mdc-form-field, .mdc-chip, .mdc-drawer .mdc-list-item, .mdc-tab, .mdc-list, .mdc-data-table__header-cell, .mdc-data-table__content, .mdc-data-table__cell {
 	font-family: inherit;
 	letter-spacing: 0;

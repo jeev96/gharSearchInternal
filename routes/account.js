@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
 const dbEntry = require("../services/dbEntry");
 const Listing = require("../models/listing");
+const Lead = require("../models/lead");
 const User = require("../models/user");
-let utils = require("../services/utils");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
@@ -96,26 +95,6 @@ router.get("/profile", isLoggedIn, function (req, res) {
     res.render("account/profile", { page: "profile" });
 });
 
-// submit route
-router.get("/submit", isLoggedIn, function (req, res) {
-    res.render("account/submit", { page: "submit" });
-});
-
-// submit post route
-router.post("/submit", isLoggedIn, function (req, res) {
-    let newListing = utils.createSubmitEntryResidential(req.user, req.body);
-
-	Listing.create(newListing, function (err, newlyCreated) {
-		if (err) {
-			console.log(err);
-		} else {
-			//redirect back to listings page
-			console.log(newlyCreated);
-			res.redirect("/listings");
-		}
-	});
-});
-
 // profile route
 router.get("/my-properties", isLoggedIn, function (req, res) {
     Listing.find({ "author.id": req.user._id }).exec((err, foundListings) => {
@@ -125,6 +104,19 @@ router.get("/my-properties", isLoggedIn, function (req, res) {
         } else {
             console.log("Listings Found: " + foundListings.length);
             res.render("account/my-properties", { listings: foundListings, page: "my-properties" });
+        }
+    });
+});
+
+// lead route
+router.get("/leads", isLoggedIn, isAdmin, function (req, res) {
+    Lead.find({}).exec((err, foundLeads) => {
+        if (err) {
+            console.log(err);
+            res.render("account/leads", { leads: [], page: "leads" });
+        } else {
+            console.log("Leads Found: " + foundLeads.length);
+            res.render("account/leads", { leads: foundLeads, page: "leads" });
         }
     });
 });

@@ -21,5 +21,11 @@ module.exports = {
         COMMERCIAL_SPACE: "COMMERCIAL SPACE",
         AGRICULTURAL_LAND: "AGRICULTURAL LAND",
         OTHER: "OTHER",
+    },
+    status: {
+        PENDING: "PENDING",
+        LIVE: "LIVE",
+        DELETED: "DELETED",
+        SOLD: "SOLD"
     }
 }

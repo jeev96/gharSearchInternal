@@ -1,6 +1,12 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const listingType = require("../constants/listingType");
 
-var listingSchema = new mongoose.Schema({
+let listingSchema = new mongoose.Schema({
+    status: {
+        type: String,
+        required: true,
+        default: listingType.status.PENDING
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -74,7 +80,6 @@ var listingSchema = new mongoose.Schema({
     media: {
         images: {
             type: [String],
-            default: ["https://d27p8o2qkwv41j.cloudfront.net/wp-content/uploads/2016/07/shutterstock_262923179-e1500871070126.jpg"]
         },
         videos: [{
             name: { type: String },
@@ -146,7 +151,6 @@ var listingSchema = new mongoose.Schema({
         firmName: String,
         type: {
             type: String,
-            enum: ["DEALER", "OWNER"]
         },
         phone: [String]
     }

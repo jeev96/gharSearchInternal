@@ -333,7 +333,7 @@
                     </div>
                     <div class="mdc-card p-3 mt-3 row between-xs middle-xs">
                         <span>ID:<span class="fw-500 mx-2">1</span></span>
-                        <span>Published:<span class="fw-500 mx-2">12 August, 2012</span></span>
+                        <span>Published:<span class="fw-500 mx-2"><%= listing.createdAt %></span></span>
                         <span>Last Update:<span class="fw-500 mx-2">20 May, 2019</span></span>
                         <span>Views:<span class="fw-500 mx-2">322</span></span>
                     </div>
@@ -463,10 +463,11 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="listing_id" value="<%= listing._id %>">
+                                <input type="hidden" name="listingName" value="<%= listing.location.project %>">
                                 <div class="row around-xs middle-xs p-2 mb-3">
                                     <button class="mdc-button mdc-button--raised bg-accent" type="submit">
                                         <span class="mdc-button__ripple"></span>
-                                        <span class="mdc-button__label">Send email</span>
+                                        <span class="mdc-button__label">Submit</span>
                                     </button>
                                 </div>
                                 <p id="lead-success" class="primary-color d-none"></p>

@@ -279,7 +279,7 @@
                                 </li>
                                 <li role="separator" class="mdc-list-divider m-0"></li>
                                 <li>
-                                    <a href="/account/submit" class="mdc-list-item" role="menuitem">
+                                    <a href="/listing/submit" class="mdc-list-item" role="menuitem">
                                         <i class="material-icons mat-icon-sm text-muted">add_circle</i>
                                         <span class="mdc-list-item__text px-3">Submit Property</span>
                                     </a>
@@ -325,7 +325,7 @@
                                 </li>
                                 <% } %>
                                 <li>
-                                    <a href="/listing/favourite" class="mdc-list-item" role="menuitem">
+                                    <a href="/listingOperation/favourite" class="mdc-list-item" role="menuitem">
                                         <i class="material-icons mat-icon-sm text-muted">favorite_border</i>
                                         <span class="mdc-list-item__text px-3">Favorites
                                             <span id="favourite-header"
@@ -334,7 +334,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/listing/compare" class="mdc-list-item" role="menuitem">
+                                    <a href="/listingOperation/compare" class="mdc-list-item" role="menuitem">
                                         <i class="material-icons mat-icon-sm text-muted">compare_arrows</i>
                                         <span class="mdc-list-item__text px-3">Compare
                                             <span id="compare-header" class="badge primary"><%= compare.length %></span>
@@ -435,21 +435,21 @@
                     </div>
                 </div>
                 <div class="row middle-xs">
-                    <a href="/listing/favourite" class="mdc-icon-button material-icons d-none d-lg-flex d-xl-flex"
+                    <a href="/listingOperation/favourite" class="mdc-icon-button material-icons d-none d-lg-flex d-xl-flex"
                         title="Favorites">favorite_border<i id="favourite-menubar"
                             class="badge-menubar warn"><%= favourite.length %></i>
                     </a>
-                    <a href="/listing/compare"
+                    <a href="/listingOperation/compare"
                         class="mdc-icon-button material-icons d-none d-lg-flex d-xl-flex mr-3 ml-2"
                         title="Compare list">compare_arrows<i id="compare-menubar"
                             class="badge-menubar primary"><%= compare.length %></i>
                     </a>
-                    <a href="/account/submit"
+                    <a href="/listing/submit"
                         class="mdc-fab mdc-fab--mini primary d-sm-none d-md-none d-lg-none d-xl-none">
                         <span class="mdc-fab__ripple"></span>
                         <span class="mdc-fab__icon material-icons">add</span>
                     </a>
-                    <a href="/account/submit"
+                    <a href="/listing/submit"
                         class="mdc-button mdc-button--raised d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex">
                         <span class="mdc-button__ripple"></span>
                         <span class="mdc-button__label">submit property</span>
