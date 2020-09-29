@@ -52,21 +52,14 @@
                                             </span>
                                             <span class="mdc-tab__ripple"></span>
                                         </button>
-                                        <button class="mdc-tab mdc-tab" tabindex="0">
-                                            <span class="mdc-tab__content">
-                                                <span class="mdc-tab__text-label">Confirmation</span>
-                                            </span>
-                                            <span class="mdc-tab-indicator mdc-tab-indicator">
-                                                <span
-                                                    class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                            </span>
-                                            <span class="mdc-tab__ripple"></span>
-                                        </button>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <form action="/listing/<%= listing._id %>?_method=PUT" method="POST" id="listing-edit">
+                        <form action="/listing/<%= listing._id %>?_method=PUT" method="POST" id="listing-edit-form">
+                            <input id="upload-listing-id" type="hidden" name="listingId" value="<%= listing._id %>">
+                            <input type="hidden" name="createdAt" value="<%= moment(listing.createdAt).valueOf() %>">
                             <div class="tab-content tab-content--active">
                                 <div id="sp-basic-form" class="row">
                                     <div class="col-xs-12 p-3">
@@ -1131,7 +1124,6 @@
                                     <div class="steps">
                                         <% if(listing.media.plans) {
                                             listing.media.plans.forEach((plan, index) => { %>
-                                        <input type="hidden" name="planImages" value="<%= plan.image %>">
                                         <div class="step-section">
                                             <div class="row middle-xs">
                                                 <div class="col-xs-1 text-center fw-500">
@@ -1142,7 +1134,7 @@
                                                         <div class="col-xs-12 col-sm-5 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planName" value="<%= plan.name %>"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1156,7 +1148,7 @@
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planDescription"
                                                                     value="<%= plan.description %>"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1170,7 +1162,7 @@
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planArea" value="<%= plan.area %>"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1184,7 +1176,7 @@
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planRooms" value="<%= plan.rooms %>"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1197,7 +1189,7 @@
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planBaths" value="<%= plan.baths %>"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1207,9 +1199,25 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-xs-12 col-sm-6 p-2">
+                                                            <div class="mdc-text-field mdc-text-field--outlined">
+                                                                <input name="planImages" type="text" minlength="1" value="<%= plan.image %>"
+                                                                    class="mdc-text-field__input" autocomplete="off"
+                                                                    placeholder="Upload Image to populate" required>
+                                                                <div class="mdc-notched-outline">
+                                                                    <div class="mdc-notched-outline__leading"></div>
+                                                                    <div class="mdc-notched-outline__notch">
+                                                                        <label class="mdc-floating-label">Plan
+                                                                            Image</label>
+                                                                    </div>
+                                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-xs-12 mt-2">
                                                             <label class="text-muted">Image</label>
-                                                            <div id="plan-image-1" class="dropzone needsclick">
+                                                            <div id="plan-image-<%= index + 1 %>"
+                                                                class="dropzone needsclick">
                                                                 <div class="dz-message needsclick text-muted">
                                                                     Drop file here or click to upload.
                                                                 </div>
@@ -1217,7 +1225,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-1 text-center">
+                                                <div id="remove-step-<%= index + 1 %>" class="col-xs-1 text-center">
                                                     <button
                                                         class="mdc-icon-button material-icons warn-color remove-step"
                                                         type="button">cancel</button>
@@ -1235,7 +1243,7 @@
                                                 <div class="row"> 
                                                     <div class="col-xs-12 col-sm-5 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planName" class="mdc-text-field__input">
+                                                            <input name="planName" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1247,7 +1255,7 @@
                                                     </div> 
                                                     <div class="col-xs-12 col-sm-7 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planDescription" class="mdc-text-field__input">
+                                                            <input name="planDescription" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1259,7 +1267,7 @@
                                                     </div> 
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planArea" class="mdc-text-field__input">
+                                                            <input name="planArea" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1271,7 +1279,7 @@
                                                     </div>  
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planRooms" class="mdc-text-field__input">
+                                                            <input name="planRooms" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1283,7 +1291,7 @@
                                                     </div>  
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planBaths" class="mdc-text-field__input">
+                                                            <input name="planBaths" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1292,7 +1300,20 @@
                                                                 <div class="mdc-notched-outline__trailing"></div>
                                                             </div>
                                                         </div> 
-                                                    </div> 
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 p-2">
+                                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                                            <input name="planImages" type="text" autocomplete="off"
+                                                                class="mdc-text-field__input" placeholder="Upload Image to populate" required>
+                                                            <div class="mdc-notched-outline">
+                                                                <div class="mdc-notched-outline__leading"></div>
+                                                                <div class="mdc-notched-outline__notch">
+                                                                    <label class="mdc-floating-label">Plan Image</label>
+                                                                </div>
+                                                                <div class="mdc-notched-outline__trailing"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-xs-12 mt-2">  
                                                         <label class="text-muted">Image</label> 
                                                         <div id="plan-image" class="dropzone needsclick">
@@ -1319,32 +1340,9 @@
                                     <button class="mdc-button mdc-button--raised next-tab" type="submit">
                                         <span class="mdc-button__ripple"></span>
                                         <span class="mdc-button__label">Submit</span>
-                                        <i class="material-icons mdc-button__icon">navigate_next</i>
                                     </button>
                                 </div>
                         </form>
-                    </div>
-                    <div class="tab-content">
-                        <div class="column center-xs middle-xs pt-5 text-center">
-                            <button class="mdc-fab primary">
-                                <span class="mdc-fab__ripple"></span>
-                                <span class="mdc-fab__icon material-icons mat-icon-lg">check</span>
-                            </button>
-                            <h2 class="mt-3 uppercase">Congratulation!</h2>
-                            <h2 class="my-3">Your property <span class="primary-color">"Property Name"</span> has
-                                been submitted</h2>
-                            <p class="text-muted fw-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Sed tempus dolor ante, ut luctus mi faucibus a. Ut eu tincidunt neque. Proin
-                                porttitor id ligula id placerat. Integer nec nulla varius, dapibus libero quis,
-                                semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus interdum
-                                euismod.</p>
-                        </div>
-                        <div class="row center-xs middle-xs py-3">
-                            <button class="mdc-button mdc-button--raised bg-accent" type="button">
-                                <span class="mdc-button__ripple"></span>
-                                <span class="mdc-button__label">Return to submit new property</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div id="dropzone-preview-template" class="d-none plan-image-template">

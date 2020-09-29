@@ -16,6 +16,9 @@ function resetDefaults() {
     page = DEFAULT_PAGE;
 }
 
+let snackbarElement = document.getElementById('snackbar');
+const snackbar = mdc.snackbar.MDCSnackbar.attachTo(snackbarElement);
+
 jQuery(document).ready(function () {
     onPageLoad()
 });
@@ -438,6 +441,14 @@ function onPageLoad() {
         });
     });
 
+    $("#listing-edit-form").submit(function (event) {
+        let extraValues = $("#listing-edit-form li.mdc-list-item--selected");
+        for (let i = 0; i < extraValues.length; i++) {
+            let inputHtml = `<input type="hidden" name="${$(extraValues[i]).parent().attr("name")}" value="${$(extraValues[i]).data("value")}" />`
+            $("#listing-edit-form").append(inputHtml);
+        }
+    });
+
     $("#listing-media-form").submit(function (event) {
         const formData = getFilterFormData("#listing-media-form");
         console.log(formData);
@@ -754,52 +765,6 @@ function onPageLoad() {
         initAddToCompare();
     }
 
-    function initAddToFavorites() {
-        const add_favorites_snackbar = mdc.snackbar.MDCSnackbar.attachTo(favorites_snackbar);
-        $('.add-to-favorite').on('click', function () {
-            $.post('/listingOperation/favourite', { id: $(this).data("value") }, function (data, status, xhr) {
-                console.log('Request sent!');
-            })
-                .done(function () {
-                    console.log('Request done!');
-                    let count = Number($('#favourite-header').text());
-                    $('#favourite-header').text(count + 1);
-                    $('#favourite-menubar').text(count + 1);
-                    add_favorites_snackbar.open();
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    console.log('failed, ' + ex);
-                    if (jqxhr.status === 409)
-                        add_conflict_snackbar.open();
-                    else
-                        add_error_snackbar.open();
-                });
-        });
-    }
-
-    function initAddToCompare() {
-        const add_compare_snackbar = mdc.snackbar.MDCSnackbar.attachTo(compare_snackbar);
-        $('.add-to-compare').on('click', function () {
-            $.post('/listingOperation/compare', { id: $(this).data("value") }, function (data, status, xhr) {
-                console.log('Request sent!');
-            })
-                .done(function () {
-                    console.log('Request done!');
-                    let count = Number($('#compare-header').text());
-                    $('#compare-header').text(count + 1);
-                    $('#compare-menubar').text(count + 1);
-                    add_compare_snackbar.open();
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    console.log('failed, ' + ex);
-                    if (jqxhr.status === 409)
-                        add_conflict_snackbar.open();
-                    else
-                        add_error_snackbar.open();
-                });
-        });
-    }
-
     $(".subscribe-input").on("focus", function () {
         $(this).parent().addClass("active");
     }).blur(function () {
@@ -951,9 +916,11 @@ function onPageLoad() {
         });
         dynamic_steps.find('#plan-image').attr("id", "plan-image-" + i);
         initDropzonePlanImage(i);
+        preventImageNameKeypress();
         event.preventDefault();
     });
     $(document).on("click", ".remove-step", function (event) {
+        $(this).parent().parent().find(".dz-remove")[0].click();
         $(this).closest(".step-section").remove();
     });
 
@@ -962,18 +929,57 @@ function onPageLoad() {
         $('.time').text(formatAMPM(new Date));
     }, 1000);
 
-    var conflict_snackbar = document.getElementById('conflict-snackbar');
-    const add_conflict_snackbar = mdc.snackbar.MDCSnackbar.attachTo(conflict_snackbar);
+    function initAddToFavorites() {
+        $('.add-to-favorite').on('click', function () {
+            $.post('/listingOperation/favourite', { id: $(this).data("value") }, function (data, status, xhr) {
+                console.log('Request sent!');
+            })
+                .done(function () {
+                    console.log('Request done!');
+                    let count = Number($('#favourite-header').text());
+                    $('#favourite-header').text(count + 1);
+                    $('#favourite-menubar').text(count + 1);
+                    showSnackbar('The property has been added to favorites.');
+                })
+                .fail(function (jqxhr, settings, ex) {
+                    console.log('failed, ' + ex);
+                    if (jqxhr.status === 409) {
+                        showSnackbar('The property has already been added.');
+                    } else {
+                        showSnackbar('Some error occurred.');
+                    }
+                });
+        });
+    }
 
-    var error_snackbar = document.getElementById('error-snackbar');
-    const add_error_snackbar = mdc.snackbar.MDCSnackbar.attachTo(error_snackbar);
+    function initAddToCompare() {
+        $('.add-to-compare').on('click', function () {
+            $.post('/listingOperation/compare', { id: $(this).data("value") }, function (data, status, xhr) {
+                console.log('Request sent!');
+            })
+                .done(function () {
+                    console.log('Request done!');
+                    let count = Number($('#compare-header').text());
+                    $('#compare-header').text(count + 1);
+                    $('#compare-menubar').text(count + 1);
+                    showSnackbar('The property has been added to compare.');
+                })
+                .fail(function (jqxhr, settings, ex) {
+                    console.log('failed, ' + ex);
+                    if (jqxhr.status === 409) {
+                        showSnackbar('The property has already been added.');
+                    } else {
+                        showSnackbar('Some error occurred.');
+                    }
+                });
+        });
+    }
 
 
-    var favorites_snackbar = document.getElementById('favorites-snackbar');
-    if (favorites_snackbar) {
-        initAddToFavorites();
-    };
+    initAddToFavorites();
+    initAddToCompare();
 
+    // favourite methods
     $('.favourite-remove').on('click', function () {
         let button = $(this);
         $.ajax({
@@ -1002,11 +1008,7 @@ function onPageLoad() {
 
     });
 
-    var compare_snackbar = document.getElementById('compare-snackbar');
-    if (compare_snackbar) {
-        initAddToCompare();
-    };
-
+    // compare methods
     $('.compare-remove').on('click', function () {
         let button = $(this);
         $.ajax({
@@ -1033,6 +1035,18 @@ function onPageLoad() {
             }
         });
     });
+
+    function preventImageNameKeypress() {
+        $('input[name=planImages]').keydown(function (e) {
+            e.preventDefault();
+        });
+    }
+    preventImageNameKeypress()
+}
+
+function showSnackbar(message) {
+    snackbar.labelText = message;
+    snackbar.open();
 }
 
 function formatAMPM(date) {
@@ -1415,7 +1429,7 @@ function initDropzonePropertyImages() {
         let property_images = new Dropzone('#property-images', {
             autoProcessQueue: false,
             addRemoveLinks: true,
-            uploadMultiple: true,
+            uploadMultiple: false,
             acceptedFiles: 'image/*',
             url: '/media/upload',
             paramName: 'image',
@@ -1432,6 +1446,30 @@ function initDropzonePropertyImages() {
                                     <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z" />
                                 </svg>`,
             filesizeBase: 1000,
+            init: function () {
+                if ($('input[name=images]').length === 0) {
+                    return;
+                }
+                let images = $('input[name=images]');
+                for (let i = 0; i < images.length; i++) {
+                    let image = $(images[i]).val();
+                    let file = {
+                        processing: true,
+                        accepted: true,
+                        name: image,
+                        size: 5000000,
+                        type: 'image/jpeg',
+                        status: Dropzone.SUCCESS
+                    }
+                    let thumbnailUrl = `/uploads/${$("input[name=listingId]").val()}/images/raw/${image}`
+                    this.files.push(file);
+                    this.emit("addedfile", file);
+                    this.emit("thumbnail", file, thumbnailUrl);
+                    this.emit("processing", file);
+                    this.emit("success", file, { status: "success" }, false);
+                    this.emit("complete", file);
+                }
+            },
             thumbnail: function (file, dataUrl) {
                 if (file.previewElement) {
                     file.previewElement.classList.remove("dz-file-preview");
@@ -1443,17 +1481,27 @@ function initDropzonePropertyImages() {
                     }
                     setTimeout(function () { file.previewElement.classList.add("dz-image-preview"); }, 1);
                 }
-            }
+            },
         });
 
-        property_images.on('sendingmultiple', function (file, xhr, formData) {
+        property_images.on('sending', function (file, xhr, formData) {
             formData.append('listingId', $("#upload-listing-id").val());
-            file.forEach((image) => {
-                $("#listing-media-form").append(`<input type="hidden" name="images" value="${image.name}" />`)
-            })
+        });
+
+        property_images.on("complete", function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+            $("#listing-media-form").append(`<input type="hidden" name="images" value="${file.name}" />`);
+            $("#listing-edit-form").append(`<input type="hidden" name="images" value="${file.name}" />`);
+            showSnackbar("Image Uploaded. Please submit Changes.")
         });
 
         property_images.on('removedfile', function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+
             $('input[type=hidden]').each(function () {
                 if ($(this).val() === file.name) {
                     $(this).remove();
@@ -1461,12 +1509,16 @@ function initDropzonePropertyImages() {
             });
             let data = {
                 listingId: $("#upload-listing-id").val(),
-                // listingId: "testEntry",
                 imageName: file.name
             }
             $.post("/media/removeListingImage", data, function (result, status) {
-                console.log("Data: " + data + "\nStatus: " + status);
-            });
+            }).done((response) => {
+                console.log("Message: " + response);
+                showSnackbar("Image Deleted. Please submit Changes.")
+            }).fail((error) => {
+                console.log("Error: " + error.responseText);
+                showSnackbar("Could not delete Image")
+            })
         });
 
         $('#upload-images-button').on('click', function () {
@@ -1499,6 +1551,29 @@ function initDropzonePlanImage(index) {
                                     <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z" />
                                 </svg>`,
             filesizeBase: 1000,
+            init: function () {
+                let images = $("input[name=planImages]");
+                if (images.length === 0 || $(images[index - 1]).val() === "") {
+                    return;
+                }
+                let image = $(images[index - 1]).val();
+                let file = {
+                    processing: true,
+                    accepted: true,
+                    name: image,
+                    size: 5000000,
+                    type: 'image/jpeg',
+                    status: Dropzone.SUCCESS
+                }
+                let thumbnailUrl = `/uploads/${$("input[name=listingId]").val()}/plans/${image}`
+                this.files.push(file);
+                this.emit("addedfile", file);
+                this.emit("thumbnail", file, thumbnailUrl);
+                this.emit("processing", file);
+                this.emit("success", file, { status: "success" }, false);
+                this.emit("complete", file);
+
+            },
             thumbnail: function (file, dataUrl) {
                 if (file.previewElement) {
                     file.previewElement.classList.remove("dz-file-preview");
@@ -1510,29 +1585,40 @@ function initDropzonePlanImage(index) {
                     }
                     setTimeout(function () { file.previewElement.classList.add("dz-image-preview"); }, 1);
                 }
-            }
+            },
         });
 
         plan_image.on('sending', function (file, xhr, formData) {
             formData.append('listingId', $("#upload-listing-id").val());
-            $("#listing-media-form").append(`<input type="hidden" name="planImages" value="${file.name}" />`)
+        });
+
+        plan_image.on("complete", function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+            $("#plan-image-" + index).parent().parent().find("input[name=planImages]").val(file.name);
+            showSnackbar("Image Uploaded. Please submit Changes.")
         });
 
         plan_image.on('removedfile', function (file) {
-            $('input[type=hidden]').each(function () {
-                if ($(this).val() === file.name) {
-                    $(this).remove();
-                }
-            });
+            if (file.status !== "success") {
+                return;
+            }
+
+            $("#plan-image-" + index).parent().parent().find("input[name=planImages]").val("");
             let data = {
                 listingId: $("#upload-listing-id").val(),
                 imageName: file.name
             }
             $.post("/media/removePlanImage", data, function (result, status) {
-                console.log("Data: " + data + "\nStatus: " + status);
-            });
+            }).done((response) => {
+                console.log("Message: " + response);
+                showSnackbar("Image Deleted. Please submit Changes.")
+            }).fail((error) => {
+                console.log("Error: " + error.responseText);
+                showSnackbar("Some error occurred.")
+            })
         });
-
     }
 }
 
@@ -1607,6 +1693,8 @@ function initUserProfileImage() {
 if (typeof Dropzone !== "undefined") {
     Dropzone.autoDiscover = false;
     initDropzonePropertyImages();
-    initDropzonePlanImage(1);
+    for (let i = 0; i < $('input[name=planName]').length; i++) {
+        initDropzonePlanImage(i + 1);
+    }
     initUserProfileImage();
 } 

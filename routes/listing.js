@@ -103,6 +103,7 @@ router.get("/:id/edit", isLoggedIn, function (req, res) {
 // put edit route
 router.put("/:id", isLoggedIn, function (req, res) {
     let newData = dbEntry.createCompleteResidentialEntry(req.user, req.body);
+    console.log(newData);
 
     Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedListing) {
         if (err) {
@@ -111,7 +112,7 @@ router.put("/:id", isLoggedIn, function (req, res) {
             res.redirect("back");
         } else {
             req.flash("success", "Successfully Updated!");
-			res.redirect("/account/my-properties");
+            res.redirect("/account/my-properties");
         }
     });
 });

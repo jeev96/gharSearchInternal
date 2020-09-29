@@ -23,6 +23,11 @@ let listingSchema = new mongoose.Schema({
         default: Date.now,
         required: true
     },
+    lastModified: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
     listingInfo: {
         title: {
             type: String,

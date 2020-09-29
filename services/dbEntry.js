@@ -10,6 +10,9 @@ function getListingTags(data) {
 }
 
 function getVideoEntry(names, links) {
+    if (!names) {
+        return null;
+    }
     let videos = [];
     if (typeof names === "string" && names !== "") {
         videos.push({
@@ -28,6 +31,9 @@ function getVideoEntry(names, links) {
 }
 
 function getAddFeaturesEntry(names, values) {
+    if (!names) {
+        return null;
+    }
     let addFeatures = [];
     if (typeof names === "string" && names !== "") {
         addFeatures.push({
@@ -46,6 +52,9 @@ function getAddFeaturesEntry(names, values) {
 }
 
 function getPlanEntry(names, descriptions, areas, rooms, baths, images) {
+    if (!names) {
+        return null;
+    }
     let plans = [];
     if (typeof names === "string" && names !== "") {
         plans.push({
@@ -90,7 +99,7 @@ module.exports = {
         let status = listingType.status.PENDING;
         let listingInfo = {
             title: data.title,
-            description: data.description,
+            description: data.description.trim(),
             tags: getListingTags(data)
         }
         let ownership = data.ownership;
@@ -138,7 +147,8 @@ module.exports = {
         let newListing = {
             status: status,
             author: author,
-            createdAt: Date.now(),
+            createdAt: data.createdAt ? data.createdAt : Date.now(),
+            lastModified: Date.now(),
             listingInfo: listingInfo,
             propertyType: propertyType,
             location: location,
@@ -160,7 +170,7 @@ module.exports = {
             plans: plans
         }
     },
-    createCompleteResidentialEntry: function(user, data) {
+    createCompleteResidentialEntry: function (user, data) {
         let newData = this.createSubmitEntryResidential(user, data);
         newData["media"] = this.createSubmitEntryMedia(data);
 
