@@ -1517,7 +1517,7 @@ function initDropzonePropertyImages() {
                 showSnackbar("Image Deleted. Please submit Changes.")
             }).fail((error) => {
                 console.log("Error: " + error.responseText);
-                showSnackbar("Could not delete Image")
+                showSnackbar(error.responseText)
             })
         });
 
@@ -1552,11 +1552,11 @@ function initDropzonePlanImage(index) {
                                 </svg>`,
             filesizeBase: 1000,
             init: function () {
-                let images = $("input[name=planImages]");
-                if (images.length === 0 || $(images[index - 1]).val() === "") {
+                let imageElement = $('#plan-image-' + index).parent().parent().find('input[name=planImages]');
+                if (imageElement.length === 0 || $(imageElement).val() === "") {
                     return;
                 }
-                let image = $(images[index - 1]).val();
+                let image = $(imageElement).val();
                 let file = {
                     processing: true,
                     accepted: true,
@@ -1616,7 +1616,7 @@ function initDropzonePlanImage(index) {
                 showSnackbar("Image Deleted. Please submit Changes.")
             }).fail((error) => {
                 console.log("Error: " + error.responseText);
-                showSnackbar("Some error occurred.")
+                showSnackbar(error.responseText)
             })
         });
     }
