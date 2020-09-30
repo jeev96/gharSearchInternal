@@ -19,7 +19,7 @@ router.post("/submit", isLoggedIn, function (req, res) {
     Listing.create(newListing, function (err, newlyCreated) {
         if (err) {
             console.log(err);
-            res.status(400).send();
+            res.status(400).send(err);
         } else {
             //redirect back to listings page
             console.log(newlyCreated);
@@ -35,11 +35,13 @@ router.post("/submitMedia", isLoggedIn, function (req, res) {
     Listing.findByIdAndUpdate(req.body.listingId, { $set: { media: mediaInfo } }, function (err, newlyCreated) {
         if (err) {
             console.log(err);
-            res.status(400).send();
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
             //redirect back to listings page
             console.log(newlyCreated);
-            res.status(200).send({ id: newlyCreated._id });
+            req.flash("success", "Successfully Created!");
+            res.redirect("/account/my-properties");
         }
     });
 });
@@ -80,7 +82,8 @@ router.get("/:id", function (req, res) {
     Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
         if (err) {
             console.log(err);
-            res.redirect("/error");
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
             res.render("listing/show", { listing: foundListing, page: "single-listing" });
         }
@@ -92,7 +95,7 @@ router.get("/:id/edit", isLoggedIn, function (req, res) {
     Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
         if (err) {
             console.log(err);
-            // flash
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             res.render("listing/edit", { listing: foundListing, page: "edit-listing" });
@@ -108,7 +111,7 @@ router.put("/:id", isLoggedIn, function (req, res) {
     Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedListing) {
         if (err) {
             console.log(err);
-			req.flash("error", err.message);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             req.flash("success", "Successfully Updated!");

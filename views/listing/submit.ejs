@@ -52,814 +52,807 @@
                                             </span>
                                             <span class="mdc-tab__ripple"></span>
                                         </button>
-                                        <button class="mdc-tab mdc-tab" tabindex="0">
-                                            <span class="mdc-tab__content">
-                                                <span class="mdc-tab__text-label">Confirmation</span>
-                                            </span>
-                                            <span class="mdc-tab-indicator mdc-tab-indicator">
-                                                <span
-                                                    class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                            </span>
-                                            <span class="mdc-tab__ripple"></span>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <form action="javascript:void(0);" id="listing-submit">
-                            <div class="tab-content tab-content--active">
-                                <div id="sp-basic-form" class="row">
-                                    <div class="col-xs-12 p-3">
-                                        <h1 class="fw-500 text-center">Basic</h1>
-                                    </div>
-                                    <div class="col-xs-12 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="title" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Title</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
+                        <!-- <form action="javascript:void(0);" id="listing-submit"> -->
+                        <div class="tab-content tab-content--active">
+                            <form action="javascript:void(0);" id="listing-submit-form-1" class="row">
+                                <div class="col-xs-12 p-3">
+                                    <h1 class="fw-500 text-center">Basic</h1>
+                                </div>
+                                <div class="col-xs-12 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="title" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Title</label>
                                             </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-12 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
-                                            <textarea name="description" class="mdc-text-field__input"
-                                                rows="5"></textarea>
-                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Description</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="price" type="number" class="mdc-text-field__input" required>
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Price</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">Ownership</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="ownership">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="FREEHOLD">FREEHOLD</li>
-                                                    <li class="mdc-list-item" data-value="LEASEHOLD">LEASEHOLD</li>
-                                                    <li class="mdc-list-item" data-value="CO-OPERATIVE-SOCIETY">
-                                                        CO-OPERATIVE-SOCIETY</li>
-                                                    <li class="mdc-list-item" data-value="GPA">GPA</li>
-                                                    <li class="mdc-list-item" data-value="FREEHOLD-AND-REG">
-                                                        FREEHOLD-AND-REG
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="TRANSFER">TRANSFER</li>
-                                                    <li class="mdc-list-item" data-value="LOI">LOI</li>
-                                                    <li class="mdc-list-item" data-value="POA">POA</li>
-                                                    <li class="mdc-list-item" data-value="REGISTRY-DONE">REGISTRY-DONE
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="NDC">NDC</li>
-                                                    <li class="mdc-list-item" data-value="CD-CASE">CD-CASE</li>
-                                                    <li class="mdc-list-item" data-value="OUSTEE">OUSTEE</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden" name="type" value="RESIDENTIAL">
-
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">Property Type</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="subtype">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="FLAT">FLAT</li>
-                                                    <li class="mdc-list-item" data-value="INDEPENDENT HOUSE">INDEPENDENT
-                                                        HOUSE</li>
-                                                    <li class="mdc-list-item" data-value="PLOT">PLOT</li>
-                                                    <li class="mdc-list-item" data-value="FLOOR">FLOOR</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">Property Status</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="tag">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="FOR SALE">FOR SALE</li>
-                                                    <li class="mdc-list-item" data-value="FOR RENT">FOR RENT</li>
-                                                    <li class="mdc-list-item" data-value="SOLD">SOLD</li>
-                                                    <li class="mdc-list-item" data-value="NEW">NEW</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 py-3 row middle-xs">
-                                        <div class="mdc-switch">
-                                            <div class="mdc-switch__track"></div>
-                                            <div class="mdc-switch__thumb-underlay">
-                                                <div class="mdc-switch__thumb">
-                                                    <input name="isFeatured" type="checkbox" id="featured"
-                                                        class="mdc-switch__native-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label for="featured" class="mx-2">Featured</label>
-                                    </div>
-                                    <div class="col-xs-6 py-3 row middle-xs">
-                                        <div class="mdc-switch">
-                                            <div class="mdc-switch__track"></div>
-                                            <div class="mdc-switch__thumb-underlay">
-                                                <div class="mdc-switch__thumb">
-                                                    <input name="isHotOffer" type="checkbox" id="featured"
-                                                        class="mdc-switch__native-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label for="featured" class="mx-2">Hot Offer</label>
-                                    </div>
-                                    <div class="col-xs-12 p-3">
-                                        <h1 class="fw-500 text-center">Dealer Info</h1>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="dealerName" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Dealer Name</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="firmName" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Firm Name</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">Dealer Type</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="dealerType">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="OWNER">OWNER</li>
-                                                    <li class="mdc-list-item" data-value="DEALER">DEALER</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="dealerPhone" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Phone 1</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="dealerPhone" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Phone 2</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 p-2 mt-3 end-xs">
-                                        <button class="mdc-button mdc-button--raised next-tab" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Next</span>
-                                            <i class="material-icons mdc-button__icon">navigate_next</i>
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-content">
-                                <div id="sp-address-form" class="row">
-                                    <div class="col-xs-12 p-3">
-                                        <h1 class="fw-500 text-center">Address</h1>
-                                    </div>
-                                    <div class="col-xs-12 p-2">
-                                        <div
-                                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
-                                            <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
-                                            <input id="maps-search" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Location</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
+                                <div class="col-xs-12 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
+                                        <textarea name="description" class="mdc-text-field__input" rows="5"
+                                            required></textarea>
+                                        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Description</label>
                                             </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div
-                                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
-                                            <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
-                                            <input readonly id="latitude" name="lat" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Latitude</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div
-                                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
-                                            <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
-                                            <input readonly id="longitude" name="lon" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Longitude</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 p-2">
-                                        <div id="contact-map"></div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">City</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="city">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="CHANDIGARH">CHANDIGARH</li>
-                                                    <li class="mdc-list-item" data-value="MOHALI">MOHALI</li>
-                                                    <li class="mdc-list-item" data-value="PANCHKULA">PANCHKULA</li>
-                                                    <li class="mdc-list-item" data-value="ZIRAKPUR">ZIRAKPUR</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input required name="sector" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Sector/Area</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input required name="project" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Project</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="block" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Block</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="tower" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Tower</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="floor" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Floor</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="propertyNumber" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Property Number</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="preferentialLocationCharges" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Preferential Location
-                                                        Charges</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 p-2 mt-3 row between-xs">
-                                        <button class="mdc-button mdc-button--raised prev-tab" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <i class="material-icons mdc-button__icon">navigate_before</i>
-                                            <span class="mdc-button__label">Back</span>
-                                        </button>
-                                        <button class="mdc-button mdc-button--raised next-tab" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Next</span>
-                                            <i class="material-icons mdc-button__icon">navigate_next</i>
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-content">
-                                <div id="sp-additional-form" class="row">
-                                    <div class="col-xs-12 p-3">
-                                        <h1 class="fw-500 text-center">Property Info</h1>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="price" type="number" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Price</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="bedrooms" class="mdc-text-field__input">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
                                             <div class="mdc-notched-outline">
                                                 <div class="mdc-notched-outline__leading"></div>
                                                 <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Bedrooms</label>
+                                                    <label class="mdc-floating-label">Ownership*</label>
                                                 </div>
                                                 <div class="mdc-notched-outline__trailing"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="bathrooms" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Bathrooms</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="ownership">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="FREEHOLD">FREEHOLD</li>
+                                                <li class="mdc-list-item" data-value="LEASEHOLD">LEASEHOLD</li>
+                                                <li class="mdc-list-item" data-value="CO-OPERATIVE-SOCIETY">
+                                                    CO-OPERATIVE-SOCIETY</li>
+                                                <li class="mdc-list-item" data-value="GPA">GPA</li>
+                                                <li class="mdc-list-item" data-value="FREEHOLD-AND-REG">
+                                                    FREEHOLD-AND-REG
+                                                </li>
+                                                <li class="mdc-list-item" data-value="TRANSFER">TRANSFER</li>
+                                                <li class="mdc-list-item" data-value="LOI">LOI</li>
+                                                <li class="mdc-list-item" data-value="POA">POA</li>
+                                                <li class="mdc-list-item" data-value="REGISTRY-DONE">REGISTRY-DONE
+                                                </li>
+                                                <li class="mdc-list-item" data-value="NDC">NDC</li>
+                                                <li class="mdc-list-item" data-value="CD-CASE">CD-CASE</li>
+                                                <li class="mdc-list-item" data-value="OUSTEE">OUSTEE</li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="balconies" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Balconies</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="reservedParking" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Garages</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">BHK</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="bhk">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="1RK">1RK</li>
-                                                    <li class="mdc-list-item" data-value="1BHK">1BHK</li>
-                                                    <li class="mdc-list-item" data-value="2BHK">WEST</li>
-                                                    <li class="mdc-list-item" data-value="3BHK">3BHK</li>
-                                                    <li class="mdc-list-item" data-value="4BHK">4BHK</li>
-                                                    <li class="mdc-list-item" data-value="4BHK+">4BHK+</li>
-                                                    <li class="mdc-list-item" data-value="OTHER">OTHER</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-select mdc-select--outlined">
-                                            <div class="mdc-select__anchor">
-                                                <i class="mdc-select__dropdown-icon"></i>
-                                                <div class="mdc-select__selected-text"></div>
-                                                <div class="mdc-notched-outline">
-                                                    <div class="mdc-notched-outline__leading"></div>
-                                                    <div class="mdc-notched-outline__notch">
-                                                        <label class="mdc-floating-label">Facing</label>
-                                                    </div>
-                                                    <div class="mdc-notched-outline__trailing"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-                                                <ul class="mdc-list" name="facing">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
-                                                    </li>
-                                                    <li class="mdc-list-item" data-value="EAST">EAST</li>
-                                                    <li class="mdc-list-item" data-value="WEST">WEST</li>
-                                                    <li class="mdc-list-item" data-value="NORTH">NORTH</li>
-                                                    <li class="mdc-list-item" data-value="SOUTH">SOUTH</li>
-                                                    <li class="mdc-list-item" data-value="NORTH-EAST">NORTH-EAST</li>
-                                                    <li class="mdc-list-item" data-value="NORTH-WEST">NORTH-WEST</li>
-                                                    <li class="mdc-list-item" data-value="SOUTH-EAST">SOUTH-EAST</li>
-                                                    <li class="mdc-list-item" data-value="SOUTH-WEST">SOUTH-WEST</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="flooring" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Flooring</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="otherRooms" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Other Rooms</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="waterSource" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Water Source</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input required type="number" name="area" class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Area (ft²)</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 p-2">
-                                        <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input required type="number" name="builtYear"
-                                                class="mdc-text-field__input">
-                                            <div class="mdc-notched-outline">
-                                                <div class="mdc-notched-outline__leading"></div>
-                                                <div class="mdc-notched-outline__notch">
-                                                    <label class="mdc-floating-label">Year Built</label>
-                                                </div>
-                                                <div class="mdc-notched-outline__trailing"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 mb-2 p-0">
-                                        <p class="uppercase m-2 fw-500">Amenities</p>
-                                        <div class="features">
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Air Conditioning" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="air-conditioning" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="air-conditioning">Air Conditioning</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Barbeque" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="barbeque" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="barbeque">Barbeque</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Dryer" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="dryer" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="dryer">Dryer</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Microwave" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="microwave" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="microwave">Microwave</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Refrigerator" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="refrigerator" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="refrigerator">Refrigerator</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="TV Cable" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="tv-cable" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="tv-cable">TV Cable</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Sauna" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="sauna" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="sauna">Sauna</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="WiFi" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="wi-fi" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="wi-fi">WiFi</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Fireplace" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="fireplace" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="fireplace">Fireplace</label>
-                                            </div>
-                                            <div class="mdc-form-field">
-                                                <div class="mdc-checkbox">
-                                                    <input name="amenities" value="Gym" type="checkbox"
-                                                        class="mdc-checkbox__native-control" id="gym" />
-                                                    <div class="mdc-checkbox__background">
-                                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                            <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                                        </svg>
-                                                        <div class="mdc-checkbox__mixedmark"></div>
-                                                    </div>
-                                                    <div class="mdc-checkbox__ripple"></div>
-                                                </div>
-                                                <label for="gym">Gym</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
 
-                                    <div class="col-xs-12 p-0 dynamic-steps">
-                                        <div class="row middle-xs my-3 px-2">
-                                            <p class="mb-0"><span class="uppercase fw-500">Additional features</span></p>
-                                            <button class="mdc-icon-button material-icons primary-color add-step"
-                                                type="button" data-template-name="features">add_circle</button>
+                                <input type="hidden" name="type" value="RESIDENTIAL">
+
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Property Type*</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
                                         </div>
-                                        <div class="steps">
-                                            <div class="step-section">
-                                                <div class="row middle-xs">
-                                                    <div class="col-xs-1 text-center fw-500">
-                                                        <span class="num">1</span>
-                                                    </div>
-                                                    <div class="col-xs-10">
-                                                        <div class="row">
-                                                            <div class="col-xs-12 col-sm-5 p-2">
-                                                                <div class="mdc-text-field mdc-text-field--outlined">
-                                                                    <input name="addFeatureName"
-                                                                        class="mdc-text-field__input">
-                                                                    <div class="mdc-notched-outline">
-                                                                        <div class="mdc-notched-outline__leading"></div>
-                                                                        <div class="mdc-notched-outline__notch">
-                                                                            <label class="mdc-floating-label">Name</label>
-                                                                        </div>
-                                                                        <div class="mdc-notched-outline__trailing"></div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="subtype">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="FLAT">FLAT</li>
+                                                <li class="mdc-list-item" data-value="INDEPENDENT HOUSE">INDEPENDENT
+                                                    HOUSE</li>
+                                                <li class="mdc-list-item" data-value="PLOT">PLOT</li>
+                                                <li class="mdc-list-item" data-value="FLOOR">FLOOR</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Property Status*</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="tag">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="FOR SALE">FOR SALE</li>
+                                                <li class="mdc-list-item" data-value="FOR RENT">FOR RENT</li>
+                                                <li class="mdc-list-item" data-value="SOLD">SOLD</li>
+                                                <li class="mdc-list-item" data-value="NEW">NEW</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 py-3 row middle-xs">
+                                    <div class="mdc-switch">
+                                        <div class="mdc-switch__track"></div>
+                                        <div class="mdc-switch__thumb-underlay">
+                                            <div class="mdc-switch__thumb">
+                                                <input name="isFeatured" type="checkbox"
+                                                    class="mdc-switch__native-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for="featured" class="mx-2">Featured</label>
+                                </div>
+                                <div class="col-xs-6 py-3 row middle-xs">
+                                    <div class="mdc-switch">
+                                        <div class="mdc-switch__track"></div>
+                                        <div class="mdc-switch__thumb-underlay">
+                                            <div class="mdc-switch__thumb">
+                                                <input name="isHotOffer" type="checkbox"
+                                                    class="mdc-switch__native-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for="featured" class="mx-2">Hot Offer</label>
+                                </div>
+                                <div class="col-xs-12 p-3">
+                                    <h1 class="fw-500 text-center">Dealer Info</h1>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="dealerName" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Dealer Name</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="firmName" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Firm Name</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Dealer Type*</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="dealerType">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="OWNER">OWNER</li>
+                                                <li class="mdc-list-item" data-value="DEALER">DEALER</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="dealerPhone" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Phone 1</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="dealerPhone" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Phone 2</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 p-2 mt-3 end-xs">
+                                    <button class="mdc-button mdc-button--raised next-tab" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <span class="mdc-button__label">Next</span>
+                                        <i class="material-icons mdc-button__icon">navigate_next</i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-content">
+                            <form action="javascript:void(0);" id="listing-submit-form-2" class="row">
+                                <div class="col-xs-12 p-3">
+                                    <h1 class="fw-500 text-center">Address</h1>
+                                </div>
+                                <div class="col-xs-12 p-2">
+                                    <div
+                                        class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                                        <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
+                                        <input id="maps-search" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Location</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div
+                                        class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                                        <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
+                                        <input readonly id="latitude" name="lat" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Latitude</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div
+                                        class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                                        <i class="material-icons mdc-text-field__icon text-muted">location_on</i>
+                                        <input readonly id="longitude" name="lon" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Longitude</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 p-2">
+                                    <div id="contact-map"></div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">City*</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="city">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="CHANDIGARH">CHANDIGARH</li>
+                                                <li class="mdc-list-item" data-value="MOHALI">MOHALI</li>
+                                                <li class="mdc-list-item" data-value="PANCHKULA">PANCHKULA</li>
+                                                <li class="mdc-list-item" data-value="ZIRAKPUR">ZIRAKPUR</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input required name="sector" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Sector/Area</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input required name="project" class="mdc-text-field__input" required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Project</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="block" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Block</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="tower" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Tower</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="floor" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Floor</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="propertyNumber" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Property Number</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="preferentialLocationCharges" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Preferential Location
+                                                    Charges</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 p-2 mt-3 row between-xs">
+                                    <button class="mdc-button mdc-button--raised prev-tab" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <i class="material-icons mdc-button__icon">navigate_before</i>
+                                        <span class="mdc-button__label">Back</span>
+                                    </button>
+                                    <button class="mdc-button mdc-button--raised next-tab" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <span class="mdc-button__label">Next</span>
+                                        <i class="material-icons mdc-button__icon">navigate_next</i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-content">
+                            <form action="javascript:void(0);" id="listing-submit-form-3" class="row">
+                                <div class="col-xs-12 p-3">
+                                    <h1 class="fw-500 text-center">Property Info</h1>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="bedrooms" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Bedrooms</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="bathrooms" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Bathrooms</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="balconies" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Balconies</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="reservedParking" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Garages</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">BHK*</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="bhk">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="1RK">1RK</li>
+                                                <li class="mdc-list-item" data-value="1BHK">1BHK</li>
+                                                <li class="mdc-list-item" data-value="2BHK">WEST</li>
+                                                <li class="mdc-list-item" data-value="3BHK">3BHK</li>
+                                                <li class="mdc-list-item" data-value="4BHK">4BHK</li>
+                                                <li class="mdc-list-item" data-value="4BHK+">4BHK+</li>
+                                                <li class="mdc-list-item" data-value="OTHER">OTHER</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-select mdc-select--outlined">
+                                        <div class="mdc-select__anchor">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <div class="mdc-select__selected-text"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Facing</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                                            <ul class="mdc-list" name="facing">
+                                                <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                </li>
+                                                <li class="mdc-list-item" data-value="EAST">EAST</li>
+                                                <li class="mdc-list-item" data-value="WEST">WEST</li>
+                                                <li class="mdc-list-item" data-value="NORTH">NORTH</li>
+                                                <li class="mdc-list-item" data-value="SOUTH">SOUTH</li>
+                                                <li class="mdc-list-item" data-value="NORTH-EAST">NORTH-EAST</li>
+                                                <li class="mdc-list-item" data-value="NORTH-WEST">NORTH-WEST</li>
+                                                <li class="mdc-list-item" data-value="SOUTH-EAST">SOUTH-EAST</li>
+                                                <li class="mdc-list-item" data-value="SOUTH-WEST">SOUTH-WEST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="flooring" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Flooring</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="otherRooms" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Other Rooms</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input name="waterSource" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Water Source</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input required type="number" name="area" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Area (ft²)</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input required type="number" name="builtYear" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Year Built</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 mb-2 p-0">
+                                    <p class="uppercase m-2 fw-500">Amenities</p>
+                                    <div class="features">
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Air Conditioning" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="air-conditioning" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="air-conditioning">Air Conditioning</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Barbeque" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="barbeque" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="barbeque">Barbeque</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Dryer" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="dryer" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="dryer">Dryer</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Microwave" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="microwave" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="microwave">Microwave</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Refrigerator" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="refrigerator" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="refrigerator">Refrigerator</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="TV Cable" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="tv-cable" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="tv-cable">TV Cable</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Sauna" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="sauna" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="sauna">Sauna</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="WiFi" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="wi-fi" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="wi-fi">WiFi</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Fireplace" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="fireplace" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="fireplace">Fireplace</label>
+                                        </div>
+                                        <div class="mdc-form-field">
+                                            <div class="mdc-checkbox">
+                                                <input name="amenities" value="Gym" type="checkbox"
+                                                    class="mdc-checkbox__native-control" id="gym" />
+                                                <div class="mdc-checkbox__background">
+                                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                    </svg>
+                                                    <div class="mdc-checkbox__mixedmark"></div>
+                                                </div>
+                                                <div class="mdc-checkbox__ripple"></div>
+                                            </div>
+                                            <label for="gym">Gym</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 p-0 dynamic-steps">
+                                    <div class="row middle-xs my-3 px-2">
+                                        <p class="mb-0"><span class="uppercase fw-500">Additional
+                                                features</span><span class="text-muted mx-3">(Remove if not
+                                                required)</span></p>
+                                        <button class="mdc-icon-button material-icons primary-color add-step"
+                                            type="button" data-template-name="features">add_circle</button>
+                                    </div>
+                                    <div class="steps">
+                                        <div class="step-section">
+                                            <div class="row middle-xs">
+                                                <div class="col-xs-1 text-center fw-500">
+                                                    <span class="num">1</span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-5 p-2">
+                                                            <div class="mdc-text-field mdc-text-field--outlined">
+                                                                <input name="addFeatureName"
+                                                                    class="mdc-text-field__input" required>
+                                                                <div class="mdc-notched-outline">
+                                                                    <div class="mdc-notched-outline__leading"></div>
+                                                                    <div class="mdc-notched-outline__notch">
+                                                                        <label class="mdc-floating-label">Name</label>
+                                                                    </div>
+                                                                    <div class="mdc-notched-outline__trailing">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xs-12 col-sm-7 p-2">
-                                                                <div class="mdc-text-field mdc-text-field--outlined">
-                                                                    <input name="addFeatureValue"
-                                                                        class="mdc-text-field__input">
-                                                                    <div class="mdc-notched-outline">
-                                                                        <div class="mdc-notched-outline__leading"></div>
-                                                                        <div class="mdc-notched-outline__notch">
-                                                                            <label class="mdc-floating-label">Value</label>
-                                                                        </div>
-                                                                        <div class="mdc-notched-outline__trailing"></div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-7 p-2">
+                                                            <div class="mdc-text-field mdc-text-field--outlined">
+                                                                <input name="addFeatureValue"
+                                                                    class="mdc-text-field__input" required>
+                                                                <div class="mdc-notched-outline">
+                                                                    <div class="mdc-notched-outline__leading"></div>
+                                                                    <div class="mdc-notched-outline__notch">
+                                                                        <label class="mdc-floating-label">Value</label>
+                                                                    </div>
+                                                                    <div class="mdc-notched-outline__trailing">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-1 text-center">
-                                                        <button
-                                                            class="mdc-icon-button material-icons warn-color remove-step"
-                                                            type="button">cancel</button>
-                                                    </div>
+                                                </div>
+                                                <div class="col-xs-1 text-center">
+                                                    <button
+                                                        class="mdc-icon-button material-icons warn-color remove-step"
+                                                        type="button">cancel</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <script id="features" type="text/template">
+                                </div>
+                                <script id="features" type="text/template">
                                         <div class="step-section">
                                             <div class="row middle-xs">
                                                 <div class="col-xs-1 text-center fw-500 number"></div>
@@ -867,7 +860,7 @@
                                                     <div class="row"> 
                                                         <div class="col-xs-12 col-sm-5 p-2">  
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="addFeatureName" class="mdc-text-field__input">
+                                                                <input name="addFeatureName" class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -879,7 +872,7 @@
                                                         </div> 
                                                         <div class="col-xs-12 col-sm-7 p-2">  
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="addFeatureValue" class="mdc-text-field__input">
+                                                                <input name="addFeatureValue" class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -897,27 +890,40 @@
                                             </div> 
                                         </div>
                                     </script>
-                                    <div class="col-xs-12 p-2 mt-3 row between-xs">
-                                        <button class="mdc-button mdc-button--raised prev-tab" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <i class="material-icons mdc-button__icon">navigate_before</i>
-                                            <span class="mdc-button__label">Back</span>
-                                        </button>
-                                        <button class="mdc-button mdc-button--raised next-tab" type="submit">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Next</span>
-                                            <i class="material-icons mdc-button__icon">navigate_next</i>
-                                        </button>
-                                    </div>
+                                <div class="col-xs-12 p-2 mt-3 row between-xs">
+                                    <button class="mdc-button mdc-button--raised prev-tab" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <i class="material-icons mdc-button__icon">navigate_before</i>
+                                        <span class="mdc-button__label">Back</span>
+                                    </button>
+                                    <button id="listing-submit-button" class="mdc-button mdc-button--raised next-tab"
+                                        type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <span class="mdc-button__label">Save and Next</span>
+                                        <i class="material-icons mdc-button__icon">navigate_next</i>
+                                    </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                        <!-- </form> -->
                         <div class="tab-content">
-                            <form action="javascript:void(0);" id="listing-media-form" enctype="multipart/form-data" class="row">
+                            <form action="/listing/submitMedia" method="POST" id="listing-submit-form-4" class="row">
                                 <div class="col-xs-12 p-3">
                                     <h1 class="fw-500 text-center">Media</h1>
                                 </div>
-                                <input id="upload-listing-id" type="hidden" name="listingId" value="">
+                                <div class="col-xs-12 col-sm-12 p-2">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <input id="upload-listing-id" name="listingId" class="mdc-text-field__input"
+                                            required>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                                <label class="mdc-floating-label">Listing Id</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xs-12 mt-2">
                                     <label class="text-muted">GALLERY (max 8 images)</label>
                                     <div id="property-images" class="dropzone needsclick">
@@ -926,7 +932,8 @@
                                         </div>
                                     </div>
                                     <div class="center-xs mt-2">
-                                        <button id="upload-images-button" class="mdc-button mdc-button--raised" type="button">
+                                        <button id="upload-images-button" class="mdc-button mdc-button--raised"
+                                            type="button">
                                             <span class="mdc-button__ripple"></span>
                                             <span class="mdc-button__label">Upload</span>
                                         </button>
@@ -936,7 +943,7 @@
                                 <div class="col-xs-12 p-0 dynamic-steps">
                                     <div class="row middle-xs my-3 px-2">
                                         <p class="mb-0"><span class="uppercase fw-500">Videos</span><span
-                                                class="text-muted mx-3">(video link to .mp4)</span></p>
+                                                class="text-muted mx-3">(Remove if not required)</span></p>
                                         <button class="mdc-icon-button material-icons primary-color add-step"
                                             type="button" data-template-name="videos">add_circle</button>
                                     </div>
@@ -950,7 +957,8 @@
                                                     <div class="row">
                                                         <div class="col-xs-12 col-sm-5 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="videoName" class="mdc-text-field__input">
+                                                                <input name="videoName" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -963,7 +971,8 @@
                                                         <div class="col-xs-12 col-sm-7 p-2">
                                                             <div name="videoLink"
                                                                 class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="videoLink" class="mdc-text-field__input">
+                                                                <input name="videoLink" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -992,7 +1001,7 @@
                                                 <div class="row"> 
                                                     <div class="col-xs-12 col-sm-5 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="videoName" class="mdc-text-field__input">
+                                                            <input name="videoName" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1004,7 +1013,7 @@
                                                     </div> 
                                                     <div class="col-xs-12 col-sm-7 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="videoLink" class="mdc-text-field__input">
+                                                            <input name="videoLink" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1024,7 +1033,8 @@
                                 </script>
                                 <div class="col-xs-12 p-0 dynamic-steps">
                                     <div class="row middle-xs my-3 px-2">
-                                        <p class="mb-0"><span class="uppercase fw-500">Plans</span></p>
+                                        <p class="mb-0"><span class="uppercase fw-500">Plans</span><span
+                                                class="text-muted mx-3">(Remove if not required)</span></p>
                                         <button class="mdc-icon-button material-icons primary-color add-step"
                                             type="button" data-template-name="plans">add_circle</button>
                                     </div>
@@ -1038,7 +1048,8 @@
                                                     <div class="row">
                                                         <div class="col-xs-12 col-sm-5 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="planName" class="mdc-text-field__input">
+                                                                <input name="planName" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1051,7 +1062,7 @@
                                                         <div class="col-xs-12 col-sm-7 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
                                                                 <input name="planDescription"
-                                                                    class="mdc-text-field__input">
+                                                                    class="mdc-text-field__input" required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1064,7 +1075,8 @@
                                                         </div>
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="planArea" class="mdc-text-field__input">
+                                                                <input name="planArea" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1077,7 +1089,8 @@
                                                         </div>
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="planRooms" class="mdc-text-field__input">
+                                                                <input name="planRooms" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
@@ -1089,11 +1102,27 @@
                                                         </div>
                                                         <div class="col-xs-12 col-sm-4 p-2">
                                                             <div class="mdc-text-field mdc-text-field--outlined">
-                                                                <input name="planBaths" class="mdc-text-field__input">
+                                                                <input name="planBaths" class="mdc-text-field__input"
+                                                                    required>
                                                                 <div class="mdc-notched-outline">
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
                                                                         <label class="mdc-floating-label">Baths</label>
+                                                                    </div>
+                                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-6 p-2">
+                                                            <div class="mdc-text-field mdc-text-field--outlined">
+                                                                <input name="planImages" type="text" autocomplete="off"
+                                                                    class="mdc-text-field__input"
+                                                                    placeholder="Upload Image to populate" required>
+                                                                <div class="mdc-notched-outline">
+                                                                    <div class="mdc-notched-outline__leading"></div>
+                                                                    <div class="mdc-notched-outline__notch">
+                                                                        <label class="mdc-floating-label">Plan
+                                                                            Image</label>
                                                                     </div>
                                                                     <div class="mdc-notched-outline__trailing"></div>
                                                                 </div>
@@ -1126,7 +1155,7 @@
                                                 <div class="row"> 
                                                     <div class="col-xs-12 col-sm-5 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planName" class="mdc-text-field__input">
+                                                            <input name="planName" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1138,7 +1167,7 @@
                                                     </div> 
                                                     <div class="col-xs-12 col-sm-7 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planDescription" class="mdc-text-field__input">
+                                                            <input name="planDescription" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1150,7 +1179,7 @@
                                                     </div> 
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planArea" class="mdc-text-field__input">
+                                                            <input name="planArea" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1162,7 +1191,7 @@
                                                     </div>  
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planRooms" class="mdc-text-field__input">
+                                                            <input name="planRooms" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1174,7 +1203,7 @@
                                                     </div>  
                                                     <div class="col-xs-12 col-sm-4 p-2">  
                                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                                            <input name="planBaths" class="mdc-text-field__input">
+                                                            <input name="planBaths" class="mdc-text-field__input" required>
                                                             <div class="mdc-notched-outline">
                                                                 <div class="mdc-notched-outline__leading"></div>
                                                                 <div class="mdc-notched-outline__notch">
@@ -1183,7 +1212,20 @@
                                                                 <div class="mdc-notched-outline__trailing"></div>
                                                             </div>
                                                         </div> 
-                                                    </div> 
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 p-2">
+                                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                                            <input name="planImages" type="text" autocomplete="off"
+                                                                class="mdc-text-field__input" placeholder="Upload Image to populate" required>
+                                                            <div class="mdc-notched-outline">
+                                                                <div class="mdc-notched-outline__leading"></div>
+                                                                <div class="mdc-notched-outline__notch">
+                                                                    <label class="mdc-floating-label">Plan Image</label>
+                                                                </div>
+                                                                <div class="mdc-notched-outline__trailing"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-xs-12 mt-2">  
                                                         <label class="text-muted">Image</label> 
                                                         <div id="plan-image" class="dropzone needsclick">
@@ -1214,28 +1256,6 @@
                                     </button>
                                 </div>
                             </form>
-                        </div>
-                        <div class="tab-content">
-                            <div class="column center-xs middle-xs pt-5 text-center">
-                                <button class="mdc-fab primary">
-                                    <span class="mdc-fab__ripple"></span>
-                                    <span class="mdc-fab__icon material-icons mat-icon-lg">check</span>
-                                </button>
-                                <h2 class="mt-3 uppercase">Congratulation!</h2>
-                                <h2 class="my-3">Your property <span class="primary-color">"Property Name"</span> has
-                                    been submitted</h2>
-                                <p class="text-muted fw-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Sed tempus dolor ante, ut luctus mi faucibus a. Ut eu tincidunt neque. Proin
-                                    porttitor id ligula id placerat. Integer nec nulla varius, dapibus libero quis,
-                                    semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus interdum
-                                    euismod.</p>
-                            </div>
-                            <div class="row center-xs middle-xs py-3">
-                                <button class="mdc-button mdc-button--raised bg-accent" type="button">
-                                    <span class="mdc-button__ripple"></span>
-                                    <span class="mdc-button__label">Return to submit new property</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                     <div id="dropzone-preview-template" class="d-none plan-image-template">

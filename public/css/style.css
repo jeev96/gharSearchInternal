@@ -180,6 +180,16 @@ a {
 	background: transparent !important;
 }
 
+.bg-primary {
+	background: var(--mdc-theme-primary) !important;
+}
+.bg-success {
+	background: #4CAF50 !important;
+}
+.bg-error {
+	background:  #c62828 !important;
+}
+
 .text-muted {
 	color: rgba(0, 0, 0, 0.54) !important;
 	color: var(--mdc-theme-text-secondary-on-background) !important;

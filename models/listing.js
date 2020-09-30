@@ -85,26 +85,34 @@ let listingSchema = new mongoose.Schema({
     media: {
         images: {
             type: [String],
+            default: []
         },
-        videos: [{
-            name: { type: String },
-            link: { type: String }
-        }],
-        plans: [{
-            name: { type: String },
-            description: { type: String },
-            area: { type: String },
-            rooms: { type: String },
-            baths: { type: String },
-            image: { type: String },
-        }]
+        videos: {
+            type: [{
+                name: { type: String },
+                link: { type: String }
+            }],
+            default: []
+        },
+        plans: {
+            type: [{
+                name: { type: String },
+                description: { type: String },
+                area: { type: String },
+                rooms: { type: String },
+                baths: { type: String },
+                image: { type: String },
+            }],
+            default: []
+        },
     },
     propertyInfo: {
         builtYear: {
             type: Number
         },
         amenities: {
-            type: [String]
+            type: [String],
+            default: []
         },
         area: {
             type: Number,
@@ -138,10 +146,13 @@ let listingSchema = new mongoose.Schema({
             type: String,
             default: "MUNICIPAL-CORPORATION"
         },
-        additionalFeatures: [{
-            name: { type: String },
-            value: { type: String }
-        }]
+        additionalFeatures: {
+            type: [{
+                name: { type: String },
+                value: { type: String }
+            }],
+            default: []
+        },
     },
     ownership: {
         type: String,
@@ -157,7 +168,10 @@ let listingSchema = new mongoose.Schema({
         type: {
             type: String,
         },
-        phone: [String]
+        phone: {
+            type: [String],
+            default: []
+        }
     }
 });
 

@@ -3,7 +3,6 @@ const router = express.Router();
 const utils = require("../services/utils");
 const fileManager = require("../services/fileManager");
 const middleware = require("../services/middleware");
-const { response } = require("express");
 const { isLoggedIn, isAdmin } = middleware;
 
 // upload images route

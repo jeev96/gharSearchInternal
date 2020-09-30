@@ -426,19 +426,31 @@ function onPageLoad() {
         }
     });
 
-    $("#listing-submit").submit(function (event) {
-        event.preventDefault();
-        const formData = getFilterFormData("#listing-submit");
-        $.post("/listing/submit", formData, function (data, status) {
-            if (status === "success") {
-                console.log("Success");
-                $("#upload-listing-id").val(data.id)
-                return;
-            } else {
-                console.log("Faliure");
-                return;
-            }
+    $("#listing-submit-button").on("click", function (event) {
+        if (!checkFormValidity($(this).parent().parent().parent())) {
+            return;
+        }
+        const formData1 = getFilterFormData("#listing-submit-form-1");
+        const formData2 = getFilterFormData("#listing-submit-form-2");
+        const formData3 = getFilterFormData("#listing-submit-form-3");
+        const formData = formData1.concat(formData2, formData3);
+        $.post("/listing/submit", formData, function () {
+            console.log("Request sent...");
+        }).done((data) => {
+            console.log("Success");
+            $("#upload-listing-id").val(data.id);
+            showSnackbar("Listing Saved.");
+            return;
+        }).fail((error) => {
+            console.log(error.responseText);
+            showSnackbar("There was an error. Please check your fields and Retry");
+            return;
         });
+    });
+
+    $("#listing-submit-form-4").submit(function (event) {
+        const formData = getFilterFormData("#listing-submit-form-4");
+        console.log(formData);
     });
 
     $("#listing-edit-form").submit(function (event) {
@@ -447,20 +459,6 @@ function onPageLoad() {
             let inputHtml = `<input type="hidden" name="${$(extraValues[i]).parent().attr("name")}" value="${$(extraValues[i]).data("value")}" />`
             $("#listing-edit-form").append(inputHtml);
         }
-    });
-
-    $("#listing-media-form").submit(function (event) {
-        const formData = getFilterFormData("#listing-media-form");
-        console.log(formData);
-        $.post("/listing/submitMedia", formData, function (data, status) {
-            if (status === "success") {
-                console.log("Success");
-                return;
-            } else {
-                console.log("Faliure");
-                return;
-            }
-        });
     });
 
     $("#filters").submit(function (event) {
@@ -522,6 +520,14 @@ function onPageLoad() {
             }
         }
         return formData;
+    }
+
+    function checkFormValidity(tab) {
+        let form = $(tab).find("form")
+        if (form.length > 0) {
+            return $(form).get(0).reportValidity();
+        }
+        return true;
     }
 
     function tagSearch(key) {
@@ -875,9 +881,9 @@ function onPageLoad() {
                 const prev = content.querySelector('.prev-tab');
                 if (next) {
                     next.addEventListener('click', () => {
-                        // if ($("#listing-submit").isValid()) {
-                        // }
-                        tabBar.activateTab(index + 1);
+                        if (checkFormValidity(content)) {
+                            tabBar.activateTab(index + 1);
+                        }
                     });
                 }
                 if (prev) {
@@ -920,7 +926,9 @@ function onPageLoad() {
         event.preventDefault();
     });
     $(document).on("click", ".remove-step", function (event) {
-        $(this).parent().parent().find(".dz-remove")[0].click();
+        if ($(this).parent().parent().find(".dz-remove")[0]) {
+            $(this).parent().parent().find(".dz-remove")[0].click();
+        }
         $(this).closest(".step-section").remove();
     });
 
@@ -974,7 +982,6 @@ function onPageLoad() {
                 });
         });
     }
-
 
     initAddToFavorites();
     initAddToCompare();
@@ -1041,7 +1048,23 @@ function onPageLoad() {
             e.preventDefault();
         });
     }
-    preventImageNameKeypress()
+    preventImageNameKeypress();
+
+    $('#upload-listing-id').keydown(function (e) {
+        e.preventDefault();
+    });
+
+    let snackbarSuccessElement = document.getElementById('snackbar-success');
+    if (snackbarSuccessElement) {
+        const snackbarSuccess = mdc.snackbar.MDCSnackbar.attachTo(snackbarSuccessElement);
+        snackbarSuccess.open();
+    }
+
+    let snackbarErrorElement = document.getElementById('snackbar-error');
+    if (snackbarErrorElement) {
+        const snackbarError = mdc.snackbar.MDCSnackbar.attachTo(snackbarErrorElement);
+        snackbarError.open();
+    }
 }
 
 function showSnackbar(message) {
@@ -1492,7 +1515,7 @@ function initDropzonePropertyImages() {
             if (file.status !== "success") {
                 return;
             }
-            $("#listing-media-form").append(`<input type="hidden" name="images" value="${file.name}" />`);
+            $("#listing-submit-form-4").append(`<input type="hidden" name="images" value="${file.name}" />`);
             $("#listing-edit-form").append(`<input type="hidden" name="images" value="${file.name}" />`);
             showSnackbar("Image Uploaded. Please submit Changes.")
         });

@@ -130,12 +130,43 @@
             <button type="button" class="mdc-button mdc-snackbar__action">
                 <div class="mdc-button__ripple"></div>
                 <span class="mdc-button__label">
-                    <i class="material-icons warn-color">close</i>
                 </span>
+                <i class="material-icons warn-color">close</i>
             </button>
         </div>
     </div>
 </div>
+<% if(success && success.length > 0) { %>
+<div id="snackbar-success" class="mdc-snackbar">
+    <div class="mdc-snackbar__surface">
+        <div class="mdc-snackbar__label"><%= success %></div>
+        <div class="mdc-snackbar__actions">
+            <button type="button" class="mdc-button mdc-snackbar__action">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">
+                </span>
+                <i class="material-icons warn-color">close</i>
+            </button>
+        </div>
+    </div>
+</div>
+<% } %>
+<% if(error && error.length > 0) { %>
+<div id="snackbar-error" class="mdc-snackbar">
+    <div class="mdc-snackbar__surface bg-error">
+        <div class="mdc-snackbar__label"><%= error %></div>
+        <div class="mdc-snackbar__actions">
+            <button type="button" class="mdc-button mdc-snackbar__action">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">
+                </span>
+                <i class="material-icons warn-color">close</i>
+            </button>
+        </div>
+    </div>
+</div>
+<% } %>
+
 
 <div id="back-to-top"><i class="material-icons">arrow_upward</i></div>
 

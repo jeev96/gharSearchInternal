@@ -11,7 +11,7 @@ function getListingTags(data) {
 
 function getVideoEntry(names, links) {
     if (!names) {
-        return null;
+        return [];
     }
     let videos = [];
     if (typeof names === "string" && names !== "") {
@@ -32,7 +32,7 @@ function getVideoEntry(names, links) {
 
 function getAddFeaturesEntry(names, values) {
     if (!names) {
-        return null;
+        return [];
     }
     let addFeatures = [];
     if (typeof names === "string" && names !== "") {
@@ -53,7 +53,7 @@ function getAddFeaturesEntry(names, values) {
 
 function getPlanEntry(names, descriptions, areas, rooms, baths, images) {
     if (!names) {
-        return null;
+        return [];
     }
     let plans = [];
     if (typeof names === "string" && names !== "") {
@@ -99,7 +99,7 @@ module.exports = {
         let status = listingType.status.PENDING;
         let listingInfo = {
             title: data.title,
-            description: data.description.trim(),
+            description: data.description ? data.description.trim() : "",
             tags: getListingTags(data)
         }
         let ownership = data.ownership;
@@ -131,7 +131,7 @@ module.exports = {
             reservedParking: data.reservedParking,
             otherRooms: data.otherRooms,
             builtYear: data.builtYear,
-            amenities: data.amenities,
+            amenities: data.amenities ? data.amenities : [],
             waterSource: data.waterSource,
             facing: data.facing,
             flooring: data.flooring,

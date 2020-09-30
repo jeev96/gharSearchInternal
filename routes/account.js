@@ -17,7 +17,7 @@ router.get("/login", function (req, res) {
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/account/login",
-    failureFlash: true,
+    failureFlash: "Username or Password is incorrect!",
     successFlash: 'Welcome to Ghar Search!'
 }), function (req, res) {
 });
@@ -37,8 +37,10 @@ router.post("/register", function (req, res) {
     User.register(new User(newUser), req.body.password, function (err, user) {
         if (err) {
             console.log(err);
+            req.flash("error", "Some error occurerd.");
             return res.redirect("back");
         }
+        req.flash("success", "User creation Successful!");
         res.status(201).redirect("/");
     });
 });
@@ -46,6 +48,7 @@ router.post("/register", function (req, res) {
 // logout route
 router.get("/logout", function (req, res) {
     req.logout();
+    req.flash("success", "Logout Successful!");
     res.status(204).redirect("/");
 });
 
@@ -77,7 +80,7 @@ router.post("/change-password", function (req, res) {
         } else {
             user.changePassword(req.body.passwordOld, req.body.passwordNew, function (err) {
                 if (err) {
-                    console.log("Error");
+                    console.log(err);
                     req.flash("error", "Your Current password is incorrect.");
                     res.status(400).redirect("back");
                 } else {
@@ -104,6 +107,19 @@ router.get("/my-properties", isLoggedIn, function (req, res) {
         } else {
             console.log("Listings Found: " + foundListings.length);
             res.render("account/my-properties", { listings: foundListings, page: "my-properties" });
+        }
+    });
+});
+
+// profile route
+router.get("/all-properties", isLoggedIn, function (req, res) {
+    Listing.find({}).exec((err, foundListings) => {
+        if (err) {
+            console.log(err);
+            res.render("account/my-properties", { listings: [], page: "all-properties" });
+        } else {
+            console.log("Listings Found: " + foundListings.length);
+            res.render("account/my-properties", { listings: foundListings, page: "all-properties" });
         }
     });
 });
