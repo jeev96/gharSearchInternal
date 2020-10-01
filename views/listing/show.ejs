@@ -48,35 +48,11 @@
                                     <% listing.media.images.forEach(function(image, index) { %>
                                     <div class="swiper-slide">
                                         <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/<%= index + 1 %>-big.jpg"
+                                            data-src="/uploads/<%= listing._id %>/images/large/<%= image %>"
                                             class="slide-item swiper-lazy">
                                         <div class="swiper-lazy-preloader"></div>
                                     </div>
-                                    <% }) %>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/2-big.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/3-big.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/4-big.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/5-big.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
+                                    <% }); %>
                                 </div>
                                 <button class="swiper-button-prev swipe-arrow mdc-fab mdc-fab--mini primary">
                                     <span class="mdc-fab__ripple"></span>
@@ -95,35 +71,11 @@
                                     <% listing.media.images.forEach(function(image, index) { %>
                                     <div class="swiper-slide">
                                         <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/<%= index + 1 %>-small.jpg"
+                                            data-src="/uploads/<%= listing._id %>/images/small/<%= image %>"
                                             class="slide-item swiper-lazy">
                                         <div class="swiper-lazy-preloader"></div>
                                     </div>
-                                    <% }) %>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/2-small.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/3-small.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/4-small.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="/assets/images/others/transparent-bg.png" alt="slide image"
-                                            data-src="/assets/images/props/flat-2/5-small.jpg"
-                                            class="slide-item swiper-lazy">
-                                        <div class="swiper-lazy-preloader"></div>
-                                    </div>
+                                    <% }); %>
                                 </div>
                             </div>
                         </div>
@@ -162,14 +114,6 @@
                                 <span>City:</span>
                                 <span><%= listing.location.city %></span>
                             </div>
-
-                            <!-- <div class="row col-xs-12 col-sm-6 item">
-                                <span>Street:</span>
-                                <div class="row list">
-                                    <span>Astoria Street #1</span>
-                                    <span class="last">Midtown Street #2</span>
-                                </div>
-                            </div> -->
                             <div class="row col-xs-12 col-sm-6 item">
                                 <span>Bedrooms:</span>
                                 <span><%= listing.propertyInfo.bedrooms %></span>
@@ -196,145 +140,115 @@
                         <h2 class="uppercase text-center fw-500 mb-2">Features</h2>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Air Conditioning") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Air Conditioning</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Barbeque") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Barbeque</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Dryer") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Dryer</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Microwave") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Microwave</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Refrigerator") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Refrigerator</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Fireplace") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Fireplace</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("Swimming Pool") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">Swimming Pool</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">check</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("TV Cable") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">TV Cable</span>
                             </div>
                             <div class="col-xs-12 col-sm-4 row middle-xs">
-                                <i class="material-icons mat-icon-sm primary-color">cross</i>
+                                <i
+                                    class="material-icons mat-icon-sm primary-color"><%= listing.propertyInfo.amenities.indexOf("WiFi") > -1 ? "check" : "cross" %></i>
                                 <span class="mx-2">WiFi</span>
                             </div>
                         </div>
                     </div>
+
+                    <% if (listing.propertyInfo.additionalFeatures.length > 0) { %>
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Additional features</h2>
                         <div class="row details">
+                            <% listing.propertyInfo.additionalFeatures.forEach((feature) => { %>
                             <div class="row col-xs-12 col-sm-6 item">
-                                <span>Heat:</span>
-                                <span>Natural Gas</span>
+                                <span><%= feature.name %> :</span>
+                                <span><%= feature.value %> </span>
                             </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Roof:</span>
-                                <span>Composition/Shingle</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Floors:</span>
-                                <span>Wall-to-Wall Carpet</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Water:</span>
-                                <span>District/Public</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Cross Streets:</span>
-                                <span>Orangethorpe-Gilbert</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Windows:</span>
-                                <span>Skylights</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Flat:</span>
-                                <span>5</span>
-                            </div>
-                            <div class="row col-xs-12 col-sm-6 item">
-                                <span>Childroom:</span>
-                                <span>2</span>
-                            </div>
+                            <% }); %>
                         </div>
                     </div>
+                    <% } %>
+
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Description</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, suscipit, numquam
-                            accusantium eligendi veniam dolor placeat earum illo corporis esse nulla facere sunt
-                            assumenda? Perferendis omnis magni quos fugiat explicabo.</p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit laboriosam voluptates
-                            dignissimos? Dolorum sed culpa repellat, itaque quas nostrum, eos qui nemo fugit reiciendis
-                            laboriosam vero magnam nam, dolorem officia.</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus voluptas assumenda ab, quos
-                            sequi rerum. Quos iusto ab alias, exercitationem autem a doloribus non. Vel porro tenetur
-                            omnis ut numquam.</p>
+                        <p><%= listing.listingInfo.description %></p>
                     </div>
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Location</h2>
                         <div id="contact-map"></div>
                     </div>
+
+                    <% if (listing.media.plans.length > 0) { %>
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Plans</h2>
                         <div class="expansion-panel-wrapper">
+                            <% listing.media.plans.forEach(plan => { %>
                             <div class="mdc-card expansion-panel">
                                 <div class="row between-xs middle-xs expansion-panel-header">
-                                    <div class="fw-500">First floor</div>
+                                    <div class="fw-500"><%= plan.name %></div>
                                     <div class="text-muted d-none d-md-flex d-lg-flex d-xl-flex">
-                                        <span>Area: <span class="fw-500">1180 ft²</span></span>
-                                        <span class="mx-3">Rooms: <span class="fw-500">3</span></span>
-                                        <span>Baths: <span class="fw-500">1</span></span>
+                                        <span>Area: <span class="fw-500"><%= plan.area %> ft²</span></span>
+                                        <span class="mx-3">Rooms: <span class="fw-500"><%= plan.rooms %></span></span>
+                                        <span>Baths: <span class="fw-500"><%= plan.baths %></span></span>
                                     </div>
                                 </div>
                                 <div class="expansion-panel-body text-center">
-                                    <img src="/assets/images/others/plan-1.jpg" alt="plan-1" class="mw-100">
-                                    <p>Plan description. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam
-                                        veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur
-                                        impedit dolore.</p>
+                                    <img src="/uploads/<%= listing._id %>/plans/<%= plan.image %>" alt="plan-1" class="mw-100">
+                                    <p><%= plan.description %></p>
                                 </div>
                             </div>
-                            <div class="mdc-card expansion-panel">
-                                <div class="row between-xs middle-xs expansion-panel-header">
-                                    <div class="fw-500">Second floor</div>
-                                    <div class="text-muted d-none d-md-flex d-lg-flex d-xl-flex">
-                                        <span>Area: <span class="fw-500">1200 ft²</span></span>
-                                        <span class="mx-3">Rooms: <span class="fw-500">5</span></span>
-                                        <span>Baths: <span class="fw-500">2</span></span>
-                                    </div>
-                                </div>
-                                <div class="expansion-panel-body text-center">
-                                    <img src="/assets/images/others/plan-2.jpg" alt="plan-2" class="mw-100">
-                                    <p>Plan description. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam
-                                        veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur
-                                        impedit dolore.</p>
-                                </div>
-                            </div>
+                            <% }); %>
                         </div>
                     </div>
+                    <% } %>
+
+                    <% if (listing.media.videos.length > 0) { %>
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Videos</h2>
+                        <% listing.media.videos.forEach(video => { %>
                         <div class="videoWrapper">
-                            <iframe src="https://www.youtube.com/embed/-NInBEdSvp8"></iframe>
+                            <iframe src=<%= video.link %>></iframe>
                         </div>
+                        <% }); %>
                     </div>
+                    <% } %>
+
                     <div class="mdc-card p-3 mt-3 row between-xs middle-xs">
-                        <span>ID:<span class="fw-500 mx-2">1</span></span>
-                        <span>Published:<span class="fw-500 mx-2"><%= listing.createdAt %></span></span>
-                        <span>Last Update:<span class="fw-500 mx-2">20 May, 2019</span></span>
+                        <span>ID:<span class="fw-500 mx-2"><%= listing._id %> </span></span>
+                        <span>Published:<span class="fw-500 mx-2"><%= moment(listing.createdAt).format("ll") %></span></span>
+                        <span>Last Update:<span class="fw-500 mx-2"><%= moment(listing.lastModified).format("ll") %> </span></span>
                         <span>Views:<span class="fw-500 mx-2">322</span></span>
                     </div>
 

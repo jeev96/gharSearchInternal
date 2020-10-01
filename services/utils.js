@@ -61,28 +61,21 @@ module.exports = {
     getListingSubtype: function (data) {
         let subtype = null;
         switch (data) {
-            case "independenthouse": subtype = listingType.subtype.INDEPENDENT_HOUSE;
-                break;
-            case "studioapartment": subtype = listingType.subtype.STUDIO_APARTMENT;
-                break;
-            case "serviceapartment": subtype = listingType.subtype.SERVICE_APARTMENT;
-                break;
-            case "farmhouse": subtype = listingType.subtype.FARM_HOUSE;
-                break;
-            case "commercialshop": subtype = listingType.subtype.COMMERCIAL_SHOP;
-                break;
-            case "commercialplot": subtype = listingType.subtype.COMMERCIAL_PLOT;
-                break;
-            case "commercialsco": subtype = listingType.subtype.COMMERCIAL_SCO;
-                break;
-            case "commercialspace": subtype = listingType.subtype.COMMERCIAL_SPACE;
-                break;
-            case "agriculturalland": subtype = listingType.subtype.AGRICULTURAL_LAND;
-                break;
-            default:
-                subtype = listingType.subtype[data.toUpperCase()]
+            case "independenthouse": subtype = listingType.subtype.INDEPENDENT_HOUSE; break;
+            case "studioapartment": subtype = listingType.subtype.STUDIO_APARTMENT; break;
+            case "serviceapartment": subtype = listingType.subtype.SERVICE_APARTMENT; break;
+            case "farmhouse": subtype = listingType.subtype.FARM_HOUSE; break;
+            case "commercialshop": subtype = listingType.subtype.COMMERCIAL_SHOP; break;
+            case "commercialplot": subtype = listingType.subtype.COMMERCIAL_PLOT; break;
+            case "commercialsco": subtype = listingType.subtype.COMMERCIAL_SCO; break;
+            case "commercialspace": subtype = listingType.subtype.COMMERCIAL_SPACE; break;
+            case "agriculturalland": subtype = listingType.subtype.AGRICULTURAL_LAND; break;
+            default: subtype = listingType.subtype[data.toUpperCase()]
         }
         return subtype;
+    },
+    checkListingStatus(status) {
+        return (status in listingType.status);
     },
     renderListingsEjs: function (data, isListingSearch) {
         if (isListingSearch) {

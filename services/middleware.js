@@ -10,8 +10,8 @@ module.exports = {
 		if (req.user.userType === "ADMIN") {
 			next();
 		} else {
-			req.flash('error', 'This site is now read only.');
+			req.flash('error', 'Need admin access.');
 			res.redirect('back');
 		}
-	}
+	},
 }

@@ -1,64 +1,123 @@
-const fs = require('fs-extra')
+const fs = require('fs-extra');
+const sharp = require('sharp');
+const imageParameters = require("../constants/imageParameters");
+
+function resizeImage(inputLocation, outputLocation, images, imgX, imgY) {
+    return new Promise(function (resolve, reject) {
+        fs.mkdir(outputLocation, { recursive: true }, function (err) {
+            if (err) {
+                console.error("Some error occurred.");
+                return reject(Error("Some error occurred."))
+            }
+            if (!(images && images.length > 0)) {
+                return reject(Error("No Image Uploaded."))
+            }
+            fs.emptyDir(outputLocation).then(() => {
+                images.forEach((image, index) => {
+                    sharp(`${inputLocation}/${image}`).resize({ width: imgX, height: imgY }).toFile(`${outputLocation}/${image}`).then((newFileInfo) => {
+                        console.log("Image Resized");
+                        resolve("Image resized and Saved.")
+                    }).catch((error) => {
+                        console.log(error.message);
+                        return reject(Error("Some error occurred."))
+                    })
+                });
+            }).catch((err) => {
+                console.error(err);
+                return reject(Error("Some error occurred."))
+            });
+        });
+    });
+}
+
+function saveImage(saveLocation, images) {
+    return new Promise(function (resolve, reject) {
+        fs.mkdir(saveLocation, { recursive: true }, function (err) {
+            if (err) {
+                console.error("Some error occurred.");
+                return reject(Error("Some error occurred."))
+            }
+            if (!images) {
+                return reject(Error("No Image Uploaded."))
+            }
+            Object.keys(images).forEach((key, index) => {
+                let image = images[key];
+                fs.access(`${saveLocation}/${image.name}`, (err) => {
+                    if (err) {
+                        image.mv(`${saveLocation}/${image.name}`);
+                        console.log(`${image.name} uploaded.`);
+                        return resolve("Image Uploaded");
+                    }
+                    return reject(Error("File with this name already exists."));
+                });
+            });
+        });
+    });
+}
+
+function deleteImage(imageLocation) {
+    return new Promise(function (resolve, reject) {
+        fs.access(imageLocation, (error) => {
+            if (error) {
+                console.log("No file existis with this name");
+                return reject(Error("No file existis with this name."));
+            }
+            let tempFile = fs.openSync(imageLocation, 'r');
+            fs.closeSync(tempFile);
+            fs.unlinkSync(imageLocation);
+            console.log(`${imageLocation} deleted.`)
+            return resolve("Image deleted.");
+        });
+    });
+}
 
 module.exports = {
     saveListingImages: function (listingId, images) {
         return new Promise(function (resolve, reject) {
             let saveLocation = `./public/uploads/${listingId}/images/raw`;
-            fs.mkdir(saveLocation, { recursive: true }, function (err) {
-                if (err) {
-                    console.error("Some error occurred.");
-                    return reject(Error("Some error occurred."))
-                }
-                Object.keys(images).forEach((key, index) => {
-                    let image = images[key];
-                    fs.access(`${saveLocation}/${image.name}`, (err) => {
-                        if (err) {
-                            image.mv(`${saveLocation}/${image.name}`);
-                            console.log(`Plan ${image.name} uploaded.`);
-                            return resolve("Image Uploaded");
-                        }
-                        return reject(Error("File with this name already exists."));
-                    })
-                });
+            saveImage(saveLocation, images).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                reject(error);
             });
         });
     },
     savePlanImage: function (listingId, images) {
         return new Promise(function (resolve, reject) {
             let saveLocation = `./public/uploads/${listingId}/plans`;
-            fs.mkdir(saveLocation, { recursive: true }, function (err) {
-                if (err) {
-                    console.error("Some error occurred.");
-                    return reject(Error("Some error occurred."))
-                }
-                Object.keys(images).forEach((key, index) => {
-                    let image = images[key];
-                    fs.access(`${saveLocation}/${image.name}`, (err) => {
-                        if (err) {
-                            image.mv(`${saveLocation}/${image.name}`);
-                            console.log(`Plan ${image.name} uploaded.`);
-                            return resolve("Image Uploaded");
-                        }
-                        return reject(Error("File with this name already exists."));
-                    })
-                });
+            saveImage(saveLocation, images).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                reject(error);
             });
+        });
+    },
+    createLiveImages: function (listingId, images) {
+        return new Promise(function (resolve, reject) {
+            let rawLocation = `./public/uploads/${listingId}/images/raw`;
+            let largeLocation = `./public/uploads/${listingId}/images/large`;
+            let mediumLocation = `./public/uploads/${listingId}/images/medium`;
+            let smallLocation = `./public/uploads/${listingId}/images/small`;
+
+            resizeImage(rawLocation, largeLocation, images, imageParameters.size.large.x, imageParameters.size.large.y)
+                .then(resizeImage(rawLocation, mediumLocation, images, imageParameters.size.medium.x, imageParameters.size.medium.y))
+                .then(resizeImage(rawLocation, smallLocation, images, imageParameters.size.small.x, imageParameters.size.small.y))
+                .then((response) => {
+                    console.log(response);
+                    return resolve("Live images created");
+                }).catch((error) => {
+                    return reject(error);
+                })
         });
     },
     deleteListingImage: function (listingId, imageName) {
         return new Promise(function (resolve, reject) {
             let imageLocation = `./public/uploads/${listingId}/images/raw/${imageName}`;
 
-            fs.access(imageLocation, (error) => {
-                if (error) {
-                    console.log("No file existis with this name");
-                    return reject(Error("No file existis with this name."));
-                }
-                let tempFile = fs.openSync(imageLocation, 'r');
-                fs.closeSync(tempFile);
-                fs.unlinkSync(imageLocation);
-                console.log(`Plan ${imageName} deleted.`)
-                return resolve("Image deleted.");
+            deleteImage(imageLocation).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                return reject(error);
             });
         });
     },
@@ -66,16 +125,10 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             let imageLocation = `./public/uploads/${listingId}/plans/${imageName}`;
 
-            fs.access(imageLocation, (error) => {
-                if (error) {
-                    console.log("No file existis with this name");
-                    return reject(Error("No file existis with this name."));
-                }
-                let tempFile = fs.openSync(imageLocation, 'r');
-                fs.closeSync(tempFile);
-                fs.unlinkSync(imageLocation);
-                console.log(`Plan ${imageName} deleted.`)
-                return resolve("Image deleted.");
+            deleteImage(imageLocation).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                return reject(error);
             });
         });
     },
@@ -97,5 +150,5 @@ module.exports = {
                 });
             });
         });
-    }
+    },
 }

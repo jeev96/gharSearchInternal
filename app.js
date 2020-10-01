@@ -12,6 +12,8 @@ const express = require("express"),
     flash = require("connect-flash"),
     methodOverride = require("method-override");
 
+let testScript = require("./services/testScript");
+
 // configure dotenv
 require('dotenv').config();
 
@@ -86,6 +88,8 @@ app.use("/account", accountRoutes);
 app.use("/media", mediaRoutes);
 app.use("/user", userRoutes);
 app.use("/lead", leadRoutes);
+
+// testScript.imageScript();
 
 app.listen(3000, function () {
     console.log("The server has started!");

@@ -113,7 +113,7 @@ router.get("/my-properties", isLoggedIn, function (req, res) {
 
 // profile route
 router.get("/all-properties", isLoggedIn, function (req, res) {
-    Listing.find({}).exec((err, foundListings) => {
+    Listing.find({}).sort({ lastModified: -1, status: -1 }).exec((err, foundListings) => {
         if (err) {
             console.log(err);
             res.render("account/my-properties", { listings: [], page: "all-properties" });

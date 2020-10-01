@@ -24,6 +24,7 @@ module.exports = {
     },
     status: {
         PENDING: "PENDING",
+        REJECTED: "REJECTED",
         LIVE: "LIVE",
         DELETED: "DELETED",
         SOLD: "SOLD"

@@ -28,6 +28,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/account/all-properties" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">storage</span>
+                                    <span class="mdc-list-item__text">All Properties</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/account/leads" class="mdc-list-item py-1">
                                     <span
                                         class="mdc-list-item__graphic material-icons text-muted mx-3">person_pin</span>
@@ -94,19 +100,21 @@
                             <table id="my-properties" class="mdc-data-table__table" aria-label="Dessert calories">
                                 <thead>
                                     <tr class="mdc-data-table__header-row">
-                                        <th class="mdc-data-table__header-cell">Image</th>
+                                        <th class="mdc-data-table__header-cell">#</th>
                                         <th class="mdc-data-table__header-cell">Title</th>
+                                        <% if (page === "all-properties") { %>
+                                        <th class="mdc-data-table__header-cell">Status</th>
+                                        <% } %>
                                         <th class="mdc-data-table__header-cell">Location</th>
-                                        <th class="mdc-data-table__header-cell">Published</th>
-                                        <th class="mdc-data-table__header-cell">Actions</th>
+                                        <th class="mdc-data-table__header-cell">Last Modified</th>
+                                        <th class="mdc-data-table__header-cell text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="mdc-data-table__content">
                                     <% listings.forEach((listing, index) => { %>
                                     <tr class="mdc-data-table__row">
                                         <td class="mdc-data-table__cell">
-                                            <img src="/assets/images/props/flat-1/1-small.jpg" alt="pro-image"
-                                                width="100" class="d-block py-3">
+                                            <%= index + 1 %>
                                         </td>
                                         <td class="mdc-data-table__cell">
                                             <a href="/listing/<%= listing._id %>"
@@ -114,14 +122,40 @@
                                                 <%= listing.location.project %>
                                             </a>
                                         </td>
+                                        <% if (page === "all-properties") { %>
+                                        <td class="mdc-data-table__cell <%= getStatusColor(listing.status) %>">
+                                            <%= listing.status %>
+                                        </td>
+                                        <% } %>
                                         <td class="mdc-data-table__cell">
                                             <%= listing.location.sector + ", " + listing.location.city %>
                                         </td>
-                                        <td class="mdc-data-table__cell"><%= moment(listing.createdAt).format("ll") %>
-                                        </td>
                                         <td class="mdc-data-table__cell">
-                                            <a href="/listing/<%= listing._id %>/edit" class="mdc-icon-button material-icons primary-color">edit</a>
-                                            <button class="mdc-icon-button material-icons warn-color">delete</button>
+                                            <%= moment(listing.lastModified).format("DD-MMM-YY hh:mm A") %>
+                                        </td>
+                                        <td class="mdc-data-table__cell d-flex">
+                                            <% if (page === "all-properties" && listing.status === "PENDING") { %>
+                                            <form action="/listing/<%= listing._id %>/LIVE?_method=PUT" method="POST">
+                                                <button title="Approve Listing" type="submit"
+                                                    class="mdc-icon-button material-icons success-color">playlist_add_check</button>
+                                            </form>
+                                            <% } else if (page === "all-properties" && listing.status === "LIVE") { %>
+                                            <form action="/listing/<%= listing._id %>/REJECTED?_method=PUT"
+                                                method="POST">
+                                                <button title="Reject Listing" type="submit"
+                                                    class="mdc-icon-button material-icons warn-color">cancel</button>
+                                            </form>
+                                            <% } %>
+                                            <a href="/listing/<%= listing._id %>/edit" title="Edit"
+                                                class="mdc-icon-button material-icons primary-color">edit
+                                            </a>
+                                            <% if (page === "all-properties" && listing.status !== "DELETED") { %>
+                                            <form action="/listing/<%= listing._id %>/DELETED?_method=PUT"
+                                                method="POST">
+                                                <button title="Delete Listing" type="submit"
+                                                    class="mdc-icon-button material-icons warn-color">delete</button>
+                                            </form>
+                                            <% } %>
                                         </td>
                                     </tr>
                                     <% }); %>
@@ -136,5 +170,27 @@
         </div>
     </div>
 </main>
+
+<% function getStatusColor(status) {
+    let color;
+    switch(status) {
+        case "PENDING": 
+            color = "warn-color"
+            break;
+        case "REJECTED": 
+        color = "error-color"
+            break;
+        case "LIVE": 
+            color = "success-color"
+            break;
+        case "DELETED": 
+            color = "error-color"
+            break;
+        case "SOLD": 
+            color = "secondary-color"
+            break;
+    }
+    return color;
+} %>
 
 <%- include ("../partials/footer") %>

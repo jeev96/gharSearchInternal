@@ -203,8 +203,16 @@ a {
 	color: var(--mdc-theme-secondary) !important;
 }
 
+.success-color {
+	color: #4CAF50 !important;
+}
+
 .warn-color {
 	color: var(--mdc-theme-error) !important;
+}
+
+.error-color {
+	color: #c62828 !important;
 }
 
 .divider {
