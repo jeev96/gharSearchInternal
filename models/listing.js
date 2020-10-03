@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const listingType = require("../constants/listingType");
+const listingType = require("../constants/listing");
 
 let listingSchema = new mongoose.Schema({
     status: {
@@ -18,6 +18,11 @@ let listingSchema = new mongoose.Schema({
             required: true
         }
     },
+    similarListings: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Listing",
+        default: []
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -35,7 +40,7 @@ let listingSchema = new mongoose.Schema({
         },
         tags: {
             type: [String],
-            default: ["NEW"]
+            default: []
         },
         description: {
             type: String
@@ -171,6 +176,23 @@ let listingSchema = new mongoose.Schema({
         phone: {
             type: [String],
             default: []
+        }
+    },
+    builderInfo: {
+        name: {
+            type: String, 
+        },
+        description: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        phone: {
+            type: String
+        },
+        image: {
+            type: String
         }
     }
 });

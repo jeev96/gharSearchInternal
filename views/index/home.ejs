@@ -697,45 +697,30 @@
                     <div class="mdc-card property-item grid-item column-4 full-width-page">
                         <div class="thumbnail-section">
                             <div class="row property-status">
-                                <% for(let i = 0; i < listing.listingInfo.tags.length; i++) { %>
-                                <% let tag = listing.listingInfo.tags[i]; %>
-                                <% let color = tag === "FOR SALE" ? "green" :
+                                <% for(let i = 0; i < listing.listingInfo.tags.length; i++) { 
+                                let tag = listing.listingInfo.tags[i];
+                                let color = tag === "FOR SALE" ? "green" :
                                                        tag === "FEATURED" ? "orange" :
                                                        tag === "FOR RENT" ? "blue" :
                                                        tag === "HOT OFFER" ? "red" :
                                                        tag === "SOLD" ? "dark" :
                                                        tag === "NEW" ? "teal" : ""
-                                        %>
+                                %>
                                 <span class="<%= color %>"><%= tag %></span>
                                 <% } %>
                             </div>
                             <div class="property-image">
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
+                                        <% listing.media.images.forEach((image) =>{ %>
                                         <div class="swiper-slide">
-                                            <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                                data-src="assets/images/props/flat-1/1-medium.jpg"
+                                            <img src="assets/images/others/transparent-bg.png"
+                                                alt="slide image <%= image %>"
+                                                data-src="uploads/<%= listing._id %>/images/medium/<%= image %>"
                                                 class="slide-item swiper-lazy">
                                             <div class="swiper-lazy-preloader"></div>
                                         </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                                data-src="assets/images/props/flat-1/2-medium.jpg"
-                                                class="slide-item swiper-lazy">
-                                            <div class="swiper-lazy-preloader"></div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                                data-src="assets/images/props/flat-1/3-medium.jpg"
-                                                class="slide-item swiper-lazy">
-                                            <div class="swiper-lazy-preloader"></div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                                data-src="assets/images/props/flat-1/4-medium.jpg"
-                                                class="slide-item swiper-lazy">
-                                            <div class="swiper-lazy-preloader"></div>
-                                        </div>
+                                        <% }); %>
                                     </div>
                                     <div class="swiper-pagination white"></div>
                                     <button class="mdc-icon-button swiper-button-prev swipe-arrow"><i
@@ -760,8 +745,7 @@
                                 <div class="content">
                                     <h1 class="title">
                                         <a href="/listing/<%= listing._id %>">
-                                            <%= listing.listingInfo && listing.listingInfo.title ?
-                                        listing.listingInfo.title : listing.location.project %>
+                                            <%= listing.listingInfo.title %>
                                         </a>
                                     </h1>
                                     <p class="row address flex-nowrap">
@@ -782,10 +766,7 @@
                                     </div>
                                     <div class="d-none d-md-flex d-lg-flex d-xl-flex">
                                         <div class="description mt-3">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-                                                modi dignissimos blanditiis accusamus, magni provident omnis
-                                                perferendis laudantium illo recusandae ab molestiae repudiandae cum
-                                                obcaecati nulla adipisci fuga culpa repellat!</p>
+                                            <p><%= listing.listingInfo.description %></p>
                                         </div>
                                     </div>
                                     <div class="features mt-3">

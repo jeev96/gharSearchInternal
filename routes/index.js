@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const listingType = require("../constants/listingType");
+const listingType = require("../constants/listing");
 const dbConstants = require("../constants/dbConstants");
 const Listing = require("../models/listing");
 
@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
         } else {
             let featuredListings = allListings.filter((listing) => {
                 if (listing.listingInfo && listing.listingInfo.tags) {
-                    if (listing.listingInfo.tags.indexOf("FEATURED") > -1) {
+                    if (listing.listingInfo.tags.indexOf(listingType.tagType.FEATURED) > -1) {
                         return true;
                     } else {
                         return false;

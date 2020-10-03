@@ -119,7 +119,7 @@
                                         <td class="mdc-data-table__cell">
                                             <a href="/listing/<%= listing._id %>"
                                                 class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
-                                                <%= listing.location.project %>
+                                                <%= listing.listingInfo.title %>
                                             </a>
                                         </td>
                                         <% if (page === "all-properties") { %>
@@ -133,13 +133,14 @@
                                         <td class="mdc-data-table__cell">
                                             <%= moment(listing.lastModified).format("DD-MMM-YY hh:mm A") %>
                                         </td>
-                                        <td class="mdc-data-table__cell d-flex">
-                                            <% if (page === "all-properties" && listing.status === "PENDING") { %>
+                                        <td class="mdc-data-table__cell d-flex justify-content-between">
+                                            <% if (page === "all-properties") { %>
+                                            <% if (listing.status === "PENDING") { %>
                                             <form action="/listing/<%= listing._id %>/LIVE?_method=PUT" method="POST">
                                                 <button title="Approve Listing" type="submit"
                                                     class="mdc-icon-button material-icons success-color">playlist_add_check</button>
                                             </form>
-                                            <% } else if (page === "all-properties" && listing.status === "LIVE") { %>
+                                            <% } %>
                                             <form action="/listing/<%= listing._id %>/REJECTED?_method=PUT"
                                                 method="POST">
                                                 <button title="Reject Listing" type="submit"
@@ -149,13 +150,11 @@
                                             <a href="/listing/<%= listing._id %>/edit" title="Edit"
                                                 class="mdc-icon-button material-icons primary-color">edit
                                             </a>
-                                            <% if (page === "all-properties" && listing.status !== "DELETED") { %>
                                             <form action="/listing/<%= listing._id %>/DELETED?_method=PUT"
                                                 method="POST">
                                                 <button title="Delete Listing" type="submit"
                                                     class="mdc-icon-button material-icons warn-color">delete</button>
                                             </form>
-                                            <% } %>
                                         </td>
                                     </tr>
                                     <% }); %>

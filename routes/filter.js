@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const utils = require("../services/utils");
-const listingType = require("../constants/listingType");
+const listingType = require("../constants/listing");
 const dbConstants = require("../constants/dbConstants");
 const Listing = require("../models/listing");
 

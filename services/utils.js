@@ -1,5 +1,5 @@
 const ejs = require("ejs");
-const listingType = require("../constants/listingType");
+const listingType = require("../constants/listing");
 const ejsComponents = require("../services/ejsComponents");
 
 function getRangeQuery(lower, upper) {

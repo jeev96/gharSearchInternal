@@ -4,7 +4,7 @@ const moment = require('moment')
 const dbEntry = require("../services/dbEntry");
 const utils = require("../services/utils");
 const fileManager = require("../services/fileManager");
-const listingType = require("../constants/listingType");
+const listingType = require("../constants/listing");
 const Listing = require("../models/listing");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
@@ -52,7 +52,7 @@ router.post("/submitMedia", isLoggedIn, function (req, res) {
 router.post("/search", function (req, res) {
     const dbQuery = utils.getDbQuery(req.body);
     console.log(dbQuery);
-    Listing.countDocuments(dbQuery.searchQuery).exec((err, count) => {
+    Listing.countDocuments(dbQuery.searchQuery).exec((error, count) => {
         if (error) {
             console.log(error);
             res.status(400).send();
@@ -81,13 +81,44 @@ router.post("/search", function (req, res) {
 
 // single listing route
 router.get("/:id", function (req, res) {
-    Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
+    Listing.findOne({ _id: req.params.id }, function (error, foundListing) {
+        if (error) {
+            console.log(error);
+            req.flash("error", error.message);
             res.redirect("back");
         } else {
-            res.render("listing/show", { listing: foundListing, page: "single-listing" });
+            let searchData = {
+                "_id": { $in: foundListing.similarListings },
+                "status": listingType.status.LIVE
+            }
+            Listing.find(searchData, function (error, similarListings) {
+                if (error) {
+                    console.log(error);
+                    req.flash("error", error.message);
+                    res.redirect("back");
+                } else {
+                    console.log("Similar Listings: " + similarListings.length);
+                    let searchData = {
+                        "listingInfo.tags": { $in: [listingType.tagType.FEATURED] },
+                        "status": listingType.status.LIVE
+                    }
+                    Listing.find(searchData, function (error, featuredListings) {
+                        if (error) {
+                            console.log(error);
+                            req.flash("error", error.message);
+                            res.redirect("back");
+                        } else {
+                            console.log("Featured Listings: " + featuredListings.length);
+                            res.render("listing/show", {
+                                listing: foundListing,
+                                similarListings: similarListings,
+                                featuredListings: featuredListings,
+                                page: "single-listing"
+                            });
+                        }
+                    });
+                }
+            });
         }
     });
 });

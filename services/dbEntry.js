@@ -1,11 +1,10 @@
-const listingType = require("../constants/listingType");
-const tagType = require("../constants/tagType");
+const listingType = require("../constants/listing");
 
 function getListingTags(data) {
     let tags = [];
     tags.push(data.tag);
-    data.isFeatured ? tags.push(tagType.FEATURED) : "";
-    data.isHotOffer ? tags.push(tagType.HOT_OFFER) : "";
+    data.isFeatured ? tags.push(listingType.tagType.FEATURED) : "";
+    data.isHotOffer ? tags.push(listingType.tagType.HOT_OFFER) : "";
     return tags;
 }
 
@@ -93,8 +92,8 @@ module.exports = {
     },
     createSubmitEntryResidential: function (user, data) {
         let author = {
-            id: user._id,
-            username: user.username
+            id: data.userId ? data.userId : user._id,
+            username: data.username ? data.username : user.username
         }
         let status = listingType.status.PENDING;
         let listingInfo = {
@@ -102,6 +101,7 @@ module.exports = {
             description: data.description ? data.description.trim() : "",
             tags: getListingTags(data)
         }
+        let similarListings = data.similarListing ? data.similarListing : [];
         let ownership = data.ownership;
         let price = data.price;
         let propertyType = {
@@ -147,6 +147,7 @@ module.exports = {
         let newListing = {
             status: status,
             author: author,
+            similarListings: similarListings,
             createdAt: data.createdAt ? data.createdAt : Date.now(),
             lastModified: Date.now(),
             listingInfo: listingInfo,

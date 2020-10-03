@@ -59,6 +59,8 @@
                         </div>
                         <form action="/listing/<%= listing._id %>?_method=PUT" method="POST" id="listing-edit-form">
                             <input id="upload-listing-id" type="hidden" name="listingId" value="<%= listing._id %>">
+                            <input type="hidden" name="userId" value="<%= listing.author.id %>">
+                            <input type="hidden" name="username" value="<%= listing.author.username %>">
                             <input type="hidden" name="createdAt" value="<%= moment(listing.createdAt).valueOf() %>">
                             <div class="tab-content tab-content--active">
                                 <div id="sp-basic-form" class="row">
@@ -969,6 +971,78 @@
                                                                     <div class="mdc-notched-outline__leading"></div>
                                                                     <div class="mdc-notched-outline__notch">
                                                                         <label class="mdc-floating-label">Value</label>
+                                                                    </div>
+                                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                                </div>
+                                                            </div> 
+                                                        </div>  
+                                                    </div> 
+                                                </div>
+                                                <div class="col-xs-1 text-center">
+                                                    <button class="mdc-icon-button material-icons warn-color remove-step" type="button">cancel</button> 
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </script>
+
+                                    <div class="col-xs-12 p-0 dynamic-steps">
+                                        <div class="row middle-xs my-3 px-2">
+                                            <p class="mb-0"><span class="uppercase fw-500">Similar Listings</span>
+                                            </p>
+                                            <button class="mdc-icon-button material-icons primary-color add-step"
+                                                type="button" data-template-name="similarListing">add_circle</button>
+                                        </div>
+                                        <div class="steps">
+                                            <% if(listing.similarListings) {
+                                                listing.similarListings.forEach((listing, index) => { %>
+                                            <div class="step-section">
+                                                <div class="row middle-xs">
+                                                    <div class="col-xs-1 text-center fw-500">
+                                                        <span class="num"><%= index + 1 %> </span>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-10 p-2">
+                                                                <div class="mdc-text-field mdc-text-field--outlined">
+                                                                    <input name="similarListing"
+                                                                        value="<%= listing %>"
+                                                                        class="mdc-text-field__input">
+                                                                    <div class="mdc-notched-outline">
+                                                                        <div class="mdc-notched-outline__leading"></div>
+                                                                        <div class="mdc-notched-outline__notch">
+                                                                            <label
+                                                                                class="mdc-floating-label">Listing Id</label>
+                                                                        </div>
+                                                                        <div class="mdc-notched-outline__trailing">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-1 text-center">
+                                                        <button
+                                                            class="mdc-icon-button material-icons warn-color remove-step"
+                                                            type="button">cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); } %>
+                                        </div>
+                                    </div>
+                                    <script id="similarListing" type="text/template">
+                                        <div class="step-section">
+                                            <div class="row middle-xs">
+                                                <div class="col-xs-1 text-center fw-500 number"></div>
+                                                <div class="col-xs-10">
+                                                    <div class="row"> 
+                                                        <div class="col-xs-12 col-sm-10 p-2">  
+                                                            <div class="mdc-text-field mdc-text-field--outlined">
+                                                                <input name="similarListing" class="mdc-text-field__input">
+                                                                <div class="mdc-notched-outline">
+                                                                    <div class="mdc-notched-outline__leading"></div>
+                                                                    <div class="mdc-notched-outline__notch">
+                                                                        <label class="mdc-floating-label">Listing Id</label>
                                                                     </div>
                                                                     <div class="mdc-notched-outline__trailing"></div>
                                                                 </div>

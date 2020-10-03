@@ -7,7 +7,7 @@ const express = require("express"),
     LocalStrategy = require("passport-local"),
     session = require('express-session'),
     fileupload = require("express-fileupload");
-    MongoStore = require('connect-mongo')(session),
+MongoStore = require('connect-mongo')(session),
     User = require("./models/user"),
     flash = require("connect-flash"),
     methodOverride = require("method-override");
@@ -40,9 +40,7 @@ mongoose.connect(databaseUri, {
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false
-})
-    .then(() => console.log(`Database connected`))
-    .catch(err => console.log(`Database connection error: ${err.message}`));
+}).then(() => console.log(`Database connected`)).catch(err => console.log(`Database connection error: ${err.message}`));
 
 app.use(bodyParser.urlencoded({
     extended: true

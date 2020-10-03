@@ -22,6 +22,14 @@ module.exports = {
         AGRICULTURAL_LAND: "AGRICULTURAL LAND",
         OTHER: "OTHER",
     },
+    tagType: {
+        NEW: "NEW",
+        HOT_OFFER: "HOT OFFER",
+        FEATURED: "FEATURED",
+        SOLD: "SOLD",
+        FOR_SALE: "FOR SALE",
+        FOR_RENT: "FOR RENT"
+    },
     status: {
         PENDING: "PENDING",
         REJECTED: "REJECTED",
