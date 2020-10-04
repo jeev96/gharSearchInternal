@@ -42,8 +42,7 @@
                             </li>
                             <li>
                                 <a href="/account/all-properties" class="mdc-list-item py-1">
-                                    <span
-                                        class="mdc-list-item__graphic material-icons text-muted mx-3">storage</span>
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">storage</span>
                                     <span class="mdc-list-item__text">All Properties</span>
                                 </a>
                             </li>
@@ -105,7 +104,7 @@
                             <div class="mdc-notched-outline">
                                 <div class="mdc-notched-outline__leading"></div>
                                 <div class="mdc-notched-outline__notch">
-                                    <label class="mdc-floating-label">Filter properties</label>
+                                    <label class="mdc-floating-label">Filter Builders</label>
                                 </div>
                                 <div class="mdc-notched-outline__trailing"></div>
                             </div>
@@ -114,43 +113,47 @@
                             <table id="my-properties" class="mdc-data-table__table" aria-label="Dessert calories">
                                 <thead>
                                     <tr class="mdc-data-table__header-row">
-                                        <th class="mdc-data-table__header-cell">Index</th>
+                                        <th class="mdc-data-table__header-cell">#</th>
                                         <th class="mdc-data-table__header-cell">Name</th>
-                                        <th class="mdc-data-table__header-cell">Username</th>
+                                        <th class="mdc-data-table__header-cell">Parent</th>
+                                        <th class="mdc-data-table__header-cell">Email</th>
                                         <th class="mdc-data-table__header-cell">Phone</th>
-                                        <th class="mdc-data-table__header-cell">Type</th>
-                                        <th class="mdc-data-table__header-cell">Actions</th>
+                                        <th class="mdc-data-table__header-cell">Created</th>
+                                        <th class="mdc-data-table__header-cell text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="mdc-data-table__content">
-                                    <% users.forEach((user, index) => { %>
+                                    <% builders.forEach((builder, index) => { %>
                                     <tr class="mdc-data-table__row">
                                         <td class="mdc-data-table__cell">
-                                            <%= index + 1%>
+                                            <%= index + 1 %>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <div
+                                            <a href="/builder/<%= builder._id %>"
                                                 class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
-                                                <%= user.name %>
-                                            </div>
+                                                <%= builder.name %>
+                                            </a>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <%= user.username %>
+                                            <%= builder.parentCompany %>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <%= user.phone %>
+                                            <%= builder.email %>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <%= user.userType %>
+                                            <%= builder.phone %>
                                         </td>
                                         <td class="mdc-data-table__cell">
-                                            <form class="delete-user" data-value="<%= user.username %>"
-                                                action="/user/<%= user._id %>?_method=DELETE" method="POST">
-                                                <% if (currentUser.username !== user.username) { %>
-                                                <button type="submit" class="mdc-icon-button material-icons warn-color">
-                                                    delete
-                                                </button>
-                                                <% } %>
+                                            <%= moment(builder.createdAt).format("DD-MM-YY hh:mm A") %>
+                                        </td>
+                                        <td class="mdc-data-table__cell d-flex justify-content-between">
+                                            <a href="/builder/<%= builder._id %>/edit" title="Edit" title="Edit Builder"
+                                                class="mdc-icon-button material-icons primary-color">edit
+                                            </a>
+                                            <form action="/builder/<%= builder._id %>/DELETED?_method=DELETE"
+                                                method="POST">
+                                                <button title="Delete Builder" type="submit"
+                                                    class="mdc-icon-button material-icons warn-color">delete</button>
                                             </form>
                                         </td>
                                     </tr>

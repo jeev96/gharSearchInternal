@@ -45,6 +45,15 @@ let listingSchema = new mongoose.Schema({
         description: {
             type: String
         },
+        contactDisplay: {
+            type: {
+                type: String,
+                enum: ["BUILDER", "DEALER", "NONE"],
+                default: "NONE"
+            },
+            email: Boolean,
+            phone: Boolean
+        }
     },
     propertyType: {
         type: {
@@ -170,6 +179,8 @@ let listingSchema = new mongoose.Schema({
     contactInfo: {
         name: String,
         firmName: String,
+        description: String,
+        email: String,
         type: {
             type: String,
         },
@@ -178,22 +189,9 @@ let listingSchema = new mongoose.Schema({
             default: []
         }
     },
-    builderInfo: {
-        name: {
-            type: String, 
-        },
-        description: {
-            type: String
-        },
-        email: {
-            type: String
-        },
-        phone: {
-            type: String
-        },
-        image: {
-            type: String
-        }
+    builderId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Builder",
     }
 });
 

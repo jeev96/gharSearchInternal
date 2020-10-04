@@ -1047,6 +1047,9 @@ function onPageLoad() {
         $('input[name=planImages]').keydown(function (e) {
             e.preventDefault();
         });
+        $('input[name=image]').keydown(function (e) {
+            e.preventDefault();
+        });
     }
     preventImageNameKeypress();
 
@@ -1484,7 +1487,7 @@ function initDropzonePropertyImages() {
                         type: 'image/jpeg',
                         status: Dropzone.SUCCESS
                     }
-                    let thumbnailUrl = `/uploads/${$("input[name=listingId]").val()}/images/raw/${image}`
+                    let thumbnailUrl = `/uploads/listing/${$("input[name=listingId]").val()}/images/raw/${image}`
                     this.files.push(file);
                     this.emit("addedfile", file);
                     this.emit("thumbnail", file, thumbnailUrl);
@@ -1588,7 +1591,7 @@ function initDropzonePlanImage(index) {
                     type: 'image/jpeg',
                     status: Dropzone.SUCCESS
                 }
-                let thumbnailUrl = `/uploads/${$("input[name=listingId]").val()}/plans/${image}`
+                let thumbnailUrl = `/uploads/listing/${$("input[name=listingId]").val()}/plans/${image}`
                 this.files.push(file);
                 this.emit("addedfile", file);
                 this.emit("thumbnail", file, thumbnailUrl);
@@ -1634,6 +1637,98 @@ function initDropzonePlanImage(index) {
                 imageName: file.name
             }
             $.post("/media/removePlanImage", data, function (result, status) {
+            }).done((response) => {
+                console.log("Message: " + response);
+                showSnackbar("Image Deleted. Please submit Changes.")
+            }).fail((error) => {
+                console.log("Error: " + error.responseText);
+                showSnackbar(error.responseText)
+            })
+        });
+    }
+}
+
+function initDropzoneBuilderImage() {
+    if ($('#builder-image').length) {
+        let builder_image = new Dropzone('#builder-image', {
+            autoProcessQueue: true,
+            addRemoveLinks: true,
+            acceptedFiles: 'image/*',
+            url: '/media/uploadBuilder',
+            paramName: 'builderImage',
+            previewTemplate: document.querySelector('#dropzone-preview-template').innerHTML,
+            parallelUploads: 1,
+            thumbnailHeight: 120,
+            thumbnailWidth: 120,
+            maxFilesize: 5,
+            maxFiles: 1,
+            dictRemoveFile: `<svg viewBox="0 0 24 24">
+                                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </svg>`,
+            dictCancelUpload: `<svg viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z" />
+                                </svg>`,
+            filesizeBase: 1000,
+            init: function () {
+                let imageElement = $('#builder-image').parent().parent().find('input[name=image]');
+                if (imageElement.length === 0 || $(imageElement).val() === "") {
+                    return;
+                }
+                let image = $(imageElement).val();
+                let file = {
+                    processing: true,
+                    accepted: true,
+                    name: image,
+                    size: 5000000,
+                    type: 'image/jpeg',
+                    status: Dropzone.SUCCESS
+                }
+                let thumbnailUrl = `/uploads/builder/${$("input[name=builderId]").val()}/${image}`
+                this.files.push(file);
+                this.emit("addedfile", file);
+                this.emit("thumbnail", file, thumbnailUrl);
+                this.emit("processing", file);
+                this.emit("success", file, { status: "success" }, false);
+                this.emit("complete", file);
+
+            },
+            thumbnail: function (file, dataUrl) {
+                if (file.previewElement) {
+                    file.previewElement.classList.remove("dz-file-preview");
+                    let images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                    for (let i = 0; i < images.length; i++) {
+                        let thumbnailElement = images[i];
+                        thumbnailElement.alt = file.name;
+                        thumbnailElement.src = dataUrl;
+                    }
+                    setTimeout(function () { file.previewElement.classList.add("dz-image-preview"); }, 1);
+                }
+            },
+        });
+
+        builder_image.on('sending', function (file, xhr, formData) {
+            formData.append('builderId', $("#upload-builder-id").val());
+        });
+
+        builder_image.on("complete", function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+            $("#builder-image").parent().parent().find("input[name=image]").val(file.name);
+            showSnackbar("Image Uploaded. Please submit Changes.")
+        });
+
+        builder_image.on('removedfile', function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+
+            $("#builder-image").parent().parent().find("input[name=image]").val("");
+            let data = {
+                builderId: $("#upload-builder-id").val(),
+                imageName: file.name
+            }
+            $.post("/media/removeBuilderImage", data, function (result, status) {
             }).done((response) => {
                 console.log("Message: " + response);
                 showSnackbar("Image Deleted. Please submit Changes.")
@@ -1719,5 +1814,6 @@ if (typeof Dropzone !== "undefined") {
     for (let i = 0; i < $('input[name=planName]').length; i++) {
         initDropzonePlanImage(i + 1);
     }
+    initDropzoneBuilderImage();
     initUserProfileImage();
 } 

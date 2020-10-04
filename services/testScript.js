@@ -12,11 +12,10 @@ module.exports = {
             } else {
 
                 foundListings.forEach((listing, index) => {
-                    let media = {
-                        images: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"],
-                        videos: [{ name: "Walkthrough", link: "https://www.youtube.com/embed/-NInBEdSvp8" }],
-                        plans: [{ name: "First Floor", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.", area: "1180", rooms: "3", baths: "1", image: "plan-1.jpg" },
-                        { name: "Second Floor", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium magnam veniam sit reprehenderit deserunt ad voluptates id aperiam veritatis! Nobis saepe quos eveniet numquam vitae quis, tenetur consectetur impedit dolore.", area: "1200", rooms: "5", baths: "2", image: "plan-2.jpg" }]
+                    let contactDisplay = {
+                        type: "NONE",
+                        email: true,
+                        phone: true
                     }
                     // let listingInfo = {
                     //     title: listing.location.project,
@@ -25,9 +24,10 @@ module.exports = {
                     // }
                     // let lastModified = moment(listing.createdAt).valueOf();
                     let data = {
-                        media: media,
+                        "listingInfo.contactDisplay": contactDisplay,
                     }
-                    Listing.findByIdAndUpdate({ _id: listing._id }, { $set: data }, function (err, updatedListing) {
+                    Listing.findByIdAndUpdate({ _id: listing._id }, 
+                        { $set: data }, function (err, updatedListing) {
                         if (err) {
                             console.log(err);
                         } else {

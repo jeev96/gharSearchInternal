@@ -179,9 +179,11 @@ a {
 .bg-transparent {
 	background: transparent !important;
 }
-
 .bg-primary {
 	background: var(--mdc-theme-primary) !important;
+}
+.bg-secondary {
+	background:  rgba(0, 0, 0, 0.1) !important;
 }
 .bg-success {
 	background: #4CAF50 !important;
@@ -2450,6 +2452,7 @@ main.content-offset-to-top .main-content-header {
 	text-transform: uppercase;
 	font-weight: 500;
 	font-size: 16px;
+	border-radius: 3px;
 }
 
 .widget .widget-title:first-child .widget-title {

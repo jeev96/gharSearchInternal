@@ -99,7 +99,12 @@ module.exports = {
         let listingInfo = {
             title: data.title,
             description: data.description ? data.description.trim() : "",
-            tags: getListingTags(data)
+            tags: getListingTags(data),
+            contactDisplay: {
+                type: data.contactDisplayType,
+                email: data.contactDisplayEmail ? true : false,
+                phone: data.contactDisplayPhone ? true : false
+            }
         }
         let similarListings = data.similarListing ? data.similarListing : [];
         let ownership = data.ownership;
@@ -139,24 +144,28 @@ module.exports = {
         }
         let contactInfo = {
             name: data.dealerName,
+            email: data.dealerEmail,
+            description: data.dealerDescription,
             firmName: data.firmName,
             type: data.dealerType,
             phone: data.dealerPhone
         }
+        let builderId = data.builderId ? data.builderId : null;
 
         let newListing = {
             status: status,
             author: author,
-            similarListings: similarListings,
+            builderId: builderId,
+            contactInfo: contactInfo,
+            price: price,
+            ownership: ownership,
             createdAt: data.createdAt ? data.createdAt : Date.now(),
             lastModified: Date.now(),
             listingInfo: listingInfo,
             propertyType: propertyType,
             location: location,
             propertyInfo: propertyInfo,
-            ownership: ownership,
-            price: price,
-            contactInfo: contactInfo
+            similarListings: similarListings,
         }
         return newListing;
     },
@@ -176,5 +185,17 @@ module.exports = {
         newData["media"] = this.createSubmitEntryMedia(data);
 
         return newData;
-    }
+    },
+    createBuilderEntry: function (data) {
+        return {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            parentCompany: data.parentCompany,
+            descriptionShort: data.descriptionShort ? data.descriptionShort.trim() : "",
+            description: data.description ? data.description.trim() : "",
+            image: data.image,
+            createdAt: Date.now(),
+        }
+    },
 }

@@ -74,7 +74,7 @@ function deleteImage(imageLocation) {
 module.exports = {
     saveListingImages: function (listingId, images) {
         return new Promise(function (resolve, reject) {
-            let saveLocation = `./public/uploads/${listingId}/images/raw`;
+            let saveLocation = `./public/uploads/listing/${listingId}/images/raw`;
             saveImage(saveLocation, images).then((response) => {
                 return resolve(response);
             }).catch((error) => {
@@ -84,7 +84,17 @@ module.exports = {
     },
     savePlanImage: function (listingId, images) {
         return new Promise(function (resolve, reject) {
-            let saveLocation = `./public/uploads/${listingId}/plans`;
+            let saveLocation = `./public/uploads/listing/${listingId}/plans`;
+            saveImage(saveLocation, images).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    },
+    saveBuilderImage: function (listingId, images) {
+        return new Promise(function (resolve, reject) {
+            let saveLocation = `./public/uploads/builder/${listingId}`;
             saveImage(saveLocation, images).then((response) => {
                 return resolve(response);
             }).catch((error) => {
@@ -94,10 +104,10 @@ module.exports = {
     },
     createLiveImages: function (listingId, images) {
         return new Promise(function (resolve, reject) {
-            let rawLocation = `./public/uploads/${listingId}/images/raw`;
-            let largeLocation = `./public/uploads/${listingId}/images/large`;
-            let mediumLocation = `./public/uploads/${listingId}/images/medium`;
-            let smallLocation = `./public/uploads/${listingId}/images/small`;
+            let rawLocation = `./public/uploads/listing/${listingId}/images/raw`;
+            let largeLocation = `./public/uploads/listing/${listingId}/images/large`;
+            let mediumLocation = `./public/uploads/listing/${listingId}/images/medium`;
+            let smallLocation = `./public/uploads/listing/${listingId}/images/small`;
 
             resizeImage(rawLocation, largeLocation, images, imageParameters.size.large.x, imageParameters.size.large.y)
                 .then(resizeImage(rawLocation, mediumLocation, images, imageParameters.size.medium.x, imageParameters.size.medium.y))
@@ -112,7 +122,7 @@ module.exports = {
     },
     deleteListingImage: function (listingId, imageName) {
         return new Promise(function (resolve, reject) {
-            let imageLocation = `./public/uploads/${listingId}/images/raw/${imageName}`;
+            let imageLocation = `./public/uploads/listing/${listingId}/images/raw/${imageName}`;
 
             deleteImage(imageLocation).then((response) => {
                 return resolve(response);
@@ -123,7 +133,18 @@ module.exports = {
     },
     deletePlanImage: function (listingId, imageName) {
         return new Promise(function (resolve, reject) {
-            let imageLocation = `./public/uploads/${listingId}/plans/${imageName}`;
+            let imageLocation = `./public/uploads/listing/${listingId}/plans/${imageName}`;
+
+            deleteImage(imageLocation).then((response) => {
+                return resolve(response);
+            }).catch((error) => {
+                return reject(error);
+            });
+        });
+    },
+    deleteBuilderImage: function (listingId, imageName) {
+        return new Promise(function (resolve, reject) {
+            let imageLocation = `./public/uploads/builder/${listingId}/${imageName}`;
 
             deleteImage(imageLocation).then((response) => {
                 return resolve(response);
@@ -134,7 +155,7 @@ module.exports = {
     },
     deleteListing: function (listingId) {
         return new Promise(function (resolve, reject) {
-            let listingLocation = `./public/uploads/${listingId}`;
+            let listingLocation = `./public/uploads/listing/${listingId}`;
             fs.access(listingLocation, (error) => {
                 if (error) {
                     console.log("No file existis with this name");

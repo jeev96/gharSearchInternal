@@ -1,11 +1,15 @@
-var mongoose = require("mongoose");
+let mongoose = require("mongoose");
 
-var LeadSchema = new mongoose.Schema({
+let LeadSchema = new mongoose.Schema({
     name: String,
     email: String,
     phone: String,
     message: String,
     listingName: String,
+    status: {
+        type: String,
+        default: "NEW"
+    },
     listing_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Listing",

@@ -6,8 +6,8 @@ const express = require("express"),
     cookieParser = require("cookie-parser"),
     LocalStrategy = require("passport-local"),
     session = require('express-session'),
-    fileupload = require("express-fileupload");
-MongoStore = require('connect-mongo')(session),
+    fileupload = require("express-fileupload"),
+    MongoStore = require('connect-mongo')(session),
     User = require("./models/user"),
     flash = require("connect-flash"),
     methodOverride = require("method-override");
@@ -23,6 +23,7 @@ let filterRoutes = require("./routes/filter");
 let listingRoutes = require("./routes/listing");
 let listingOperationRoutes = require("./routes/listingOperation");
 let accountRoutes = require("./routes/account");
+let builderRoutes = require("./routes/builder");
 let mediaRoutes = require("./routes/media");
 let userRoutes = require("./routes/user");
 let leadRoutes = require("./routes/lead");
@@ -83,11 +84,12 @@ app.use("/filter", filterRoutes);
 app.use("/listing", listingRoutes);
 app.use("/listingOperation", listingOperationRoutes);
 app.use("/account", accountRoutes);
+app.use("/builder", builderRoutes);
 app.use("/media", mediaRoutes);
 app.use("/user", userRoutes);
 app.use("/lead", leadRoutes);
 
-// testScript.imageScript();
+// testScript.dbScript();
 
 app.listen(3000, function () {
     console.log("The server has started!");

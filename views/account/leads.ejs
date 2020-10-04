@@ -21,6 +21,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/account/builder" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">apartment</span>
+                                    <span class="mdc-list-item__text">Builders</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/account/register" class="mdc-list-item py-1">
                                     <span
                                         class="mdc-list-item__graphic material-icons text-muted mx-3">person_add</span>
@@ -28,9 +34,15 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/account/all-properties" class="mdc-list-item py-1">
+                                <a href="/builder/submit" class="mdc-list-item py-1">
                                     <span
-                                        class="mdc-list-item__graphic material-icons text-muted mx-3">storage</span>
+                                        class="mdc-list-item__graphic material-icons text-muted mx-3">add_circle</span>
+                                    <span class="mdc-list-item__text">Submit Builder</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/account/all-properties" class="mdc-list-item py-1">
+                                    <span class="mdc-list-item__graphic material-icons text-muted mx-3">storage</span>
                                     <span class="mdc-list-item__text">All Properties</span>
                                 </a>
                             </li>
@@ -101,20 +113,21 @@
                             <table id="my-properties" class="mdc-data-table__table" aria-label="Dessert calories">
                                 <thead>
                                     <tr class="mdc-data-table__header-row">
-                                        <th class="mdc-data-table__header-cell">#</th>
+                                        <th class="mdc-data-table__header-cell">Status</th>
                                         <th class="mdc-data-table__header-cell">Property</th>
                                         <th class="mdc-data-table__header-cell">Name</th>
                                         <th class="mdc-data-table__header-cell">Email</th>
                                         <th class="mdc-data-table__header-cell">Phone</th>
                                         <th class="mdc-data-table__header-cell">Created</th>
                                         <th class="mdc-data-table__header-cell">Message</th>
+                                        <th class="mdc-data-table__header-cell">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="mdc-data-table__content">
                                     <% leads.forEach((lead, index) => { %>
-                                    <tr class="mdc-data-table__row">
-                                        <td class="mdc-data-table__cell">
-                                            <%= index + 1 %>
+                                    <tr class="mdc-data-table__row <%= lead.status === "NEW" ? "" : "bg-secondary" %>">
+                                        <td class="mdc-data-table__cell <%= lead.status === "NEW" ? "warn-color" : "success-color" %>">
+                                            <%= lead.status %>
                                         </td>
                                         <td class="mdc-data-table__cell">
                                             <a href="/listing/<%= lead.listing_id %>"
@@ -131,9 +144,27 @@
                                         <td class="mdc-data-table__cell" title="<%= lead.phone %>">
                                             <%= lead.phone %>
                                         </td>
-                                        <td class="mdc-data-table__cell"><%= moment(lead.createdAt).format("DD/MM/yyyy") %>
+                                        <td class="mdc-data-table__cell">
+                                            <%= moment(lead.createdAt).format("DD/MM/yyyy") %>
+                                        </td>
                                         <td class="mdc-data-table__cell" title="<%= lead.message %>">
                                             <%= lead.message %>
+                                        </td>
+                                        <td class="mdc-data-table__cell">
+                                            <% if (lead.status === "NEW") { %>
+                                            <form action="/lead/<%= lead._id %>?_method=PUT" method="POST">
+                                                <input type="hidden" name="status" value="READ">
+                                                <button title="Mark as Read." type="submit"
+                                                    class="mdc-icon-button material-icons success-color">mark_email_read</button>
+                                            </form>
+                                            <% } else { %>
+                                            <form action="/lead/<%= lead._id %>?_method=PUT"
+                                                method="POST">
+                                                <input type="hidden" name="status" value="NEW">
+                                                <button title="Mark as Unread." type="submit"
+                                                    class="mdc-icon-button material-icons warn-color">mark_email_unread</button>
+                                            </form>
+                                            <% } %>
                                         </td>
                                     </tr>
                                     <% }); %>

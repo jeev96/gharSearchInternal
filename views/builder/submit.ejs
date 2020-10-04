@@ -1,0 +1,207 @@
+<%- include ("../partials/header") %>
+
+<link rel="stylesheet" href="/css/libs/dropzone.css">
+
+<main>
+    <div class="px-3">
+        <div class="theme-container">
+            <div class="py-3">
+                <div class="mdc-card p-3">
+                    <div class="mdc-tab-bar-wrapper submit-property">
+                        <div class="mdc-tab-bar mb-3">
+                            <div class="mdc-tab-scroller">
+                                <div class="mdc-tab-scroller__scroll-area">
+                                    <div class="mdc-tab-scroller__scroll-content">
+                                        <button class="mdc-tab mdc-tab--active" tabindex="0">
+                                            <span class="mdc-tab__content">
+                                                <span class="mdc-tab__text-label">Basic</span>
+                                            </span>
+                                            <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                                                <span
+                                                    class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                            </span>
+                                            <span class="mdc-tab__ripple"></span>
+                                        </button>
+                                        <button class="mdc-tab mdc-tab" tabindex="0">
+                                            <span class="mdc-tab__content">
+                                                <span class="mdc-tab__text-label">Contact And Media</span>
+                                            </span>
+                                            <span class="mdc-tab-indicator mdc-tab-indicator">
+                                                <span
+                                                    class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                            </span>
+                                            <span class="mdc-tab__ripple"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form action="/builder/submit" method="POST" id="builder-submit-form">
+                            <div class="tab-content tab-content--active">
+                                <div class="row">
+                                    <div class="col-xs-12 p-3">
+                                        <h1 class="fw-500 text-center">Basic</h1>
+                                    </div>
+                                    <input id="upload-builder-id" type="hidden" name="builderId"
+                                        value="<%= builder._id %>">
+                                    <div class="col-xs-12 col-sm-6 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                            <input name="name" class="mdc-text-field__input" required>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Name</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                            <input name="parentCompany" type="text" class="mdc-text-field__input"
+                                                required>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Parent Company</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
+                                            <textarea name="descriptionShort" class="mdc-text-field__input" rows="2"
+                                                required></textarea>
+                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Short Description</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
+                                            <textarea name="description" class="mdc-text-field__input" rows="5"
+                                                required></textarea>
+                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Description</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 p-2 mt-3 end-xs">
+                                        <button class="mdc-button mdc-button--raised next-tab" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Next</span>
+                                            <i class="material-icons mdc-button__icon">navigate_next</i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-xs-12 p-3">
+                                        <h1 class="fw-500 text-center">Contact Info</h1>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                            <input name="email" class="mdc-text-field__input">
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Email</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                            <input name="phone" class="mdc-text-field__input">
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Phone</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 p-3">
+                                        <h1 class="fw-500 text-center">Media</h1>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined">
+                                            <input name="image" type="text" autocomplete="off"
+                                                class="mdc-text-field__input" placeholder="Upload Image to populate"
+                                                required>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Image</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 mt-2">
+                                        <label class="text-muted">Image</label>
+                                        <div id="builder-image" class="dropzone needsclick">
+                                            <div class="dz-message needsclick text-muted">
+                                                Drop file here or click to upload.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 p-2 mt-3 row between-xs">
+                                        <button class="mdc-button mdc-button--raised prev-tab" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <i class="material-icons mdc-button__icon">navigate_before</i>
+                                            <span class="mdc-button__label">Back</span>
+                                        </button>
+                                        <button class="mdc-button mdc-button--raised next-tab" type="submit">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Submit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="dropzone-preview-template" class="d-none plan-image-template">
+                        <div class="dz-preview dz-file-preview">
+                            <div class="dz-image"><img src="/assets/images/others/transparent-bg.png"
+                                    data-dz-thumbnail="" alt="prop-image"></div>
+                            <div class="dz-details">
+                                <div class="dz-size"><span data-dz-size=""></span></div>
+                                <div class="dz-filename"><span data-dz-name=""></span></div>
+                            </div>
+                            <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div>
+                            <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
+                            <div class="dz-success-mark">
+                                <i class="material-icons mat-icon-xlg">check</i>
+                            </div>
+                            <div class="dz-error-mark">
+                                <i class="material-icons mat-icon-xlg">cancel</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/js/libs/dropzone.js"></script>
+
+<%- include ("../partials/footer") %>

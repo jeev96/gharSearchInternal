@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const dbEntry = require("../services/dbEntry");
 const Listing = require("../models/listing");
+const Builder = require("../models/builder");
 const Lead = require("../models/lead");
 const User = require("../models/user");
 const middleware = require("../services/middleware");
@@ -124,9 +125,22 @@ router.get("/all-properties", isLoggedIn, function (req, res) {
     });
 });
 
+// builders route
+router.get("/builder", function (req, res) {
+    Builder.find({}, function (error, foundBuilders) {
+        if (error) {
+            console.log(error);
+            req.flash("error", error.message);
+            res.render("account/builder", { builders: [], page: "builder-index" });
+        } else {
+            res.render("account/builder", { builders: foundBuilders, page: "builder-admin" });
+        }
+    })
+});
+
 // lead route
 router.get("/leads", isLoggedIn, isAdmin, function (req, res) {
-    Lead.find({}).exec((err, foundLeads) => {
+    Lead.find({}).sort({ createdAt: -1, status: -1 }).exec((err, foundLeads) => {
         if (err) {
             console.log(err);
             res.render("account/leads", { leads: [], page: "leads" });
