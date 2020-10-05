@@ -2,6 +2,8 @@ const fs = require('fs-extra');
 const sharp = require('sharp');
 const imageParameters = require("../constants/imageParameters");
 
+sharp.cache(false);
+
 function resizeImage(inputLocation, outputLocation, images, imgX, imgY) {
     return new Promise(function (resolve, reject) {
         fs.mkdir(outputLocation, { recursive: true }, function (err) {
@@ -71,6 +73,17 @@ function deleteImage(imageLocation) {
     });
 }
 
+function deleteFile(fileLocation) {
+    return new Promise(function (resolve, reject) {
+        fs.remove(fileLocation).then(() => {
+            resolve("File Deleted")
+        }).catch((err) => {
+            console.error(err);
+            return reject(Error("Some error occurred."))
+        });
+    })
+}
+
 module.exports = {
     saveListingImages: function (listingId, images) {
         return new Promise(function (resolve, reject) {
@@ -94,10 +107,20 @@ module.exports = {
     },
     saveBuilderImage: function (listingId, images) {
         return new Promise(function (resolve, reject) {
+            let tempLocation = `./public/uploads/temp`;
             let saveLocation = `./public/uploads/builder/${listingId}`;
-            saveImage(saveLocation, images).then((response) => {
-                return resolve(response);
+
+            saveImage(tempLocation, images).then((response) => {
+                console.log(response);
+                return resizeImage(tempLocation, saveLocation, [images.builderImage.name], imageParameters.builderSize.x, imageParameters.builderSize.y)
+            }).then((response) => {
+                console.log(response);
+                return deleteFile(`${tempLocation}/${images.builderImage.name}`);
+            }).then((response) => {
+                console.log(response);
+                return resolve("Image Saved.");
             }).catch((error) => {
+                console.log(error);
                 reject(error);
             });
         });
@@ -110,9 +133,11 @@ module.exports = {
             let smallLocation = `./public/uploads/listing/${listingId}/images/small`;
 
             resizeImage(rawLocation, largeLocation, images, imageParameters.size.large.x, imageParameters.size.large.y)
-                .then(resizeImage(rawLocation, mediumLocation, images, imageParameters.size.medium.x, imageParameters.size.medium.y))
-                .then(resizeImage(rawLocation, smallLocation, images, imageParameters.size.small.x, imageParameters.size.small.y))
                 .then((response) => {
+                    return resizeImage(rawLocation, mediumLocation, images, imageParameters.size.medium.x, imageParameters.size.medium.y);
+                }).then((response) => {
+                    return resizeImage(rawLocation, smallLocation, images, imageParameters.size.small.x, imageParameters.size.small.y);
+                }).then((response) => {
                     console.log(response);
                     return resolve("Live images created");
                 }).catch((error) => {

@@ -45,6 +45,7 @@
                                     </div>
                                     <input id="upload-builder-id" type="hidden" name="builderId"
                                         value="<%= builder._id %>">
+                                    <input type="hidden" name="createdAt" value="<%= moment(builder.createdAt).valueOf() %>">
                                     <div class="col-xs-12 col-sm-6 p-2">
                                         <div class="mdc-text-field mdc-text-field--outlined">
                                             <input name="name" value="<%= builder.name %>" class="mdc-text-field__input"
@@ -97,7 +98,19 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-xs-12 p-2">
+                                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea">
+                                            <textarea name="projectBrief" class="mdc-text-field__input" rows="5"
+                                                required><%= builder.projectBrief %></textarea>
+                                            <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label class="mdc-floating-label">Project Brief</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-xs-12 p-2 mt-3 end-xs">
                                         <button class="mdc-button mdc-button--raised next-tab" type="button">
                                             <span class="mdc-button__ripple"></span>

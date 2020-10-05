@@ -2,7 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const dbEntry = require("../services/dbEntry");
+const listingType = require("../constants/listing");
 const Builder = require("../models/builder");
+const Listing = require("../models/listing");
+const dbConstants = require("../constants/dbConstants");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
@@ -35,9 +38,9 @@ router.post("/submit", isLoggedIn, isAdmin, function (req, res) {
             console.log(err);
             res.redirect("back");
         } else {
-            //redirect back to listings page
+            //redirect back to builders page
             console.log(newlyCreated);
-            res.redirect("/builders");
+            res.redirect("/builder");
         }
     });
 });
@@ -50,7 +53,21 @@ router.get("/:id", function (req, res) {
             req.flash("error", error.message);
             res.redirect("back");
         } else {
-            res.render("builder/show", { builder: foundBuilder, page: "show-builder" });
+            Listing.find({builderId: req.params.id, status: listingType.status.LIVE}, function(error, foundListings) {
+                if (error) {
+                    console.log(error);
+                    req.flash("error", error.message);
+                    res.redirect("back");
+                } else {
+                    res.render("builder/show", { 
+                        builder: foundBuilder, 
+                        listings: foundListings,
+                        listingCount: foundListings.length,
+                        pageNo: 1,
+                        limit: dbConstants.DEFAULT_LIMIT_LISTING, 
+                        page: "show-builder" });
+                }
+            });
         }
     });
 });
@@ -60,7 +77,7 @@ router.put("/:id", isLoggedIn, isAdmin, function (req, res) {
     let newData = dbEntry.createBuilderEntry(req.body);
     console.log(newData);
 
-    Builder.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedListing) {
+    Builder.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedBuilder) {
         if (err) {
             console.log(err);
             req.flash("error", err.message);

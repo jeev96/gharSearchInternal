@@ -28,7 +28,7 @@
                                 <i class="material-icons mat-icon-sm">star_border</i>
                             </div>
                             <p class="mt-3 text-muted fw-500">
-                                <%= builder.descriptionShort %>
+                                <%- builder.descriptionShort.replace(/\r\n/g, '<br/>') %>
                             </p>
                             <p class="row middle-xs">
                                 <i class="material-icons primary-color" title="Organization">business</i>

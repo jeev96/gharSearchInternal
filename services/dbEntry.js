@@ -194,8 +194,9 @@ module.exports = {
             parentCompany: data.parentCompany,
             descriptionShort: data.descriptionShort ? data.descriptionShort.trim() : "",
             description: data.description ? data.description.trim() : "",
+            projectBrief: data.projectBrief ? data.projectBrief.trim() : "",
             image: data.image,
-            createdAt: Date.now(),
+            createdAt: data.createdAt ? data.createdAt : Date.now(),
         }
     },
 }

@@ -10,6 +10,7 @@ let BuilderSchema = new mongoose.Schema({
     parentCompany: String,
     descriptionShort: String,
     description: String,
+    projectBrief: String,
     image: String,
     createdAt: {
         type: Date,

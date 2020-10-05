@@ -16,6 +16,7 @@ function getSearchQuery(data) {
     let obj = {};
     obj["status"] = listingType.status.LIVE;
     data.type ? obj["propertyType.type"] = data.type : "";
+    data.bhk ? obj["propertyInfo.bhk"] = data.bhk : "";
     data.subType ? obj["propertyType.subtype"] = data.subType : "";
     data.priceFrom || data.priceTo ? obj["price"] = getRangeQuery(data.priceFrom, data.priceTo) : "";
     data.areaFrom || data.areaTo ? obj["propertyInfo.area.area"] = getRangeQuery(data.areaFrom, data.areaTo) : "";
@@ -26,6 +27,7 @@ function getSearchQuery(data) {
     data.city ? obj["location.city"] = data.city : "";
     data.sector ? obj["location.sector"] = data.sector : "";
     data.project ? obj["location.project"] = data.project : "";
+    data.builderId ? obj["builderId"] = data.builderId : "";
 
     return obj;
 }

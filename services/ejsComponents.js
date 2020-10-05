@@ -19,26 +19,15 @@ module.exports = {
                     <div class="property-image">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
+                            <% listing.media.images.forEach((image) =>{ %>
                                 <div class="swiper-slide">
-                                    <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                        data-src="assets/images/props/flat-1/1-medium.jpg" class="slide-item swiper-lazy">
+                                    <img src="/assets/images/others/transparent-bg.png"
+                                        alt="slide image <%= image %>"
+                                        data-src="/uploads/listing/<%= listing._id %>/images/medium/<%= image %>"
+                                        class="slide-item swiper-lazy">
                                     <div class="swiper-lazy-preloader"></div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                        data-src="assets/images/props/flat-1/2-medium.jpg" class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                        data-src="assets/images/props/flat-1/3-medium.jpg" class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/images/others/transparent-bg.png" alt="slide image"
-                                        data-src="assets/images/props/flat-1/4-medium.jpg" class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
+                                <% }); %>
                             </div>
                             <div class="swiper-pagination white"></div>
                             <button class="mdc-icon-button swiper-button-prev swipe-arrow"><i
@@ -79,10 +68,7 @@ module.exports = {
                             </div>
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex">
                                 <div class="description mt-3">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-                                        modi dignissimos blanditiis accusamus, magni provident omnis
-                                        perferendis laudantium illo recusandae ab molestiae repudiandae cum
-                                        obcaecati nulla adipisci fuga culpa repellat!</p>
+                                    <p><%= listing.description %></p>
                                 </div>
                             </div>
                             <div class="features mt-3">
@@ -128,34 +114,15 @@ module.exports = {
                     <div class="property-image">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
+                                <% listing.media.images.forEach((image) =>{ %>
                                 <div class="swiper-slide">
                                     <img src="/assets/images/others/transparent-bg.png"
-                                        alt="slide image"
-                                        data-src="/assets/images/props/flat-1/1-medium.jpg"
+                                        alt="slide image <%= image %>"
+                                        data-src="/uploads/listing/<%= listing._id %>/images/medium/<%= image %>"
                                         class="slide-item swiper-lazy">
                                     <div class="swiper-lazy-preloader"></div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="/assets/images/others/transparent-bg.png"
-                                        alt="slide image"
-                                        data-src="/assets/images/props/flat-1/2-medium.jpg"
-                                        class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/assets/images/others/transparent-bg.png"
-                                        alt="slide image"
-                                        data-src="/assets/images/props/flat-1/3-medium.jpg"
-                                        class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/assets/images/others/transparent-bg.png"
-                                        alt="slide image"
-                                        data-src="/assets/images/props/flat-1/4-medium.jpg"
-                                        class="slide-item swiper-lazy">
-                                    <div class="swiper-lazy-preloader"></div>
-                                </div>
+                                <% }); %>
                             </div>
                             <div class="swiper-pagination white"></div>
                             <button class="mdc-icon-button swiper-button-prev swipe-arrow"><i
@@ -202,10 +169,7 @@ module.exports = {
                             </div>
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex">
                                 <div class="description mt-3">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-                                        modi dignissimos blanditiis accusamus, magni provident omnis
-                                        perferendis laudantium illo recusandae ab molestiae repudiandae
-                                        cum obcaecati nulla adipisci fuga culpa repellat!</p>
+                                    <p><%= listing.description %></p>
                                 </div>
                             </div>
                             <div class="features mt-3">
@@ -252,7 +216,7 @@ module.exports = {
                         <span>
                         <% let tagTitle = key.toUpperCase(); tagTitle = tagTitle.replace("TO", " <");
                             tagTitle = tagTitle.replace("FROM", " >");
-                            tagTitle = ["SUBTYPE", "CITY"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
+                            tagTitle = ["SUBTYPE", "CITY", "BHK"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
                         %>
                             <span role="button" tabindex="0" class="mdc-chip__text"><%= tagTitle + " " + tags[key] %></span>
                         </span>
@@ -273,13 +237,23 @@ module.exports = {
                         <span role="button" tabindex="0" class="mdc-chip__text uppercase"><%= listingCount %> Found</span>
                     </span>
                 </div>
+                <% if(builderName) {%>
+                    <div class="mdc-chip bg-warn">
+                    <div class="mdc-chip__ripple"></div>
+                    <span>
+                        <span role="button" tabindex="0" class="mdc-chip__text uppercase"><%= builderName %></span>
+                    </span>
+                </div>
+                <% } %>
+                <% if(type) {%>
                 <div class="mdc-chip bg-warn">
                     <div class="mdc-chip__ripple"></div>
                     <span>
                         <span role="button" tabindex="0" class="mdc-chip__text uppercase"><%= type %></span>
                     </span>
                 </div>
-                <% let excludedKeys = ["filter", "limit", "skip", "isListingSearch", "type", "page", "isListingSearchSubtype"] %>
+                <% } %>
+                <% let excludedKeys = ["filter", "limit", "skip", "builderId", "builderName", "isListingSearch", "type", "page", "isListingSearchSubtype"] %>
                 <% for(key in tags) { %>
                     <% if (tags[key] && (excludedKeys.indexOf(key) === -1)) { %>
                     <div class="mdc-chip">
@@ -287,7 +261,7 @@ module.exports = {
                         <span>
                         <% let tagTitle = key.toUpperCase(); tagTitle = tagTitle.replace("TO", " <");
                             tagTitle = tagTitle.replace("FROM", " >");
-                            tagTitle = ["SUBTYPE", "CITY"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
+                            tagTitle = ["SUBTYPE", "CITY", "BHK"].indexOf(tagTitle) > -1 ? "" : tagTitle + " ";
                         %>
                             <span role="button" tabindex="0" class="mdc-chip__text"><%= tagTitle + tags[key] %></span>
                         </span>

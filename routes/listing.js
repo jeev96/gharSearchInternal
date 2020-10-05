@@ -6,12 +6,20 @@ const utils = require("../services/utils");
 const fileManager = require("../services/fileManager");
 const listingType = require("../constants/listing");
 const Listing = require("../models/listing");
+const Builder = require("../models/builder");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
 // submit route
 router.get("/submit", isLoggedIn, function (req, res) {
-    res.render("listing/submit", { page: "submit" });
+    Builder.find({}).exec(function (error, foundBuilders) {
+        if (error) {
+            console.log(err);
+            res.render("listing/submit", { builders: [], page: "submit" });
+        } else {
+            res.render("listing/submit", { builders: foundBuilders, page: "submit" });
+        }
+    });
 });
 
 // submit post route
@@ -67,7 +75,7 @@ router.post("/search", function (req, res) {
                     let data = {
                         listings: foundListings,
                         listingsHtml: utils.renderListingsEjs({ listings: foundListings, moment: moment }, req.body.isListingSearch),
-                        tagsHtml: utils.renderTagsEjs({ listingCount: count, tags: req.body, type: req.body.type }, req.body.isListingSearch),
+                        tagsHtml: utils.renderTagsEjs({ listingCount: count, tags: req.body, builderName: req.body.builderName, type: req.body.type }, req.body.isListingSearch),
                         paginationBar: utils.renderPaginationBarEjs({ listingCount: count, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
                         loadButton: utils.renderLoadButtonEjs({ listingCount: count, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
                         isListingSearch: req.body.isListingSearch ? true : false
@@ -142,13 +150,20 @@ router.put("/:id", isLoggedIn, function (req, res) {
 
 // get edit route
 router.get("/:id/edit", isLoggedIn, function (req, res) {
-    Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
-        if (err) {
+    Builder.find({}).exec(function (error, foundBuilders) {
+        if (error) {
             console.log(err);
-            req.flash("error", err.message);
             res.redirect("back");
         } else {
-            res.render("listing/edit", { listing: foundListing, page: "edit-listing" });
+            Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
+                if (err) {
+                    console.log(err);
+                    req.flash("error", err.message);
+                    res.redirect("back");
+                } else {
+                    res.render("listing/edit", { listing: foundListing, builders: foundBuilders, page: "edit-listing" });
+                }
+            });
         }
     });
 });

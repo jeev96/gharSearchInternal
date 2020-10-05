@@ -235,10 +235,11 @@
                                             <ul class="mdc-list" name="builderId">
                                                 <li class="mdc-list-item mdc-list-item--selected" data-value="">
                                                 </li>
-                                                <li class="mdc-list-item" data-value="id1">ATS</li>
-                                                <li class="mdc-list-item" data-value="id2">DLF</li>
-                                                <li class="mdc-list-item" data-value="id3">HERO</li>
-                                                <li class="mdc-list-item" data-value="">OTHER</li>
+                                                <% builders.forEach((builder) => { %>
+                                                <li class="mdc-list-item" data-value="<%= builder._id %>">
+                                                    <%= builder.name %>
+                                                </li>
+                                                <% }); %>
                                             </ul>
                                         </div>
                                     </div>
@@ -649,7 +650,7 @@
                                                 </li>
                                                 <li class="mdc-list-item" data-value="1RK">1RK</li>
                                                 <li class="mdc-list-item" data-value="1BHK">1BHK</li>
-                                                <li class="mdc-list-item" data-value="2BHK">WEST</li>
+                                                <li class="mdc-list-item" data-value="2BHK">2BHK</li>
                                                 <li class="mdc-list-item" data-value="3BHK">3BHK</li>
                                                 <li class="mdc-list-item" data-value="4BHK">4BHK</li>
                                                 <li class="mdc-list-item" data-value="4BHK+">4BHK+</li>

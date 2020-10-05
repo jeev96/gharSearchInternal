@@ -262,16 +262,14 @@
                                             </div>
                                             <div class="mdc-select__menu mdc-menu mdc-menu-surface">
                                                 <ul class="mdc-list" name="builderId">
-                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="">
+                                                    <li class="mdc-list-item" data-value="">
                                                     </li>
-                                                    <li class="mdc-list-item <%= listing.dealerId === "id1" ? "mdc-list-item--selected": "" %>"
-                                                        data-value="id1">ATS</li>
-                                                    <li class="mdc-list-item <%= listing.dealerId === "id1" ? "mdc-list-item--selected": "" %>"
-                                                        data-value="id2">DLF</li>
-                                                    <li class="mdc-list-item <%= listing.dealerId === "id1" ? "mdc-list-item--selected": "" %>"
-                                                        data-value="id3">HERO</li>
-                                                    <li class="mdc-list-item <%= listing.dealerId === "id1" ? "mdc-list-item--selected": "" %>"
-                                                        data-value="id3">OTHER</li>
+                                                    <% builders.forEach((builder) => { %>
+                                                    <li class="mdc-list-item <%= listing.dealerId === builder._id ? "mdc-list-item--selected": "" %>"
+                                                        data-value="<%= builder._id %>">
+                                                        <%= builder.name %>
+                                                    </li>
+                                                    <% }); %>
                                                 </ul>
                                             </div>
                                         </div>
@@ -308,7 +306,8 @@
                                     </div>
                                     <div class="col-xs-4 col-sm-6 p-2">
                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="dealerEmail" value="<%= listing.contactInfo.email %>" class="mdc-text-field__input" required>
+                                            <input name="dealerEmail" value="<%= listing.contactInfo.email %>"
+                                                class="mdc-text-field__input" required>
                                             <div class="mdc-notched-outline">
                                                 <div class="mdc-notched-outline__leading"></div>
                                                 <div class="mdc-notched-outline__notch">
@@ -320,7 +319,9 @@
                                     </div>
                                     <div class="col-xs-8 col-sm-6 p-2">
                                         <div class="mdc-text-field mdc-text-field--outlined">
-                                            <input name="dealerDescription" value="<%= listing.contactInfo.description %>" class="mdc-text-field__input">
+                                            <input name="dealerDescription"
+                                                value="<%= listing.contactInfo.description %>"
+                                                class="mdc-text-field__input">
                                             <div class="mdc-notched-outline">
                                                 <div class="mdc-notched-outline__leading"></div>
                                                 <div class="mdc-notched-outline__notch">
@@ -719,7 +720,7 @@
                                                     <li class="mdc-list-item <%= listing.propertyInfo.bhk === "1BHK" ? "mdc-list-item--selected" : "" %>"
                                                         data-value="1BHK">1BHK</li>
                                                     <li class="mdc-list-item <%= listing.propertyInfo.bhk === "2BHK" ? "mdc-list-item--selected" : "" %>"
-                                                        data-value="2BHK">WEST</li>
+                                                        data-value="2BHK">2BHK</li>
                                                     <li class="mdc-list-item <%= listing.propertyInfo.bhk === "3BHK" ? "mdc-list-item--selected" : "" %>"
                                                         data-value="3BHK">3BHK</li>
                                                     <li class="mdc-list-item <%= listing.propertyInfo.bhk === "4BHK" ? "mdc-list-item--selected" : "" %>"

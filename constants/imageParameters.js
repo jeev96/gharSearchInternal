@@ -3,5 +3,6 @@ module.exports = {
         large: { x: 1366, y: 905 },
         medium: { x: 640, y: 424 },
         small: { x: 240, y: 159 },
-    }
+    },
+    builderSize: {x: 640, y: 768 }
 }

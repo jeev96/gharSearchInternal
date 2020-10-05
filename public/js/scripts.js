@@ -477,21 +477,21 @@ function onPageLoad() {
     $("#leads").submit(function (event) {
         event.preventDefault();
         let inputData = $("#leads").serializeArray()
-        $.post("/lead", inputData, function (data, status) {
-            if (status === "success") {
-                console.log("Success");
-                $("#lead-success").text("Request Sent. You will be contacted shortly.");
-                $("#lead-success").removeClass("d-none warn-color");
-                $("#lead-success").addClass("primary-color");
-                $("#leads").trigger("reset");
-                return;
-            } else {
-                console.log("Faliure");
-                $("#lead-success").text("Some Error Occurred. Try Again");
-                $("#lead-success").removeClass("d-none primary-color");
-                $("#lead-success").addClass("warn-color");
-                return;
-            }
+        $.post("/lead", inputData, function () {
+            console.log("Request sent...");
+        }).done((data) => {
+            console.log("Success");
+            $("#lead-success").text("Request Sent. You will be contacted shortly.");
+            $("#lead-success").removeClass("d-none warn-color");
+            $("#lead-success").addClass("primary-color");
+            $("#leads").trigger("reset");
+            return;
+        }).fail((error) => {
+            console.log("Faliure");
+            $("#lead-success").text("Some Error Occurred. Try Again");
+            $("#lead-success").removeClass("d-none primary-color");
+            $("#lead-success").addClass("warn-color");
+            return;
         });
     });
 
@@ -573,10 +573,16 @@ function onPageLoad() {
     function searchListings(searchString) {
         addExtraQueryParams(searchString);
 
-        $.post("/listing/search", searchString, function (data, status) {
+        $.post("/listing/search", searchString, function () {
+            console.log("Request sent...");
+        }).done((data) => {
             removeExtraQueryParams(searchString);
             data.isListingSearch ? populateListingContent(data) : populateHomeContent(data);
             reInitOptions();
+            return;
+        }).fail((error) => {
+            console.log(error.responseText);
+            showSnackbar("There was an error. Please check your fields and Retry");
             return;
         });
     }
@@ -941,22 +947,20 @@ function onPageLoad() {
         $('.add-to-favorite').on('click', function () {
             $.post('/listingOperation/favourite', { id: $(this).data("value") }, function (data, status, xhr) {
                 console.log('Request sent!');
-            })
-                .done(function () {
-                    console.log('Request done!');
-                    let count = Number($('#favourite-header').text());
-                    $('#favourite-header').text(count + 1);
-                    $('#favourite-menubar').text(count + 1);
-                    showSnackbar('The property has been added to favorites.');
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    console.log('failed, ' + ex);
-                    if (jqxhr.status === 409) {
-                        showSnackbar('The property has already been added.');
-                    } else {
-                        showSnackbar('Some error occurred.');
-                    }
-                });
+            }).done(function () {
+                console.log('Request done!');
+                let count = Number($('#favourite-header').text());
+                $('#favourite-header').text(count + 1);
+                $('#favourite-menubar').text(count + 1);
+                showSnackbar('The property has been added to favorites.');
+            }).fail(function (jqxhr, settings, ex) {
+                console.log('failed, ' + ex);
+                if (jqxhr.status === 409) {
+                    showSnackbar('The property has already been added.');
+                } else {
+                    showSnackbar('Some error occurred.');
+                }
+            });
         });
     }
 
@@ -964,22 +968,20 @@ function onPageLoad() {
         $('.add-to-compare').on('click', function () {
             $.post('/listingOperation/compare', { id: $(this).data("value") }, function (data, status, xhr) {
                 console.log('Request sent!');
-            })
-                .done(function () {
-                    console.log('Request done!');
-                    let count = Number($('#compare-header').text());
-                    $('#compare-header').text(count + 1);
-                    $('#compare-menubar').text(count + 1);
-                    showSnackbar('The property has been added to compare.');
-                })
-                .fail(function (jqxhr, settings, ex) {
-                    console.log('failed, ' + ex);
-                    if (jqxhr.status === 409) {
-                        showSnackbar('The property has already been added.');
-                    } else {
-                        showSnackbar('Some error occurred.');
-                    }
-                });
+            }).done(function () {
+                console.log('Request done!');
+                let count = Number($('#compare-header').text());
+                $('#compare-header').text(count + 1);
+                $('#compare-menubar').text(count + 1);
+                showSnackbar('The property has been added to compare.');
+            }).fail(function (jqxhr, settings, ex) {
+                console.log('failed, ' + ex);
+                if (jqxhr.status === 409) {
+                    showSnackbar('The property has already been added.');
+                } else {
+                    showSnackbar('Some error occurred.');
+                }
+            });
         });
     }
 
@@ -1544,7 +1546,7 @@ function initDropzonePropertyImages() {
             }).fail((error) => {
                 console.log("Error: " + error.responseText);
                 showSnackbar(error.responseText)
-            })
+            });
         });
 
         $('#upload-images-button').on('click', function () {
@@ -1643,7 +1645,7 @@ function initDropzonePlanImage(index) {
             }).fail((error) => {
                 console.log("Error: " + error.responseText);
                 showSnackbar(error.responseText)
-            })
+            });
         });
     }
 }
@@ -1735,7 +1737,7 @@ function initDropzoneBuilderImage() {
             }).fail((error) => {
                 console.log("Error: " + error.responseText);
                 showSnackbar(error.responseText)
-            })
+            });
         });
     }
 }
