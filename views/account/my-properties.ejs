@@ -115,9 +115,7 @@
                                     <tr class="mdc-data-table__header-row">
                                         <th class="mdc-data-table__header-cell">#</th>
                                         <th class="mdc-data-table__header-cell">Title</th>
-                                        <% if (page === "all-properties") { %>
                                         <th class="mdc-data-table__header-cell">Status</th>
-                                        <% } %>
                                         <th class="mdc-data-table__header-cell">Location</th>
                                         <th class="mdc-data-table__header-cell">Last Modified</th>
                                         <th class="mdc-data-table__header-cell text-center">Actions</th>
@@ -135,11 +133,9 @@
                                                 <%= listing.listingInfo.title %>
                                             </a>
                                         </td>
-                                        <% if (page === "all-properties") { %>
                                         <td class="mdc-data-table__cell <%= getStatusColor(listing.status) %>">
                                             <%= listing.status %>
                                         </td>
-                                        <% } %>
                                         <td class="mdc-data-table__cell">
                                             <%= listing.location.sector + ", " + listing.location.city %>
                                         </td>

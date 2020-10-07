@@ -39,6 +39,9 @@ var UserSchema = new mongoose.Schema({
     },
     organization: {
         type: String
+    },
+    image: {
+        type: String
     }
 });
 

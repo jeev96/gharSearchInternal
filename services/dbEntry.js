@@ -86,6 +86,7 @@ module.exports = {
             username: data.username,
             userType: data.userType ? data.userType : "AGENT",
             phone: data.phone,
+            image: data.image,
             organization: data.organization
         }
         return newUser;

@@ -1657,7 +1657,7 @@ function initDropzoneBuilderImage() {
             addRemoveLinks: true,
             acceptedFiles: 'image/*',
             url: '/media/uploadBuilder',
-            paramName: 'builderImage',
+            paramName: 'agentImage',
             previewTemplate: document.querySelector('#dropzone-preview-template').innerHTML,
             parallelUploads: 1,
             thumbnailHeight: 120,
@@ -1716,7 +1716,7 @@ function initDropzoneBuilderImage() {
             if (file.status !== "success") {
                 return;
             }
-            $("#builder-image").parent().parent().find("input[name=image]").val(file.name);
+            $("#builder-image").parent().parent().find("input[name=image]").val("agentImage.jpg");
             showSnackbar("Image Uploaded. Please submit Changes.")
         });
 
@@ -1744,9 +1744,12 @@ function initDropzoneBuilderImage() {
 
 function initUserProfileImage() {
     if ($('#user-profile-image').length) {
-        var property_images = new Dropzone('#user-profile-image', {
+        var profile_image = new Dropzone('#user-profile-image', {
+            autoProcessQueue: true,
             addRemoveLinks: true,
-            url: '/file/post',
+            url: '/media/uploadUserImage',
+            paramName: 'agentImage',
+            acceptedFiles: 'image/*',
             previewTemplate: document.querySelector('#dropzone-preview-template').innerHTML,
             parallelUploads: 2,
             thumbnailHeight: 120,
@@ -1760,6 +1763,29 @@ function initUserProfileImage() {
                                     <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z" />
                                 </svg>`,
             filesizeBase: 1000,
+            init: function () {
+                let imageElement = $('#user-profile-image').parent().parent().find('input[name=image]');
+                if (imageElement.length === 0 || $(imageElement).val() === "") {
+                    return;
+                }
+                let image = $(imageElement).val();
+                let file = {
+                    processing: true,
+                    accepted: true,
+                    name: image,
+                    size: 5000000,
+                    type: 'image/jpeg',
+                    status: Dropzone.SUCCESS
+                }
+                let thumbnailUrl = `/uploads/user/${$("input[name=userId]").val()}/${image}`
+                this.files.push(file);
+                this.emit("addedfile", file);
+                this.emit("thumbnail", file, thumbnailUrl);
+                this.emit("processing", file);
+                this.emit("success", file, { status: "success" }, false);
+                this.emit("complete", file);
+
+            },
             thumbnail: function (file, dataUrl) {
                 if (file.previewElement) {
                     file.previewElement.classList.remove("dz-file-preview");
@@ -1774,39 +1800,36 @@ function initUserProfileImage() {
             }
         });
 
-        // Now fake the file upload, since GitHub does not handle file uploads
-        // and returns a 404 
-        var minSteps = 6,
-            maxSteps = 60,
-            timeBetweenSteps = 100,
-            bytesPerStep = 100000;
-        property_images.uploadFiles = function (files) {
-            var self = this;
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-                for (var step = 0; step < totalSteps; step++) {
-                    var duration = timeBetweenSteps * (step + 1);
-                    setTimeout(function (file, totalSteps, step) {
-                        return function () {
-                            file.upload = {
-                                progress: 100 * (step + 1) / totalSteps,
-                                total: file.size,
-                                bytesSent: (step + 1) * file.size / totalSteps
-                            };
-                            self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-                            if (file.upload.progress == 100) {
-                                file.status = Dropzone.SUCCESS;
-                                self.emit("success", file, 'success', null);
-                                self.emit("complete", file);
-                                self.processQueue();
-                                //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
-                            }
-                        };
-                    }(file, totalSteps, step), duration);
-                }
+        profile_image.on('sending', function (file, xhr, formData) {
+            formData.append('userId', $("#upload-user-id").val());
+        });
+
+        profile_image.on("complete", function (file) {
+            if (file.status !== "success") {
+                return;
             }
-        }
+            $("#user-profile-image").parent().parent().find("input[name=image]").val("agentImage.jpg");
+            showSnackbar("Image Uploaded. Please submit Changes.")
+        });
+
+        profile_image.on('removedfile', function (file) {
+            if (file.status !== "success") {
+                return;
+            }
+            $("#user-profile-image").parent().parent().find("input[name=image]").val("");
+            let data = {
+                userId: $("#upload-user-id").val(),
+                imageName: file.name
+            }
+            $.post("/media/removeUserImage", data, function (result, status) {
+            }).done((response) => {
+                console.log("Message: " + response);
+                showSnackbar("Image Deleted. Please submit Changes.")
+            }).fail((error) => {
+                console.log("Error: " + error.responseText);
+                showSnackbar(error.responseText)
+            });
+        });
     }
 }
 

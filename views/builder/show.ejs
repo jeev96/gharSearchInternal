@@ -6,7 +6,7 @@
             <div class="mdc-card mt-5 p-5">
                 <div class="row agent-wrapper">
                     <div class="col-xs-12 col-sm-6 col-md-4 p-3">
-                        <img src="/uploads/builder/<%= builder._id %>/<%= builder.image %> " alt="agent-image"
+                        <img src="/uploads/builder/<%= builder._id %>/<%= builder.image %>" alt="agent-image"
                             class="mw-100 d-block">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 p-3">
@@ -80,7 +80,7 @@
                 <aside class="mdc-drawer mdc-drawer--modal page-sidenav">
                     <a href="#" class="h-0"></a>
                     <div class="mdc-card">
-                        <form action="javascript:void(0);" id="filters" class="search-wrapper m-0 o-hidden">
+                        <form action="javascript:void(0);" id="filters" class="search-wrapper m-0">
                             <div class="column p-2">
                                 <div class="col-xs-12 p-2">
                                     <div class="mdc-select mdc-select--outlined">
@@ -381,9 +381,8 @@
                                     <div class="property-content">
                                         <div class="content">
                                             <h1 class="title">
-                                                <a href="/listing/<%= listing._id %>">
-                                                    <%= listing.listingInfo && listing.listingInfo.title ?
-                                                    listing.listingInfo.title : listing.location.project %>
+                                                <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                                    <%= listing.listingInfo.title %>
                                                 </a>
                                             </h1>
                                             <p class="row address flex-nowrap">
@@ -424,7 +423,7 @@
                                                 <i class="material-icons text-muted">date_range</i>
                                                 <span class="mx-2"><%= moment(listing.createdAt).format("ll") %> </span>
                                             </p>
-                                            <a href="/listing/<%= listing._id %>"
+                                            <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>"
                                                 class="mdc-button mdc-button--outlined">
                                                 <span class="mdc-button__ripple"></span>
                                                 <span class="mdc-button__label">Details</span>

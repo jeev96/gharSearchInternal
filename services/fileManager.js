@@ -2,8 +2,6 @@ const fs = require('fs-extra');
 const sharp = require('sharp');
 const imageParameters = require("../constants/imageParameters");
 
-sharp.cache(false);
-
 function resizeImage(inputLocation, outputLocation, images, imgX, imgY) {
     return new Promise(function (resolve, reject) {
         fs.mkdir(outputLocation, { recursive: true }, function (err) {
@@ -76,18 +74,40 @@ function deleteImage(imageLocation) {
 function deleteFile(fileLocation) {
     return new Promise(function (resolve, reject) {
         fs.remove(fileLocation).then(() => {
-            resolve("File Deleted")
+            resolve("File Deleted");
         }).catch((err) => {
             console.error(err);
-            return reject(Error("Some error occurred."))
+            return reject(Error("Some error occurred."));
         });
     })
 }
 
+function renameFile(oldPath, newPath) {
+    return new Promise((resolve, reject) => {
+        fs.rename(oldPath, newPath).then(() => {
+            resolve("File Renamed.")
+        }).catch((err) => {
+            console.error(err);
+            return reject(Error("Some error occurred."))
+        });
+    });
+}
+
+function emptyDir(dirLocation) {
+    return new Promise(function (resolve, reject) {
+        fs.emptyDir(dirLocation).then(() => {
+            resolve("Directory Cleared.");
+        }).catch((err) => {
+            console.error(err);
+            return reject(Error("Some error occurred."))
+        });
+    });
+}
+
 module.exports = {
-    saveListingImages: function (listingId, images) {
+    saveListingImages: function (listingId, images, isListingImage) {
         return new Promise(function (resolve, reject) {
-            let saveLocation = `./public/uploads/listing/${listingId}/images/raw`;
+            let saveLocation = isListingImage ? `./public/uploads/listing/${listingId}/images/raw` : `./public/uploads/listing/${listingId}/plans`;
             saveImage(saveLocation, images).then((response) => {
                 return resolve(response);
             }).catch((error) => {
@@ -95,33 +115,32 @@ module.exports = {
             });
         });
     },
-    savePlanImage: function (listingId, images) {
-        return new Promise(function (resolve, reject) {
-            let saveLocation = `./public/uploads/listing/${listingId}/plans`;
-            saveImage(saveLocation, images).then((response) => {
-                return resolve(response);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    },
-    saveBuilderImage: function (listingId, images) {
+    saveAgentImage: function (listingId, images, isBuilder) {
         return new Promise(function (resolve, reject) {
             let tempLocation = `./public/uploads/temp`;
-            let saveLocation = `./public/uploads/builder/${listingId}`;
+            let saveLocation = isBuilder ? `./public/uploads/builder/${listingId}` : `./public/uploads/user/${listingId}`;
+            let imageName =  images.agentImage.name;
+            // let imageExt = imageName.split('.').pop();
 
             saveImage(tempLocation, images).then((response) => {
                 console.log(response);
-                return resizeImage(tempLocation, saveLocation, [images.builderImage.name], imageParameters.builderSize.x, imageParameters.builderSize.y)
+                return emptyDir(saveLocation);
             }).then((response) => {
                 console.log(response);
-                return deleteFile(`${tempLocation}/${images.builderImage.name}`);
+                return resizeImage(tempLocation, saveLocation, [imageName], imageParameters.agentSize.x, imageParameters.agentSize.y)
+            }).then((response) => {
+                console.log(response);
+                return renameFile(`${saveLocation}/${imageName}`, `${saveLocation}/agentImage.jpg`);
+            }).then((response) => {
+                console.log(response);
+                return deleteFile(`${tempLocation}/${images.agentImage.name}`);
             }).then((response) => {
                 console.log(response);
                 return resolve("Image Saved.");
             }).catch((error) => {
                 console.log(error);
                 reject(error);
+                deleteFile(`${tempLocation}/${images.agentImage.name}`);
             });
         });
     },
@@ -134,8 +153,10 @@ module.exports = {
 
             resizeImage(rawLocation, largeLocation, images, imageParameters.size.large.x, imageParameters.size.large.y)
                 .then((response) => {
+                    console.log(response);
                     return resizeImage(rawLocation, mediumLocation, images, imageParameters.size.medium.x, imageParameters.size.medium.y);
                 }).then((response) => {
+                    console.log(response);
                     return resizeImage(rawLocation, smallLocation, images, imageParameters.size.small.x, imageParameters.size.small.y);
                 }).then((response) => {
                     console.log(response);
@@ -145,9 +166,10 @@ module.exports = {
                 })
         });
     },
-    deleteListingImage: function (listingId, imageName) {
+    deleteListingImage: function (listingId, imageName, isListingImage) {
         return new Promise(function (resolve, reject) {
-            let imageLocation = `./public/uploads/listing/${listingId}/images/raw/${imageName}`;
+            let imageLocation = isListingImage ? `./public/uploads/listing/${listingId}/images/raw/${imageName}` :
+                `./public/uploads/listing/${listingId}/plans/${imageName}`;
 
             deleteImage(imageLocation).then((response) => {
                 return resolve(response);
@@ -156,20 +178,9 @@ module.exports = {
             });
         });
     },
-    deletePlanImage: function (listingId, imageName) {
+    deleteAgentImage: function (listingId, imageName, isBuilder) {
         return new Promise(function (resolve, reject) {
-            let imageLocation = `./public/uploads/listing/${listingId}/plans/${imageName}`;
-
-            deleteImage(imageLocation).then((response) => {
-                return resolve(response);
-            }).catch((error) => {
-                return reject(error);
-            });
-        });
-    },
-    deleteBuilderImage: function (listingId, imageName) {
-        return new Promise(function (resolve, reject) {
-            let imageLocation = `./public/uploads/builder/${listingId}/${imageName}`;
+            let imageLocation = isBuilder ? `./public/uploads/builder/${listingId}/${imageName}` : `./public/uploads/user/${listingId}/${imageName}`;
 
             deleteImage(imageLocation).then((response) => {
                 return resolve(response);

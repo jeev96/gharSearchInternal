@@ -9,6 +9,7 @@ const express = require("express"),
     fileupload = require("express-fileupload"),
     MongoStore = require('connect-mongo')(session),
     User = require("./models/user"),
+    utils = require("./services/utils"),
     flash = require("connect-flash"),
     methodOverride = require("method-override");
 
@@ -71,6 +72,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     app.locals.moment = require('moment');
+    app.locals.hyphenateString = utils.hyphenateString;
     res.locals.compare = req.session.compare || [];
     res.locals.favourite = req.session.favourite || [];
     res.locals.success = req.flash('success');

@@ -100,9 +100,9 @@
                                                 src="/assets/images/props/flat-1/1-small.jpg" alt="pro-image"
                                                 width="100" class="d-block py-3"></td>
                                         <td class="mdc-data-table__cell">
-                                            <a href="/listing/<%= listing._id %>"
+                                            <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>"
                                                 class="mdc-button mdc-ripple-surface mdc-ripple-surface--primary normal">
-                                                <%= listing.location.project %>
+                                                <%= listing.listingInfo.title %>
                                             </a>
                                         </td>
                                         <td class="mdc-data-table__cell">

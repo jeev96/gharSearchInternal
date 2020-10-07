@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const dbEntry = require("../services/dbEntry");
+const utils = require("../services/utils");
 const listingType = require("../constants/listing");
 const Builder = require("../models/builder");
 const Listing = require("../models/listing");
@@ -47,25 +48,27 @@ router.post("/submit", isLoggedIn, isAdmin, function (req, res) {
 
 // single builder route
 router.get("/:id", function (req, res) {
-    Builder.findOne({ _id: req.params.id }, function (error, foundBuilder) {
+    let listingId = utils.extractListingId(req.params.id);
+    Builder.findOne({ _id: listingId }, function (error, foundBuilder) {
         if (error) {
             console.log(error);
             req.flash("error", error.message);
             res.redirect("back");
         } else {
-            Listing.find({builderId: req.params.id, status: listingType.status.LIVE}, function(error, foundListings) {
+            Listing.find({ builderId: listingId, status: listingType.status.LIVE }, function (error, foundListings) {
                 if (error) {
                     console.log(error);
                     req.flash("error", error.message);
                     res.redirect("back");
                 } else {
-                    res.render("builder/show", { 
-                        builder: foundBuilder, 
+                    res.render("builder/show", {
+                        builder: foundBuilder,
                         listings: foundListings,
                         listingCount: foundListings.length,
                         pageNo: 1,
-                        limit: dbConstants.DEFAULT_LIMIT_LISTING, 
-                        page: "show-builder" });
+                        limit: dbConstants.DEFAULT_LIMIT_LISTING,
+                        page: "show-builder"
+                    });
                 }
             });
         }

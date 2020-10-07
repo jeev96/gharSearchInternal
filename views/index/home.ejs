@@ -744,7 +744,7 @@
                             <div class="property-content">
                                 <div class="content">
                                     <h1 class="title">
-                                        <a href="/listing/<%= listing._id %>">
+                                        <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                             <%= listing.listingInfo.title %>
                                         </a>
                                     </h1>
@@ -784,7 +784,7 @@
                                         <i class="material-icons text-muted">date_range</i>
                                         <span class="mx-2"><%= moment(listing.createdAt).format("ll") %></span>
                                     </p>
-                                    <a href="/listing/<%= listing._id %>" class="mdc-button mdc-button--outlined">
+                                    <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>" class="mdc-button mdc-button--outlined">
                                         <span class="mdc-button__ripple"></span>
                                         <span class="mdc-button__label">Details</span>
                                     </a>
@@ -864,7 +864,7 @@
                                     <div class="property-content-wrapper">
                                         <div class="property-content">
                                             <div class="content">
-                                                <h1 class="title"><a href="/listing/<%= listing._id %>">
+                                                <h1 class="title"><a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                                         <%= listing.listingInfo && listing.listingInfo.title ?
                                                     listing.listingInfo.title : listing.location.project %>
                                                     </a></h1>
@@ -914,7 +914,7 @@
                                                     <span class="mx-2"><%= moment(listing.createdAt).format("ll") %>
                                                     </span>
                                                 </p>
-                                                <a href="/listing/<%= listing._id %>"
+                                                <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>"
                                                     class="mdc-button mdc-button--outlined">
                                                     <span class="mdc-button__ripple"></span>
                                                     <span class="mdc-button__label">Details</span>

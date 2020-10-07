@@ -1215,11 +1215,12 @@ header.toolbar-2 .horizontal-menu .mdc-button {
 	border: 0;
 	padding: 2px;
 	width: 288px;
+	overflow: visible;
 }
 
 .page-drawer-container {
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 	display: flex;
 }
 
@@ -1264,7 +1265,7 @@ header.toolbar-2 .horizontal-menu .mdc-button {
 	top: 0 !important;
 	box-shadow: none;
 	overflow: hidden;
-	max-height: 100% !important;
+	max-height: 200% !important;
 	width: 100%;
 }
 
@@ -2221,6 +2222,16 @@ main.content-offset-to-top .main-content-header {
 }
 
 .property-item .title a:hover {
+	color: var(--mdc-theme-primary);
+}
+
+.builder-item .title a {
+	transition: 0.2s;
+	text-decoration: none;
+	color: var(--theme-base-color);
+}
+
+.builder-item .title a:hover {
 	color: var(--mdc-theme-primary);
 }
 
@@ -3829,6 +3840,7 @@ footer .copyright .mdc-button {
 
 .options.show {
 	right: -2px;
+	overflow: visible;
 }
 
 .options .mdc-button {

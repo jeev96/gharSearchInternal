@@ -44,7 +44,9 @@
                                     <div class="property-content-wrapper">
                                         <div class="property-content">
                                             <div class="content">
-                                                <h2 class="title"><a href="#"><%= listing.location.project %></a></h2>
+                                                <h2 class="title"><a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %> ">
+                                                    <%= listing.listingInfo.title %>
+                                                </a></h2>
                                                 <p class="row address flex-nowrap">
                                                     <i class="material-icons text-muted">location_on</i>
                                                     <span><%= listing.location.sector + ", " + listing.location.city %></span>

@@ -4,5 +4,5 @@ module.exports = {
         medium: { x: 640, y: 424 },
         small: { x: 240, y: 159 },
     },
-    builderSize: {x: 640, y: 768 }
+    agentSize: {x: 640, y: 768 }
 }

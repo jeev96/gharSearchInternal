@@ -89,7 +89,8 @@ router.post("/search", function (req, res) {
 
 // single listing route
 router.get("/:id", function (req, res) {
-    Listing.findOne({ _id: req.params.id }, function (error, foundListing) {
+    let listingId = utils.extractListingId(req.params.id);
+    Listing.findOne({ _id: listingId }, function (error, foundListing) {
         if (error) {
             console.log(error);
             req.flash("error", error.message);
@@ -116,12 +117,21 @@ router.get("/:id", function (req, res) {
                             req.flash("error", error.message);
                             res.redirect("back");
                         } else {
-                            console.log("Featured Listings: " + featuredListings.length);
-                            res.render("listing/show", {
-                                listing: foundListing,
-                                similarListings: similarListings,
-                                featuredListings: featuredListings,
-                                page: "single-listing"
+                            Builder.findById({ _id: foundListing.builderId }, function (error, foundBuilder) {
+                                if (error) {
+                                    console.log(error);
+                                    req.flash("error", error.message);
+                                    res.redirect("back");
+                                } else {
+                                    console.log("Featured Listings: " + featuredListings.length);
+                                    res.render("listing/show", {
+                                        listing: foundListing,
+                                        builderInfo: foundBuilder,
+                                        similarListings: similarListings,
+                                        featuredListings: featuredListings,
+                                        page: "single-listing"
+                                    });
+                                }
                             });
                         }
                     });

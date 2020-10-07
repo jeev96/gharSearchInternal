@@ -1,5 +1,7 @@
 <%- include ("../partials/header") %>
 
+<link rel="stylesheet" href="/css/libs/dropzone.css">
+
 <main>
     <div class="px-3">
         <div class="theme-container">
@@ -8,7 +10,7 @@
                     <a href="#" class="h-0"></a>
                     <div class="mdc-card">
                         <div class="row start-xs middle-xs p-3">
-                            <img src="/assets/images/others/user.jpg" alt="user-image" class="avatar">
+                            <img src="<%= currentUser.image ? `/uploads/user/${currentUser.id}/agentImage.jpg` : "/assets/images/others/user.jpg" %>" alt="user-image" class="avatar">
                             <h2 class="text-muted fw-500 mx-3"><%= currentUser.name %> </h2>
                         </div>
                         <hr class="mdc-list-divider m-0">
@@ -102,6 +104,8 @@
                         <div class="col-xs-12 col-md-6 px-3">
                             <h2 class="text-muted text-center fw-600 mb-3">Account details</h2>
                             <form action="/account/edit-profile" method="POST">
+                                <input id="upload-user-id" type="hidden" name="userId" value="<%= currentUser._id %>">
+                                <input type="hidden" name="userType" value="<%= currentUser.userType %>">
                                 <div class="mdc-text-field mdc-text-field--outlined w-100 custom-field my-2">
                                     <input class="mdc-text-field__input" name="name" value="<%= currentUser.name %>">
                                     <div class="mdc-notched-outline">
@@ -133,7 +137,8 @@
                                         <div class="mdc-notched-outline__trailing"></div>
                                     </div>
                                 </div>
-                                <div class="my-2 col-xs-6 p-0">
+                                <input type="hidden" name="image" value="<%= currentUser.image %>">
+                                <div class="my-2 col-xs-12 p-0">
                                     <label class="text-muted">Image</label>
                                     <div id="user-profile-image" class="dropzone needsclick">
                                         <div class="dz-message needsclick text-muted">
@@ -227,5 +232,7 @@
         </div>
     </div>
 </main>
+
+<script src="/js/libs/dropzone.js"></script>
 
 <%- include ("../partials/footer") %>

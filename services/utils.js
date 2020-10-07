@@ -106,5 +106,11 @@ module.exports = {
             return null;
         }
         return ejs.render(ejsComponents.loadMoreButton, data);
+    },
+    extractListingId: function(url) {
+        return url.substring(url.length - 24, url.length);
+    },
+    hyphenateString: function(str) {
+        return str.replace(/\s/g, "-").toLowerCase();
     }
 }
