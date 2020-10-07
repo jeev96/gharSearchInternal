@@ -773,6 +773,7 @@ function onPageLoad() {
             paginationSearch($(this).data("value"));
         });
 
+        initSidenav();
         initAddToFavorites();
         initAddToCompare();
     }
@@ -814,43 +815,46 @@ function onPageLoad() {
         }
     });
 
-    if (document.querySelector('.mdc-drawer.page-sidenav')) {
-        const drawerElement = document.querySelector('.mdc-drawer.page-sidenav');
-        const drawerScrim = document.querySelector('.page-sidenav-scrim')
-        const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer.page-sidenav'));
-        $("#page-sidenav-toggle").on("click", function () {
-            drawer.open = true;
-        });
-        const initPermanentDrawer = () => {
-            drawerElement.classList.remove("mdc-drawer--modal");
-            drawerElement.classList.add("mdc-drawer--dismissible");
-            drawerScrim.classList.add("d-none");
-            const drawer = mdc.drawer.MDCDrawer.attachTo(drawerElement);
-            drawer.open = true;
-            return drawer;
-        }
-        const initModalDrawer = () => {
-            drawerElement.classList.remove("mdc-drawer--dismissible");
-            drawerElement.classList.add("mdc-drawer--modal");
-            drawerScrim.classList.remove("d-none");
-            const drawer = mdc.drawer.MDCDrawer.attachTo(drawerElement);
-            drawer.open = false;
-            return drawer;
-        }
-        let drawer2 = window.matchMedia("(max-width: 959px)").matches ?
-            initModalDrawer() : initPermanentDrawer();
-
-        const resizeHandler = () => {
-            if (window.matchMedia("(max-width: 959px)").matches) {
-                drawer2.destroy();
-                drawer2 = initModalDrawer();
-            } else if (window.matchMedia("(min-width: 959px)").matches) {
-                drawer2.destroy();
-                drawer2 = initPermanentDrawer();
+    function initSidenav() {
+        if (document.querySelector('.mdc-drawer.page-sidenav')) {
+            const drawerElement = document.querySelector('.mdc-drawer.page-sidenav');
+            const drawerScrim = document.querySelector('.page-sidenav-scrim')
+            const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer.page-sidenav'));
+            $("#page-sidenav-toggle").on("click", function () {
+                drawer.open = true;
+            });
+            const initPermanentDrawer = () => {
+                drawerElement.classList.remove("mdc-drawer--modal");
+                drawerElement.classList.add("mdc-drawer--dismissible");
+                drawerScrim.classList.add("d-none");
+                const drawer = mdc.drawer.MDCDrawer.attachTo(drawerElement);
+                drawer.open = true;
+                return drawer;
             }
-        }
-        window.addEventListener('resize', resizeHandler);
-    };
+            const initModalDrawer = () => {
+                drawerElement.classList.remove("mdc-drawer--dismissible");
+                drawerElement.classList.add("mdc-drawer--modal");
+                drawerScrim.classList.remove("d-none");
+                const drawer = mdc.drawer.MDCDrawer.attachTo(drawerElement);
+                drawer.open = false;
+                return drawer;
+            }
+            let drawer2 = window.matchMedia("(max-width: 959px)").matches ?
+                initModalDrawer() : initPermanentDrawer();
+
+            const resizeHandler = () => {
+                if (window.matchMedia("(max-width: 959px)").matches) {
+                    drawer2.destroy();
+                    drawer2 = initModalDrawer();
+                } else if (window.matchMedia("(min-width: 959px)").matches) {
+                    drawer2.destroy();
+                    drawer2 = initPermanentDrawer();
+                }
+            }
+            window.addEventListener('resize', resizeHandler);
+        };
+    }
+    initSidenav();
 
     $('.expansion-panel').each(function (i) {
         if (i === 0) {

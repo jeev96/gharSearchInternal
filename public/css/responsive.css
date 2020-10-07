@@ -124,7 +124,7 @@
         float: none;
         position: absolute;
         padding: 0;
-        overflow: auto;
+        overflow: visible;
         padding-bottom: 18px;
     } 
     .page-sidenav.mdc-drawer .mdc-card{
