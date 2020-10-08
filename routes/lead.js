@@ -1,31 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const Lead = require("../models/lead");
+const leadDbService = require("../services/database/lead");
 
 router.post("/", function (req, res) {
-	Lead.create(req.body, function (err, newlyCreated) {
-		if (err) {
-			console.log(err);
-			res.status(400).send();
-		} else {
-			//redirect back to buyers page
-			console.log(newlyCreated);
-			res.status(200).send();
-		}
+	leadDbService.create(req.body).then((newlyCreated) => {
+		console.log(newlyCreated);
+		res.status(200).send();
+	}).catch((error) => {
+		console.log(err);
+		res.status(400).send(error.message);
 	});
 });
 
 router.put("/:id", function (req, res) {
-	Lead.findByIdAndUpdate(req.params.id, { status: req.body.status }, function (error, updatedLead) {
-		if (error) {
-			console.log(err);
-			req.flash("error", "Some error occurred.")
-			res.redirect("back");
-		} else {
-			console.log("Lead Updated");
-			req.flash("success", "Lead Updated");
-			res.redirect("/account/leads");
-		}
+	leadDbService.findByIdAndUpdate(req.params.id, { status: req.body.status }).then((updatedLead) => {
+		console.log("Lead Updated");
+		req.flash("success", "Lead Updated");
+		res.redirect("/account/leads");
+	}).catch((error) => {
+		console.log(error);
+		req.flash("error", "Some error occurred.")
+		res.redirect("back");
 	});
 })
 

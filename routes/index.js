@@ -2,28 +2,26 @@ const express = require("express");
 const router = express.Router();
 const listingType = require("../constants/listing");
 const dbConstants = require("../constants/dbConstants");
-const Listing = require("../models/listing");
+const listingDbService = require("../services/database/listing");
 
 // root route
 router.get("/", function (req, res) {
-    Listing.find({ "status": listingType.status.LIVE }, function (err, allListings) {
-        if (err) {
-            console.log(err);
-        } else {
-            let featuredListings = allListings.filter((listing) => {
-                if (listing.listingInfo && listing.listingInfo.tags) {
-                    if (listing.listingInfo.tags.indexOf(listingType.tagType.FEATURED) > -1) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+    listingDbService.find({ "status": listingType.status.LIVE }).then((allListings) => {
+        let featuredListings = allListings.filter((listing) => {
+            if (listing.listingInfo && listing.listingInfo.tags) {
+                if (listing.listingInfo.tags.indexOf(listingType.tagType.FEATURED) > -1) {
+                    return true;
+                } else {
+                    return false;
                 }
-                return false;
-            });
-            let count = allListings.length;
-            allListings = allListings.slice(0, dbConstants.DEFAULT_LIMIT_HOME);
-            res.render("index/home", { listings: allListings, listingCount: count, featuredListings: featuredListings, page: "home" });
-        }
+            }
+            return false;
+        });
+        let count = allListings.length;
+        allListings = allListings.slice(0, dbConstants.DEFAULT_LIMIT_HOME);
+        res.render("index/home", { listings: allListings, listingCount: count, featuredListings: featuredListings, page: "home" });
+    }).catch((error) => {
+        console.log(error);
     });
 });
 

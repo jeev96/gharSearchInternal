@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const utils = require("../services/utils");
 const fileManager = require("../services/fileManager");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;

@@ -1079,7 +1079,7 @@ header.toolbar-2 .horizontal-menu .mdc-button {
 	height: 72px;
 	padding: 0 16px;
 	transition: 0.2s;
-	z-index: 9;
+	z-index: 8;
 	box-sizing: border-box;
 	width: 100%;
 	background: var(--mdc-theme-surface);

@@ -6,7 +6,7 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 5,
+        minlength: 2,
         maxlength: 50,
         validate(value) {
             var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;

@@ -1,9 +1,7 @@
 let express = require("express");
 let router = express.Router();
-let moment = require('moment')
 let mongoose = require("mongoose");
-let utils = require("../services/utils");
-let Listing = require("../models/listing");
+const listingDbService = require("../services/database/listing");
 
 // compare listing route
 router.get("/compare", function (req, res) {
@@ -13,13 +11,11 @@ router.get("/compare", function (req, res) {
         return mongoose.Types.ObjectId(id);
     });
 
-    Listing.find({ _id: { $in: compareIds } }, function (err, foundListings) {
-        if (err) {
-            console.log(err);
-            res.redirect("/error");
-        } else {
-            res.render("listing/compare", { listings: foundListings, page: "compare-listing" });
-        }
+    listingDbService.find({ _id: { $in: compareIds } }).then((foundListings) => {
+        res.render("listing/compare", { listings: foundListings, page: "compare-listing" });
+    }).catch((error) => {
+        console.log(error);
+        res.redirect("/error");
     });
 });
 // add to compare
@@ -75,13 +71,11 @@ router.get("/favourite", function (req, res) {
         return mongoose.Types.ObjectId(id);
     });
 
-    Listing.find({ _id: { $in: favouriteIds } }, function (err, foundListings) {
-        if (err) {
-            console.log(err);
-            res.redirect("/error");
-        } else {
-            res.render("listing/favourite", { listings: foundListings, page: "favourite-listing" });
-        }
+    listingDbService.find({ _id: { $in: favouriteIds } }).then((foundListings) => {
+        res.render("listing/favourite", { listings: foundListings, page: "favourite-listing" });
+    }).catch((error) => {
+        console.log(error);
+        res.redirect("/error");
     });
 });
 // add to favourite

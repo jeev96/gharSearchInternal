@@ -1,24 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const moment = require('moment')
+const moment = require('moment');
+const listingDbService = require("../services/database/listing");
+const builderDbService = require("../services/database/builder");
 const dbEntry = require("../services/dbEntry");
 const utils = require("../services/utils");
 const fileManager = require("../services/fileManager");
 const listingType = require("../constants/listing");
-const Listing = require("../models/listing");
-const Builder = require("../models/builder");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
 // submit route
 router.get("/submit", isLoggedIn, function (req, res) {
-    Builder.find({}).exec(function (error, foundBuilders) {
-        if (error) {
-            console.log(err);
-            res.render("listing/submit", { builders: [], page: "submit" });
-        } else {
-            res.render("listing/submit", { builders: foundBuilders, page: "submit" });
-        }
+    builderDbService.find().then((foundBuilders) => {
+        res.render("listing/submit", { builders: foundBuilders, page: "submit" });
+    }).catch((error) => {
+        console.log(error);
+        res.render("listing/submit", { builders: [], page: "submit" });
     });
 });
 
@@ -26,15 +24,12 @@ router.get("/submit", isLoggedIn, function (req, res) {
 router.post("/submit", isLoggedIn, function (req, res) {
     let newListing = dbEntry.createSubmitEntryResidential(req.user, req.body);
 
-    Listing.create(newListing, function (err, newlyCreated) {
-        if (err) {
-            console.log(err);
-            res.status(400).send(err);
-        } else {
-            //redirect back to listings page
-            console.log(newlyCreated);
-            res.status(200).send({ id: newlyCreated._id });
-        }
+    listingDbService.create(newListing).then((newlyCreated) => {
+        console.log(newlyCreated);
+        res.status(201).send({ id: newlyCreated._id });
+    }).catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
     });
 });
 
@@ -42,17 +37,14 @@ router.post("/submit", isLoggedIn, function (req, res) {
 router.post("/submitMedia", isLoggedIn, function (req, res) {
     let mediaInfo = dbEntry.createSubmitEntryMedia(req.body);
 
-    Listing.findByIdAndUpdate(req.body.listingId, { $set: { media: mediaInfo } }, function (err, newlyCreated) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            //redirect back to listings page
-            console.log(newlyCreated);
-            req.flash("success", "Successfully Created!");
-            res.redirect("/account/my-properties");
-        }
+    listingDbService.findByIdAndUpdate(req.body.listingId, { media: mediaInfo }).then((updatedListing) => {
+        console.log(updatedListing);
+        req.flash("success", "Successfully Created!");
+        res.redirect("/account/my-properties");
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
     });
 });
 
@@ -60,151 +52,117 @@ router.post("/submitMedia", isLoggedIn, function (req, res) {
 router.post("/search", function (req, res) {
     const dbQuery = utils.getDbQuery(req.body);
     console.log(dbQuery);
-    Listing.countDocuments(dbQuery.searchQuery).exec((error, count) => {
-        if (error) {
-            console.log(error);
-            res.status(400).send();
+    let listingCount = 0;
+
+    listingDbService.count(dbQuery.searchQuery).then((count) => {
+        console.log("Listings Found: " + count);
+        listingCount = count;
+        return listingDbService.find(dbQuery.searchQuery, dbQuery.filter, req.body.skip, req.body.limit);
+    }).then((foundListings) => {
+        let data = {
+            listings: foundListings,
+            listingsHtml: utils.renderListingsEjs({ listings: foundListings, moment: moment }, req.body.isListingSearch),
+            tagsHtml: utils.renderTagsEjs({ listingCount: listingCount, tags: req.body, builderName: req.body.builderName, type: req.body.type }, req.body.isListingSearch),
+            paginationBar: utils.renderPaginationBarEjs({ listingCount: listingCount, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
+            loadButton: utils.renderLoadButtonEjs({ listingCount: listingCount, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
+            isListingSearch: req.body.isListingSearch ? true : false
         }
-        else {
-            Listing.find(dbQuery.searchQuery).skip(parseInt(req.body.skip)).limit(parseInt(req.body.limit)).sort(dbQuery.filter).exec((error, foundListings) => {
-                if (error) {
-                    console.log(error);
-                    res.status(400).send();
-                } else {
-                    console.log("Listings Found: " + count);
-                    let data = {
-                        listings: foundListings,
-                        listingsHtml: utils.renderListingsEjs({ listings: foundListings, moment: moment }, req.body.isListingSearch),
-                        tagsHtml: utils.renderTagsEjs({ listingCount: count, tags: req.body, builderName: req.body.builderName, type: req.body.type }, req.body.isListingSearch),
-                        paginationBar: utils.renderPaginationBarEjs({ listingCount: count, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
-                        loadButton: utils.renderLoadButtonEjs({ listingCount: count, pageNo: req.body.page, limit: req.body.limit }, req.body.isListingSearch),
-                        isListingSearch: req.body.isListingSearch ? true : false
-                    }
-                    res.status(200).send(data);
-                }
-            });
-        }
+        res.status(200).send(data);
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send(error.message);
     });
 });
 
 // single listing route
 router.get("/:id", function (req, res) {
     let listingId = utils.extractListingId(req.params.id);
-    Listing.findOne({ _id: listingId }, function (error, foundListing) {
-        if (error) {
-            console.log(error);
-            req.flash("error", error.message);
-            res.redirect("back");
-        } else {
-            let searchData = {
-                "_id": { $in: foundListing.similarListings },
-                "status": listingType.status.LIVE
-            }
-            Listing.find(searchData, function (error, similarListings) {
-                if (error) {
-                    console.log(error);
-                    req.flash("error", error.message);
-                    res.redirect("back");
-                } else {
-                    console.log("Similar Listings: " + similarListings.length);
-                    let searchData = {
-                        "listingInfo.tags": { $in: [listingType.tagType.FEATURED] },
-                        "status": listingType.status.LIVE
-                    }
-                    Listing.find(searchData, function (error, featuredListings) {
-                        if (error) {
-                            console.log(error);
-                            req.flash("error", error.message);
-                            res.redirect("back");
-                        } else {
-                            Builder.findById({ _id: foundListing.builderId }, function (error, foundBuilder) {
-                                if (error) {
-                                    console.log(error);
-                                    req.flash("error", error.message);
-                                    res.redirect("back");
-                                } else {
-                                    console.log("Featured Listings: " + featuredListings.length);
-                                    res.render("listing/show", {
-                                        listing: foundListing,
-                                        builderInfo: foundBuilder,
-                                        similarListings: similarListings,
-                                        featuredListings: featuredListings,
-                                        page: "single-listing"
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            });
+    let foundListing;
+    let similarListings;
+    let featuredListings;
+
+    listingDbService.findById(listingId).then((result) => {
+        foundListing = result;
+        let searchData = {
+            "_id": { $in: foundListing.similarListings },
+            "status": listingType.status.LIVE
         }
+        return listingDbService.find(searchData);
+    }).then((result) => {
+        similarListings = result;
+        console.log("Similar Listings: " + similarListings.length);
+        let searchData = {
+            "listingInfo.tags": { $in: [listingType.tagType.FEATURED] },
+            "status": listingType.status.LIVE
+        }
+        return listingDbService.find(searchData);
+    }).then((result) => {
+        featuredListings = result;
+        console.log("Featured Listings: " + featuredListings.length);
+        return builderDbService.findById(foundListing.builderId);
+    }).then((result) => {
+        res.render("listing/show", {
+            listing: foundListing,
+            builderInfo: result,
+            similarListings: similarListings,
+            featuredListings: featuredListings,
+            page: "single-listing"
+        });
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
     });
 });
 
 // put edit route
 router.put("/:id", isLoggedIn, function (req, res) {
     let newData = dbEntry.createCompleteResidentialEntry(req.user, req.body);
-    console.log(newData);
 
-    Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: newData }, function (err, updatedListing) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            req.flash("success", "Successfully Updated!");
-            res.redirect("/account/my-properties");
-        }
+    listingDbService.findByIdAndUpdate(req.params.id, newData).then((updatedListing) => {
+        console.log("Listing updated");
+        req.flash("success", "Successfully Updated!");
+        res.redirect("/account/my-properties");
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
     });
 });
 
 // get edit route
 router.get("/:id/edit", isLoggedIn, function (req, res) {
-    Builder.find({}).exec(function (error, foundBuilders) {
-        if (error) {
-            console.log(err);
-            res.redirect("back");
-        } else {
-            Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
-                if (err) {
-                    console.log(err);
-                    req.flash("error", err.message);
-                    res.redirect("back");
-                } else {
-                    res.render("listing/edit", { listing: foundListing, builders: foundBuilders, page: "edit-listing" });
-                }
-            });
-        }
-    });
+    let foundListing;
+    listingDbService.findById(req.params.id).then((result) => {
+        foundListing = result;
+        return builderDbService.find();
+    }).then((result) => {
+        res.render("listing/edit", { listing: foundListing, builders: result, page: "edit-listing" });
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
+    })
 });
 
 // change listing status
 router.put("/:id/LIVE", isLoggedIn, isAdmin, function (req, res) {
-    Listing.findOne({ _id: req.params.id }, function (err, foundListing) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            fileManager.createLiveImages(foundListing._id, foundListing.media.images).then((response) => {
-                console.log(response);
-                Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: listingType.status.LIVE } }, function (err, updatedListing) {
-                    if (err) {
-                        console.log(err);
-                        req.flash("error", err.message);
-                        res.redirect("back");
-                    } else {
-                        req.flash("success", "Successfully Updated!");
-                        res.redirect("/account/all-properties");
-                    }
-                });
-            }).catch((error) => {
-                console.log(error);
-                req.flash("error", error.message);
-                res.redirect("back");
-            })
-        }
-    })
+    let foundListing;
+    listingDbService.findById(req.params.id).then((result) => {
+        foundListing = result;
+        return fileManager.createLiveImages(foundListing._id, foundListing.media.images);
+    }).then((response) => {
+        console.log(response);
+        return listingDbService.findByIdAndUpdate(req.params.id, { status: listingType.status.LIVE });
+    }).then((result) => {
+        console.log("Listing set to LIVE");
+        req.flash("success", "Successfully Updated!");
+        res.redirect("/account/all-properties");
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
+    });
 });
 
 // change listing status
@@ -216,15 +174,15 @@ router.put("/:id/:status", isLoggedIn, function (req, res) {
         req.flash("error", "Cannot perform Action.");
         res.redirect("back");
     }
-    Listing.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: req.params.status } }, function (err, updatedListing) {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            req.flash("success", "Successfully Updated!");
-            res.redirect("/account/all-properties");
-        }
+
+    listingDbService.findByIdAndUpdate(req.params.id, { status: req.params.status }).then((result) => {
+        console.log("Status updated.");
+        req.flash("success", "Successfully Updated!");
+        res.redirect("/account/all-properties");
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.redirect("back");
     });
 });
 

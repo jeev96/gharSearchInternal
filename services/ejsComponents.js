@@ -48,8 +48,11 @@ module.exports = {
                 <div class="property-content-wrapper">
                     <div class="property-content">
                         <div class="content">
-                            <h1 class="title"><a href="/listing/<%= listing._id %>"><%= listing.listingInfo && listing.listingInfo.title ?
-                                listing.listingInfo.title : listing.location.project %></a></h1>
+                            <h1 class="title">
+                                <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                <%= listing.listingInfo.title %>
+                                </a>
+                            </h1>
                             <p class="row address flex-nowrap">
                                 <i class="material-icons text-muted">location_on</i>
                                 <span><%= listing.location.sector + ", " + listing.location.city %></span>
@@ -84,7 +87,7 @@ module.exports = {
                                 <i class="material-icons text-muted">date_range</i>
                                 <span class="mx-2"><%= moment(listing.createdAt).format("ll") %></span>
                             </p>
-                            <a href="/listing/<%= listing._id %>" class="mdc-button mdc-button--outlined">
+                            <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>" class="mdc-button mdc-button--outlined">
                                 <span class="mdc-button__ripple"></span>
                                 <span class="mdc-button__label">Details</span>
                             </a>
@@ -93,7 +96,11 @@ module.exports = {
                 </div>
             </div>
         </div>
-        <% }) %>`,
+        <% }) %>
+        <% function hyphenateString (str) {
+            let pattern = " ";
+            return str.split(' ').join('-').toLowerCase();
+        } %>`,
     listingSearchComponent: `<% listings.forEach((listing, index) => { %>
         <div class="row item col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
             <div class="mdc-card property-item grid-item column-3">
@@ -146,9 +153,8 @@ module.exports = {
                     <div class="property-content">
                         <div class="content">
                             <h1 class="title">
-                                <a href="/listing/<%= listing._id %>">
-                                    <%= listing.listingInfo && listing.listingInfo.title ?
-                                listing.listingInfo.title : listing.location.project %>
+                                <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                    <%= listing.listingInfo.title %>
                                 </a>
                             </h1>
                             <p class="row address flex-nowrap">
@@ -189,7 +195,7 @@ module.exports = {
                                 <i class="material-icons text-muted">date_range</i>
                                 <span class="mx-2"><%= moment(listing.createdAt).format("ll") %> </span>
                             </p>
-                            <a href="/listing/<%= listing._id %>"
+                            <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>"
                                 class="mdc-button mdc-button--outlined">
                                 <span class="mdc-button__ripple"></span>
                                 <span class="mdc-button__label">Details</span>
@@ -199,7 +205,11 @@ module.exports = {
                 </div>
             </div>
         </div>
-        <% }) %>`,
+        <% }) %>
+        <% function hyphenateString(str) {
+            let pattern = " ";
+            return str.split(' ').join('-').toLowerCase();
+        } %>`,
     homeSearchTags: `<div id="home-search-tags" class="row start-xs middle-xs py-2 w-100">
             <div class="mdc-chip-set">
                 <div class="mdc-chip bg-warn">

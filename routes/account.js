@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const dbEntry = require("../services/dbEntry");
-const Listing = require("../models/listing");
-const Builder = require("../models/builder");
-const Lead = require("../models/lead");
-const User = require("../models/user");
+const listingDbService = require("../services/database/listing");
+const builderDbService = require("../services/database/builder");
+const userDbService = require("../services/database/user");
+const leadDbService = require("../services/database/lead");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
@@ -35,14 +35,13 @@ router.post("/register", function (req, res) {
         return res.redirect("back");
     }
     let newUser = dbEntry.createUserEntry(req.body);
-    User.register(new User(newUser), req.body.password, function (err, user) {
-        if (err) {
-            console.log(err);
-            req.flash("error", "Some error occurerd.");
-            return res.redirect("back");
-        }
+    userDbService.register(newUser, req.body.password).then((result) => {
         req.flash("success", "User creation Successful!");
         res.status(201).redirect("/");
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", "Some error occurerd.");
+        return res.redirect("back");
     });
 });
 
@@ -56,15 +55,13 @@ router.get("/logout", function (req, res) {
 // submit new details
 router.post("/edit-profile", function (req, res) {
     let newUser = dbEntry.createUserEntry(req.body);
-    User.findByIdAndUpdate(req.user.id, { $set: newUser }, function (err, updatedUser) {
-        if (err) {
-            req.flash("error", err.message);
-            res.status(400).redirect("back");
-        } else {
-            console.log(updatedUser);
-            req.flash("success", "Details successfully updated!");
-            res.status(204).redirect("/account/profile");
-        }
+    userDbService.findByIdAndUpdate(req.user.id, newUser).then((updatedUser) => {
+        console.log(updatedUser);
+        req.flash("success", "Details successfully updated!");
+        res.status(204).redirect("/account/profile");
+    }).catch((error) => {
+        req.flash("error", error.message);
+        res.status(400).redirect("back");
     });
 });
 
@@ -74,24 +71,23 @@ router.post("/change-password", function (req, res) {
         req.flash("error", "Passwords do not Match!");
         return res.redirect("back");
     }
-    User.findById(req.user.id, function (err, user) {
-        if (err) {
-            req.flash("error", "Could not find user");
-            res.status(400).redirect("/");
-        } else {
-            user.changePassword(req.body.passwordOld, req.body.passwordNew, function (err) {
-                if (err) {
-                    console.log(err);
-                    req.flash("error", "Your Current password is incorrect.");
-                    res.status(400).redirect("back");
-                } else {
-                    console.log("Success");
-                    req.flash("success", "Password successfully changed!");
-                    res.status(204).redirect("/account/profile");
-                }
-            })
-        }
-    })
+    userDbService.findById(req.user.id).then((user) => {
+        user.changePassword(req.body.passwordOld, req.body.passwordNew, function (err) {
+            if (err) {
+                console.log(err);
+                req.flash("error", "Your Current password is incorrect.");
+                res.status(400).redirect("back");
+            } else {
+                console.log("Success");
+                req.flash("success", "Password successfully changed!");
+                res.status(204).redirect("/account/profile");
+            }
+        });
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", "Could not find user");
+        res.status(400).redirect("/");
+    });
 });
 
 // profile route
@@ -101,56 +97,46 @@ router.get("/profile", isLoggedIn, function (req, res) {
 
 // profile route
 router.get("/my-properties", isLoggedIn, function (req, res) {
-    Listing.find({ "author.id": req.user._id }).sort({ lastModified: -1, status: -1 }).exec((err, foundListings) => {
-        if (err) {
-            console.log(err);
-            res.render("account/my-properties", { listings: [], page: "my-properties" });
-        } else {
-            console.log("Listings Found: " + foundListings.length);
-            res.render("account/my-properties", { listings: foundListings, page: "my-properties" });
-        }
+    listingDbService.find({ "author.id": req.user._id }, { lastModified: -1, status: -1 }).then((foundListings) => {
+        console.log("Listings Found: " + foundListings.length);
+        res.render("account/my-properties", { listings: foundListings, page: "my-properties" });
+    }).catch((error) => {
+        console.log(error);
+        res.render("account/my-properties", { listings: [], page: "my-properties" });
     });
 });
 
 // profile route
 router.get("/all-properties", isLoggedIn, function (req, res) {
-    Listing.find({}).sort({ lastModified: -1, status: -1 }).exec((err, foundListings) => {
-        if (err) {
-            console.log(err);
-            res.render("account/my-properties", { listings: [], page: "all-properties" });
-        } else {
-            console.log("Listings Found: " + foundListings.length);
-            res.render("account/my-properties", { listings: foundListings, page: "all-properties" });
-        }
+    listingDbService.find({}, { lastModified: -1, status: -1 }).then((foundListings) => {
+        console.log("Listings Found: " + foundListings.length);
+        res.render("account/my-properties", { listings: foundListings, page: "all-properties" });
+    }).catch((error) => {
+        console.log(error);
+        res.render("account/my-properties", { listings: [], page: "all-properties" });
     });
 });
 
 // builders route
 router.get("/builder", function (req, res) {
-    Builder.find({}, function (error, foundBuilders) {
-        if (error) {
-            console.log(error);
-            req.flash("error", error.message);
-            res.render("account/builder", { builders: [], page: "builder-index" });
-        } else {
-            res.render("account/builder", { builders: foundBuilders, page: "builder-admin" });
-        }
-    })
+    builderDbService.find().then((foundBuilders) => {
+        res.render("account/builder", { builders: foundBuilders, page: "builder-admin" });
+    }).catch((error) => {
+        console.log(error);
+        req.flash("error", error.message);
+        res.render("account/builder", { builders: [], page: "builder-index" });
+    });
 });
 
 // lead route
 router.get("/leads", isLoggedIn, isAdmin, function (req, res) {
-    Lead.find({}).sort({ createdAt: -1, status: -1 }).exec((err, foundLeads) => {
-        if (err) {
-            console.log(err);
-            res.render("account/leads", { leads: [], page: "leads" });
-        } else {
-            console.log("Leads Found: " + foundLeads.length);
-            res.render("account/leads", { leads: foundLeads, page: "leads" });
-        }
+    leadDbService.find({}, { createdAt: -1, status: -1 }).then((foundLeads) => {
+        console.log("Leads Found: " + foundLeads.length);
+        res.render("account/leads", { leads: foundLeads, page: "leads" });
+    }).catch((error) => {
+        console.log(error);
+        res.render("account/leads", { leads: [], page: "leads" });
     });
 });
-
-
 
 module.exports = router;
