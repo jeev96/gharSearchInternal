@@ -381,7 +381,7 @@
   height: 120px;
   position: relative;
   display: block;
-  z-index: 10;
+  /* z-index: 10; */
 }
 
 .dropzone .dz-preview .dz-image img {

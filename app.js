@@ -32,8 +32,8 @@ let leadRoutes = require("./routes/lead");
 // assign mongoose promise library and connect to database
 mongoose.Promise = global.Promise;
 
-const databaseUri = "mongodb+srv://admin:24DeH40dWsEgCfmR@ghar-search.pew8r.mongodb.net/<dbname>?retryWrites=true&w=majority";
-// const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/property_db';
+// const databaseUri = "mongodb+srv://admin:24DeH40dWsEgCfmR@ghar-search.pew8r.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/property_db';
 
 console.log(databaseUri);
 
