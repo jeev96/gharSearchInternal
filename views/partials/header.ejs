@@ -289,9 +289,12 @@
                                 <li role="separator" class="mdc-list-divider m-0"></li>
                                 <% } else { %>
                                 <li class="user-info row start-xs middle-xs">
-                                    <img src="/assets/images/others/user.jpg" alt="user-image" width="50">
-                                    <p class="m-0"><%= currentUser.name %> <br> <small><i><%= currentUser.username %>
-                                            </i></small></p>
+                                    <img src="<%= currentUser.image ? `/uploads/user/${currentUser._id}/agentImage.jpg` : "/assets/images/others/user.jpg" %>" alt="user-image" width="50">
+                                    <p class="m-0"><%= currentUser.name %><br>
+                                        <small>
+                                            <i><%= currentUser.username %></i>
+                                        </small>
+                                    </p>
                                 </li>
                                 <li role="separator" class="mdc-list-divider m-0"></li>
                                 <li>

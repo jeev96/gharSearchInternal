@@ -205,10 +205,15 @@
                         <h2 class="uppercase text-center fw-500 mb-2">Description</h2>
                         <p><%= listing.listingInfo.description %></p>
                     </div>
+                    
+                    <% if(listing.location.map && listing.location.map.lat) { %>
+                    <input id="listing-lat" type="hidden" name="lat" value="<%= listing.location.map.lat %>">
+                    <input id="listing-lon" type="hidden" name="lon" value="<%= listing.location.map.lon %>">
                     <div class="mdc-card p-3 mt-3">
                         <h2 class="uppercase text-center fw-500 mb-2">Location</h2>
-                        <div id="contact-map"></div>
+                        <div id="listing-map"></div>
                     </div>
+                    <% } %>
 
                     <% if (listing.media.plans.length > 0) { %>
                     <div class="mdc-card p-3 mt-3">
@@ -484,7 +489,8 @@
                                     <div class="property-content">
                                         <div class="content">
                                             <h1 class="title">
-                                                <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                                <a
+                                                    href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                                     <%= listing.listingInfo.title %>
                                                 </a>
                                             </h1>
@@ -603,7 +609,8 @@
                                         <div class="property-content">
                                             <div class="content">
                                                 <h1 class="title">
-                                                    <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                                    <a
+                                                        href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                                         <%= listing.listingInfo.title %>
                                                     </a>
                                                 </h1>

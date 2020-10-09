@@ -146,7 +146,7 @@
                                         <td class="mdc-data-table__cell">
                                             <form class="delete-user" data-value="<%= user.username %>"
                                                 action="/user/<%= user._id %>?_method=DELETE" method="POST">
-                                                <% if (currentUser.username !== user.username) { %>
+                                                <% if (user.userType !== "ADMIN") { %>
                                                 <button type="submit" class="mdc-icon-button material-icons warn-color">
                                                     delete
                                                 </button>

@@ -168,6 +168,13 @@ a {
 	box-sizing: border-box;
 }
 
+.empty-listing-container {
+	max-width: 1300px;
+	margin: 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+}
+
 .o-hidden {
 	overflow: hidden;
 }
@@ -1683,7 +1690,17 @@ main.content-offset-to-top .main-content-header {
 	background-color: var(--mdc-theme-primary);
 }
 
+.empty-listing-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 #contact-map {
+	height: 400px;
+}
+
+#listing-map {
 	height: 400px;
 }
 

@@ -1106,10 +1106,24 @@ let conatct_marker;
 function initMap() {
     let myLatLng = { lat: 40.678178, lng: -73.944158 };
 
+    if (document.getElementById('listing-map')) {
+        let listingLatLon = { lat: parseFloat($("#listing-lat").val()), lng: parseFloat($("#listing-lon").val()) };
+        let listing_map = new google.maps.Map(document.getElementById('listing-map'), {
+            center: listingLatLon,
+            zoom: 12,
+            mapTypeControl: false,
+            fullscreenControl: false,
+        });
+        let marker = new google.maps.Marker({
+            position: listingLatLon,
+            map: listing_map,
+            title: 'Property Location'
+        });
+    }
     if (document.getElementById('location-map')) {
         let location_map = new google.maps.Map(document.getElementById('location-map'), {
             center: myLatLng,
-            zoom: 12,
+            zoom: 15,
             mapTypeControl: false,
             fullscreenControl: false,
             styles: [

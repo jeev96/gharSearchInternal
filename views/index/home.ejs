@@ -744,7 +744,8 @@
                             <div class="property-content">
                                 <div class="content">
                                     <h1 class="title">
-                                        <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                        <a
+                                            href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                             <%= listing.listingInfo.title %>
                                         </a>
                                     </h1>
@@ -784,7 +785,8 @@
                                         <i class="material-icons text-muted">date_range</i>
                                         <span class="mx-2"><%= moment(listing.createdAt).format("ll") %></span>
                                     </p>
-                                    <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>" class="mdc-button mdc-button--outlined">
+                                    <a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>"
+                                        class="mdc-button mdc-button--outlined">
                                         <span class="mdc-button__ripple"></span>
                                         <span class="mdc-button__label">Details</span>
                                     </a>
@@ -800,6 +802,18 @@
                         <span class="mdc-button__ripple"></span>
                         <span class="mdc-button__label">load more</span>
                     </a>
+                </div>
+                <% } %>
+                <% if(listings.length === 0) { %>
+                <div class="mdc-card full-width-page empty-listing-container py-4">
+                    <h2 class="empty-listing-title text-muted">
+                        <div class="material-icons mat-icon-lg">
+                            broken_image
+                        </div>
+                        <div class="mx-3">
+                            Nothing to see here...
+                        </div>
+                    </h2>
                 </div>
                 <% } %>
             </div>
@@ -864,7 +878,8 @@
                                     <div class="property-content-wrapper">
                                         <div class="property-content">
                                             <div class="content">
-                                                <h1 class="title"><a href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
+                                                <h1 class="title"><a
+                                                        href="/listing/<%= hyphenateString(listing.listingInfo.title) + "-"+ listing._id %>">
                                                         <%= listing.listingInfo && listing.listingInfo.title ?
                                                     listing.listingInfo.title : listing.location.project %>
                                                     </a></h1>
@@ -888,17 +903,14 @@
                                                 </div>
                                                 <div class="d-none d-md-flex d-lg-flex d-xl-flex">
                                                     <div class="description mt-3">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Quaerat modi dignissimos blanditiis accusamus, magni
-                                                            provident omnis perferendis laudantium illo recusandae
-                                                            ab molestiae repudiandae cum obcaecati nulla adipisci
-                                                            fuga culpa repellat!</p>
+                                                        <p><%= listing.listingInfo.description %></p>
                                                     </div>
                                                 </div>
                                                 <div class="features mt-3">
-                                                    <p><span>Property
-                                                            size</span><span><%= listing.propertyInfo.area %>
-                                                            ft²</span></p>
+                                                    <p><span>
+                                                        Property size</span>
+                                                        <span><%= listing.propertyInfo.area %> ft²</span>
+                                                    </p>
                                                     <p><span>Bedrooms</span><span><%= listing.propertyInfo.bedrooms %></span>
                                                     </p>
                                                     <p><span>Bathrooms</span><span><%= listing.propertyInfo.bathrooms %></span>
@@ -925,15 +937,19 @@
                                 </div>
                             </div>
                             <% }) %>
+                            <% if(featuredListings.length === 0) { %>
+                            <div class="mdc-card full-width-page empty-listing-container py-4">
+                                <h2 class="empty-listing-title text-muted">
+                                    <div class="material-icons mat-icon-lg">
+                                        broken_image
+                                    </div>
+                                    <div class="mx-3">
+                                        Nothing to see here...
+                                    </div>
+                                </h2>
+                            </div>
+                            <% } %>
                         </div>
-                        <button class="prop-prev swiper-button-prev swipe-arrow mdc-fab mdc-fab--mini primary">
-                            <span class="mdc-fab__ripple"></span>
-                            <span class="mdc-fab__icon material-icons">keyboard_arrow_left</span>
-                        </button>
-                        <button class="prop-next swiper-button-next swipe-arrow mdc-fab mdc-fab--mini primary">
-                            <span class="mdc-fab__ripple"></span>
-                            <span class="mdc-fab__icon material-icons">keyboard_arrow_right</span>
-                        </button>
                     </div>
                 </div>
             </div>
