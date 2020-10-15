@@ -59,7 +59,7 @@ module.exports = {
     },
     delete: function (query) {
         return new Promise((resolve, reject) => {
-            User.remove(query, function (error) {
+            User.deleteOne(query, function (error) {
                 if (error) {
                     reject(error);
                 } else {

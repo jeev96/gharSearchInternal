@@ -820,6 +820,12 @@ function onPageLoad() {
             const drawerElement = document.querySelector('.mdc-drawer.page-sidenav');
             const drawerScrim = document.querySelector('.page-sidenav-scrim')
             const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer.page-sidenav'));
+            // drawer.listen("focusout", () => {
+            //     setTimeout(() => {
+            //       drawer.open = false;
+            //       // The timer might need to be fiddled with. Needs to not be too big or too small.
+            //     }, 2000);
+            //   });
             $("#page-sidenav-toggle").on("click", function () {
                 drawer.open = true;
             });
@@ -851,6 +857,16 @@ function onPageLoad() {
                     drawer2 = initPermanentDrawer();
                 }
             }
+            const options = document.querySelectorAll('.mdc-text-field');
+            // for (let option of options) {
+            //     option.addEventListener('click', (event) => {
+            //         // let prevent = event.currentTarget.classList.contains('prevent-menu-close');
+            //         // if (prevent) {
+            //             event.stopPropagation();
+            //             // handle 'prevent-menu-close' list item click event
+            //         // }
+            //     });
+            // }
             window.addEventListener('resize', resizeHandler);
         };
     }

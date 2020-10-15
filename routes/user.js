@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userDbService = require("../services/database/user");
+const listingDbService = require("../services/database/listing");
 const middleware = require("../services/middleware");
 const { isLoggedIn, isAdmin } = middleware;
 
@@ -18,7 +19,14 @@ router.get("/", isLoggedIn, isAdmin, function (req, res) {
 
 // delete user
 router.delete("/:id", isLoggedIn, isAdmin, function (req, res) {
-    userDbService.delete({ _id: req.params.id }).then((result) => {
+    let newAuthor = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    listingDbService.updateMany({ "author.id": req.params.id }, { author: newAuthor }).then((result) => {
+        console.log(result);
+        return userDbService.delete({ _id: req.params.id });
+    }).then((result) => {
         console.log(result);
         req.flash('error', 'User deleted!');
         res.redirect('/user');

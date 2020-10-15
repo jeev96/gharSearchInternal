@@ -129,7 +129,7 @@
     } 
     .page-sidenav.mdc-drawer .mdc-card{
         border-radius: 0;
-        height: 100%;
+        /* height: 100%; */
     } 
     .page-sidenav-content{
         padding-left: 2px;
@@ -254,7 +254,7 @@
     } 
     .page-sidenav.mdc-drawer .mdc-card{
         border-radius: 0;
-        height: 100%;
+        /* height: 100%; */
     } 
     .page-sidenav-content{
         padding-left: 2px;

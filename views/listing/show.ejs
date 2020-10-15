@@ -14,7 +14,7 @@
                                     <%= listing.location.sector + ", " + listing.location.city %></span>
                             </p>
                         </div>
-                        <div class="column mx-3">
+                        <div class="column">
                             <h2 class="primary-color price">
                                 <span><%= new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0,  maximumFractionDigits: 0 }).format(parseInt(listing.price)) %></span>
                             </h2>

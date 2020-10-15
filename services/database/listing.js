@@ -56,6 +56,17 @@ module.exports = {
                 }
             });
         });
+    },
+    updateMany: function (query, newData) {
+        return new Promise((resolve, reject) => {
+            Listing.updateMany(query, { $set: newData }, function (error, updates) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(updates);
+                }
+            });
+        });
     }
 }
 
