@@ -820,14 +820,11 @@ function onPageLoad() {
             const drawerElement = document.querySelector('.mdc-drawer.page-sidenav');
             const drawerScrim = document.querySelector('.page-sidenav-scrim')
             const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer.page-sidenav'));
-            // drawer.listen("focusout", () => {
-            //     setTimeout(() => {
-            //       drawer.open = false;
-            //       // The timer might need to be fiddled with. Needs to not be too big or too small.
-            //     }, 2000);
-            //   });
             $("#page-sidenav-toggle").on("click", function () {
                 drawer.open = true;
+            });
+            $("#page-sidenav-close-button").on("click", function () {
+                drawer.open = false;
             });
             const initPermanentDrawer = () => {
                 drawerElement.classList.remove("mdc-drawer--modal");
@@ -838,35 +835,24 @@ function onPageLoad() {
                 return drawer;
             }
             const initModalDrawer = () => {
+                $("#page-sidenav-close").removeClass("d-none");
                 drawerElement.classList.remove("mdc-drawer--dismissible");
                 drawerElement.classList.add("mdc-drawer--modal");
                 drawerScrim.classList.remove("d-none");
                 const drawer = mdc.drawer.MDCDrawer.attachTo(drawerElement);
-                drawer.open = false;
+                // drawer.open = false;
                 return drawer;
             }
-            let drawer2 = window.matchMedia("(max-width: 959px)").matches ?
-                initModalDrawer() : initPermanentDrawer();
+            window.matchMedia("(max-width: 959px)").matches ? initModalDrawer() : initPermanentDrawer();
 
             const resizeHandler = () => {
                 if (window.matchMedia("(max-width: 959px)").matches) {
-                    drawer2.destroy();
-                    drawer2 = initModalDrawer();
+                    initModalDrawer();
                 } else if (window.matchMedia("(min-width: 959px)").matches) {
-                    drawer2.destroy();
-                    drawer2 = initPermanentDrawer();
+                    initPermanentDrawer();
                 }
             }
-            const options = document.querySelectorAll('.mdc-text-field');
-            // for (let option of options) {
-            //     option.addEventListener('click', (event) => {
-            //         // let prevent = event.currentTarget.classList.contains('prevent-menu-close');
-            //         // if (prevent) {
-            //             event.stopPropagation();
-            //             // handle 'prevent-menu-close' list item click event
-            //         // }
-            //     });
-            // }
+
             window.addEventListener('resize', resizeHandler);
         };
     }

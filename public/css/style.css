@@ -1214,6 +1214,14 @@ header.toolbar-2 .horizontal-menu .mdc-button {
 	z-index: 9998;
 }
 
+#page-sidenav-close {
+	border-radius: 5px;
+}
+
+.page-sidenav {
+	height: fit-content;
+}
+
 .page-sidenav.mdc-drawer {
 	position: relative;
 	float: left;
